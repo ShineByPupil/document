@@ -64,3 +64,78 @@ graph LR
 ```mysql
 CREATE DATABASE my_database;
 ```
+
+## Docker
+
+### 安装
+
+[参考文档](https://help.aliyun.com/zh/ecs/use-cases/deploy-and-use-docker-on-alibaba-cloud-linux-2-instances?spm=5176.ecscore_server.top-nav.8.11344df519zkWv&scm=20140722.S_help%40%40%E6%96%87%E6%A1%A3%40%4051853.S_RQW%40ag0%2BBB2%40ag0%2BBB1%40ag0%2Bhot%2Bos0.ID_51853-RL_docker~DAS~compose-LOC_console~UND~help-OR_ser-V_3-P0_3)
+
+### 配置阿里云国内镜像加速
+
+防止解析元数据失败，读取超时
+
+```bash
+vim /etc/docker/daemon.json
+
+# 文件内容
+{
+"registry-mirrors": ["https://4da6b0g8.mirror.aliyuncs.com"]
+}
+
+# 重启 Docker 服务
+sudo systemctl restart docker
+```
+
+### 运行 nodejs
+
+#### 编写 Dockerfile 文件配置
+
+```bash
+# 使用 Node.js 的官方镜像作为基础镜像
+FROM node:14
+
+# 设置工作目录
+WORKDIR /app/service/xxx
+
+# 将 package.json 和 package-lock.json 复制到工作目录
+COPY package*.json ./
+
+# 安装依赖
+RUN npm install
+
+# 将应用程序代码复制到工作目录
+COPY . .
+
+# 暴露应用程序的端口（根据你的应用程序配置）
+EXPOSE 3000
+
+# 启动应用程序
+CMD ["npm", "start"]
+```
+
+#### 构建 Docker 镜像
+
+```bash
+docker build -t <my-image-name> .
+docker build -t <my-image-name> . > build.log 2>&1
+```
+
+#### 查看构建的 Docker 镜像
+
+```bash
+docker images
+```
+
+#### 运行 Docker 容器
+
+```bash
+docker run -d -p 8080:80 <my-image-name>
+```
+
+#### 停止并删除 Docker 容器
+
+```bash
+docker stop <container-id>
+docker rm <container-id>
+```
