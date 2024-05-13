@@ -16,7 +16,7 @@
 
 提升前端开发效率、质量的工具和流程
 
-- 版本控制：Git、SVN
+- 版本控制：[Git](./git/README.md)、SVN
 - 包管理器：npm、pnpm、yarn
 - 打包工具：webpack
 - 代码规范：eslint、prettier
