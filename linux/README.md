@@ -7,3 +7,17 @@ Linux 是一个免费、开源的类 Unix 操作系统内核，最初由 Linus T
 用于与远程计算机建立安全连接的应用程序。它允许用户通过加密的方式在两台计算机之间进行远程连接和通信，以便执行各种操作，如远程登录、文件传输、远程命令执行等
 
 [Bitvise SSH Client 下载地址](https://bitvise.com/download-area)
+
+## 安装软件
+
+- Python
+  ```bash
+  sudo yum install python3
+  python3 --version
+  sudo yum update python3
+  ```
+- git
+  ```bash
+  sudo yum install git
+  git --version
+  ```
