@@ -89,7 +89,14 @@ sudo systemctl restart docker
 
 ### 运行 nodejs
 
-#### 编写 Dockerfile 文件配置
+```mermaid
+graph LR
+    A[创建Dockerfile] --> B(构建 Docker 镜像)
+    B --> C(查看镜像列表)
+    C --> D[运行 Docker 容器]
+```
+
+#### 创建 Dockerfile
 
 ```bash
 # 使用 Node.js 的官方镜像作为基础镜像
@@ -114,28 +121,46 @@ EXPOSE 3000
 CMD ["npm", "start"]
 ```
 
-#### 构建 Docker 镜像
-
-```bash
-docker build -t <my-image-name> .
-docker build -t <my-image-name> . > build.log 2>&1
-```
-
-#### 查看构建的 Docker 镜像
-
-```bash
-docker images
-```
-
 #### 运行 Docker 容器
 
 ```bash
-docker run -d -p 8080:80 <my-image-name>
+docker build -t nodejs . # 构建 Docker 镜像
+docker images # 查看镜像列表
+docker run --name nodejs -d -p 4000:80 nodejs # 运行 Docker 容器
 ```
 
-#### 停止并删除 Docker 容器
+#### 更新服务
+
+```mermaid
+graph LR
+    A[build 构建新镜像] --> B(prune 删除中间镜像)
+    B--> C(stop 停止容器)
+    C --> D(rm 删除容器)
+    D --> E[run 创建并运行新容器]
+```
 
 ```bash
-docker stop <container-id>
-docker rm <container-id>
+docker build -t nodejs .
+
+# 删除中间(未使用)镜像
+docker image prune
+
+# 停止一个或多个运行中的容器
+docker stop nodejs
+
+# 移除一个或多个容器
+docker rm nodejs
+
+# 从镜像创建并运行一个新的容器
+docker run --name nodejs -d -p 4000:80 nodejs
+```
+
+#### 其他关联命令
+
+```bash
+# 查看 docker 日志
+docker logs nodejs
+
+# 删除 docker 日志(停止容器 -> 删除 -> 启动容器)
+rm /var/lib/docker/containers/<container_id>/<container_id>-json.log
 ```
