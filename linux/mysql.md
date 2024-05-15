@@ -11,7 +11,12 @@ sudo yum install nodejs npm
 ## 启动 MySQL 服务器
 
 ```bash
+# 启动 MySQL 服务
 sudo systemctl start mysqld
+
+# 查看 MySQL 状态
+sudo systemctl status mysqld
+
 # 设置 MySQL 服务器开机自启动
 sudo systemctl enable mysqld
 ```
