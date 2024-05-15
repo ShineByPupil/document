@@ -1,5 +1,35 @@
 # Docker
 
+## 安装
+
+[参考文档](https://help.aliyun.com/zh/ecs/use-cases/deploy-and-use-docker-on-alibaba-cloud-linux-2-instances?spm=5176.ecscore_server.top-nav.8.11344df519zkWv&scm=20140722.S_help%40%40%E6%96%87%E6%A1%A3%40%4051853.S_RQW%40ag0%2BBB2%40ag0%2BBB1%40ag0%2Bhot%2Bos0.ID_51853-RL_docker~DAS~compose-LOC_console~UND~help-OR_ser-V_3-P0_3)
+
+## 配置阿里云国内镜像加速
+
+防止解析元数据失败，读取超时
+
+```bash
+vim /etc/docker/daemon.json
+
+# 文件内容
+{
+"registry-mirrors": ["https://4da6b0g8.mirror.aliyuncs.com"]
+}
+
+# 重启 Docker 服务
+sudo systemctl restart docker
+```
+
+#### 其他命令
+
+```bash
+# 查看 docker 日志
+docker logs nodejs
+
+# 删除 docker 日志(停止容器 -> 删除 -> 启动容器)
+rm /var/lib/docker/containers/<container_id>/<container_id>-json.log
+```
+
 ## Docker 命令说明
 
 | 命令    | 说明                         |
