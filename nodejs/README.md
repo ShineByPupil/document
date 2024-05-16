@@ -89,13 +89,11 @@ services:
     # 将 package.json 和 package-lock.json 复制到工作目录
     volumes:
       - .:/app/service/nodejs
-    # 安装依赖
-    command: npm install
+    # 安装依赖 启动应用程序
+    command: sh -c "npm install && npm start"
     # 暴露应用程序的端口（根据你的应用程序配置）
     ports:
       - "3000:3000"
-    # 启动应用程序
-    command: sh -c "npm install && npm start"
 ```
 
 ```bash
