@@ -51,6 +51,7 @@ select Host,User from mysql.user;
 
 # 授予权限
 GRANT ALL PRIVILEGES ON *.* TO '用户名'@'ip' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON user_database.* TO 'admin'@'%';
 # 刷新权限
 FLUSH PRIVILEGES;
 
