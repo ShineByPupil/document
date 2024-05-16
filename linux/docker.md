@@ -20,7 +20,7 @@ vim /etc/docker/daemon.json
 sudo systemctl restart docker
 ```
 
-#### 其他命令
+## 其他命令
 
 ```bash
 # 查看 docker 日志
