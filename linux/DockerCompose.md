@@ -24,3 +24,51 @@ sudo yum remove docker-compose-plugin
 ```
 
 ## docker-compose.yml
+
+```bash
+services:
+  # 前端服务
+  frontend:
+    image: example/webapp
+    ports:
+      - "443:8043"  # 将容器的 8043 端口映射到宿主机的 443 端口
+    networks:
+      - front-tier
+      - back-tier
+    configs:
+      - httpd-config  # 使用 httpd-config 配置文件
+    secrets:
+      - server-certificate  # 使用 server-certificate 密钥
+
+  # 后端服务
+  backend:
+    image: example/database
+    volumes:
+      - db-data:/etc/data  # 将容器的 /etc/data 挂载到名为 db-data 的卷上
+    networks:
+      - back-tier
+
+volumes:
+  # 数据库数据卷
+  db-data:
+    driver: flocker
+    driver_opts:
+      size: "10GiB"  # 设置卷的大小为 10GiB
+
+configs:
+  # 外部配置文件 httpd-config
+  httpd-config:
+    external: true
+
+secrets:
+  # 外部密钥 server-certificate
+  server-certificate:
+    external: true
+
+networks:
+  # 前端网络
+  front-tier: {}
+  # 后端网络
+  back-tier: {}
+
+```
