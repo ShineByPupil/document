@@ -4,14 +4,14 @@ Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境，使 JavaSc
 
 ## 使用 docker 运行 nodejs 服务
 
+### Dockerfile 文件
+
 ```mermaid
 graph LR
     A[创建Dockerfile] --> B(构建 Docker 镜像)
     B --> C(查看镜像列表)
     C --> D[运行 Docker 容器]
 ```
-
-Dockerfile 文件
 
 ```bash
 # 使用 Node.js 的官方镜像作为基础镜像
@@ -49,7 +49,7 @@ docker images
 docker run --name nodejs -d -p 4000:80 nodejs
 ```
 
-## 更新 nodejs 容器
+更新 nodejs 容器
 
 ```mermaid
 graph LR
@@ -73,4 +73,27 @@ docker rm nodejs
 
 # 从镜像创建并运行一个新的容器
 docker run --name nodejs -d -p 4000:80 nodejs
+```
+
+### docker-compose.yml
+
+```bash
+version: '3.8'
+
+services:
+  app:
+    # 使用 Node.js 的官方镜像作为基础镜像
+    image: node:14
+    # 设置工作目录
+    working_dir: /app/service/nodejs
+    # 将 package.json 和 package-lock.json 复制到工作目录
+    volumes:
+      - .:/app/service/nodejs
+    # 安装依赖
+    command: npm install
+    # 暴露应用程序的端口（根据你的应用程序配置）
+    ports:
+      - "3000:3000"
+    # 启动应用程序
+    command: sh -c "npm install && npm start"
 ```
