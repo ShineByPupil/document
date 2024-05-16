@@ -18,7 +18,7 @@ graph LR
 FROM node:14
 
 # 设置工作目录
-WORKDIR /app/service/xxx
+WORKDIR /app/service/nodejs
 
 # 将 package.json 和 package-lock.json 复制到工作目录
 COPY package*.json ./
@@ -46,7 +46,7 @@ docker build -t nodejs .
 docker images
 
 # 运行 Docker 容器
-docker run --name nodejs -d -p 4000:80 nodejs
+docker run --name nodejs -d -p 4000:4000 nodejs
 ```
 
 更新 nodejs 容器
@@ -72,7 +72,7 @@ docker stop nodejs
 docker rm nodejs
 
 # 从镜像创建并运行一个新的容器
-docker run --name nodejs -d -p 4000:80 nodejs
+docker run --name nodejs -d -p 4000:4000 nodejs
 ```
 
 ### docker-compose.yml
@@ -96,4 +96,8 @@ services:
       - "3000:3000"
     # 启动应用程序
     command: sh -c "npm install && npm start"
+```
+
+```bash
+docker compose up -d
 ```
