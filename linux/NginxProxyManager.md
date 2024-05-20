@@ -42,3 +42,13 @@ docker compose up -d
 http://127.0.0.1:81
 
 如果访问不上，服务器对端口 81 开发 ip 白名单
+
+## 卸载
+
+```bash
+docker ps // 查看容器
+docker images // 查看镜像
+docker stop nginx-proxy-manager_app_1 // 停止容器
+docker rm nginx-proxy-manager_app_1 // 删除容器
+docker rmi chishin/nginx-proxy-manager-zh:release // 删除镜像
+```
