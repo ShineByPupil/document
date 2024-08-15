@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router';
 </script>
 
 <template>
@@ -11,7 +11,10 @@ import HelloWorld from './components/HelloWorld.vue'
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+
+  <RouterLink to="/home">Go to Home</RouterLink>
+  <RouterLink to="/animations">Go to animations</RouterLink>
+  <router-view />
 </template>
 
 <style scoped>
