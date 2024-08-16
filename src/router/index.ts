@@ -1,10 +1,9 @@
 import { createWebHistory, createRouter } from 'vue-router';
 
-import HelloWorld from '../components/HelloWorld.vue';
 import animations from '../demo/animations/index.vue';
 
 const routes = [
-  { path: '/home', name: 'home', component: HelloWorld },
+  { path: '/home', name: 'home', component: animations },
   { path: '/animations', name: 'animations', component: animations },
 ];
 
