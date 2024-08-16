@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 // 死循环
 const fn = (timestamp: number) => {
@@ -7,15 +7,20 @@ const fn = (timestamp: number) => {
   while (Date.now() < end) {}
 };
 
-const webAnimations = ref(null);
-// webAnimations.animate(
-//   [{ transform: 'translateX(0)' }, { transform: 'translateX(100px)' }],
-//   {
-//     duration: 2000,
-//     iterations: Infinity,
-//     direction: 'alternate',
-//   }
-// );
+const webAnimations = ref<HTMLElement | null>(null);
+
+onMounted(() => {
+  if (webAnimations.value) {
+    webAnimations.value.animate(
+      [{ transform: 'translateX(0)' }, { transform: 'translateX(100px)' }],
+      {
+        duration: 2000,
+        iterations: Infinity,
+        direction: 'alternate',
+      }
+    );
+  }
+});
 </script>
 
 <template>
