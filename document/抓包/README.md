@@ -14,7 +14,7 @@
 
 [下载地址](https://www.wireshark.org/download.html)
 
-- [ ] Install USBPcap 1.5.4.0
+- [x] Install USBPcap 1.5.4.0
       (Use Add/Remove Programs first to uninstall any undetected old USBPcap versions)
 
 `USBPcap` 是一个用于捕获 USB 流量的工具，通常与 Wireshark 一起使用。它的主要用途是监控和分析 USB 设备之间的通信，适用于调试 USB 设备或应用程序。_默认不勾选，有需要可以勾选_
@@ -158,4 +158,4 @@ help > SSL proxying > Install Charles Root Certificate on a Mobile Device or Rem
 
 1. Android 系统需要 root
 2. 下载 MT 管理器 app
-3. 证书从 /data/misc/user/0/cacerts-added/ 移动到 /system/etc/security/cacerts/
+3. 证书从 <u>/data/misc/user/0/cacerts-added/</u> 移动到 <u>/system/etc/security/cacerts/</u>
