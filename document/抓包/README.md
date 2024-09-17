@@ -158,4 +158,4 @@ help > SSL proxying > Install Charles Root Certificate on a Mobile Device or Rem
 
 1. Android 系统需要 root
 2. 下载 MT 管理器 app
-3. 证书从 <u>/data/misc/user/0/cacerts-added/</u> 移动到 <u>/system/etc/security/cacerts/</u>
+3. 证书从 `/data/misc/user/0/cacerts-added/` 移动到 `/system/etc/security/cacerts/`
