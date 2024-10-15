@@ -4,3 +4,4 @@
 - [XMLHttpRequest](./XMLHttpRequest.md)
 - [闭包](./闭包.md)
 - [深拷贝](./深拷贝.md)
+- [Web Crypto API](./Web%20Crypto%20API.md)
