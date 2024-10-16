@@ -14,9 +14,11 @@ Web Crypto API （发音 `/ˈkrɪptəʊ/`）提供了一套关于密码学原语
 
 ## 单词
 
-- `crypto` /ˈkrɪptəʊ/ *n. 密码学*
-- `subtle` /ˈsʌt(ə)l/ *adj. 隐秘的*
-- `algorithm` /ˈælɡərɪðəm/ *n.（尤指计算机）算法，运算法则*
+- `crypto` /ˈkrɪptəʊ/ _n. 密码学_
+- `subtle` /ˈsʌt(ə)l/ _adj. 隐秘的_
+- `encrypt` /ɪnˈkrɪpt/ _v. 把……加密_
+- `decrypt` /diːˈkrɪpt/ _vt. 解密码_
+- `algorithm` /ˈælɡərɪðəm/ _n.（尤指计算机）算法，运算法则_
 
 ## 属性 & 方法
 
@@ -175,6 +177,97 @@ interface SubtleCrypto {
 ### randomUUID
 
 ## 完整示例
+
+### 口令加密
+
+> 每次加密都生成新的随机salt和iv，增大暴力破解的难度。
+> 盐（Salt）
+
+```js
+async function deriveKeyFromPassword(password, salt) {
+    const keyMaterial = await window.crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(password),
+        {name: "PBKDF2"},
+        false,
+        ["deriveBits", "deriveKey"]
+    );
+
+    const key = await window.crypto.subtle.deriveKey(
+        {
+            name: "PBKDF2",
+            salt: salt,
+            iterations: 100000,
+            hash: "SHA-256"
+        },
+        keyMaterial,
+        {name: "AES-GCM", length: 256},
+        true,
+        ["encrypt", "decrypt"]
+    );
+
+    return key;
+}
+
+// 加密
+async function encryptData(password, data) {
+    // 生成盐
+    const salt = window.crypto.getRandomValues(new Uint8Array(16));
+    // 派生密钥
+    const key = await deriveKeyFromPassword(password, salt);
+
+    // 生成随机 IV
+    const iv = window.crypto.getRandomValues(new Uint8Array(12));
+
+    // 加密数据
+    const encryptedData = await window.crypto.subtle.encrypt(
+        {
+            name: "AES-GCM",
+            iv: iv,
+            tagLength: 128
+        },
+        key,
+        new TextEncoder().encode(data)
+    );
+
+    return {
+        iv: iv,
+        salt: salt,
+        encryptedData: new Uint8Array(encryptedData)
+    };
+}
+
+// 解密
+async function decryptData(password, salt, iv, encryptedData) {
+    // 派生密钥
+    const key = await deriveKeyFromPassword(password, salt);
+
+    // 解密数据
+    const decryptedData = await window.crypto.subtle.decrypt(
+        {
+            name: "AES-GCM",
+            iv: iv,
+            tagLength: 128
+        },
+        key,
+        encryptedData
+    );
+
+    return new TextDecoder().decode(decryptedData);
+}
+
+const password = "用户指定的口令";
+const data = "这是需要加密的明文数据";
+// 加密
+const {iv, salt, encryptedData} = await encryptData(password, data);
+console.log("加密后的数据:", encryptedData);
+console.log("IV:", iv);
+console.log("Salt:", salt);
+
+// 解密
+const decryptedData = await decryptData(password, salt, iv, encryptedData);
+console.log("解密后的数据:", decryptedData);
+```
 
 <table>
     <thead>
