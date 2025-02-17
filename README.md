@@ -2,9 +2,9 @@
 
 前端开发语言的基石
 
-- [html](docs/html/README.md)
-- [css](docs/css/README.md)
-- [js](docs/js/README.md)
+- [html](docs/base/README.md)
+- [css](docs/base/css/README.md)
+- [js](docs/base/js/README.md)
 
 ## 前端框架
 
