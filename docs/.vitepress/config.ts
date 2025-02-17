@@ -8,16 +8,40 @@ export default defineConfig({
 
     themeConfig: {
         nav: [
-            { text: '基础', link: '/base/html' },
-            { text: '框架', link: '/framework/vue' },
-            { text: '工程化', link: '/engineering/webpack' },
+            { text: '基础', link: '/base/html/文档结构', activeMatch: '/base/' },
+            { text: '框架', link: '/framework/vue', activeMatch: '/framework/' },
+            { text: '工程化', link: '/engineering/webpack', activeMatch: '/engineering/' },
         ],
 
         sidebar: {
             '/base/': [
-                { text: 'HTML', base: '/base/html/', items: sidebarHTML() },
-                { text: 'CSS', base: '/base/css/', items: sidebarCSS() },
-                { text: 'JavaScript', base: '/base/js/', items: sidebarJavaScript() }
+                {
+                    text: 'HTML', base: '/base/html/', items: [
+                        { text: '文档结构', link: '文档结构' },
+                        { text: '元素体系', link: '元素体系' },
+                        { text: '通信与存储', link: '通信与存储' },
+                        { text: '高级特性', link: '通信与存储' },
+                    ]
+                },
+                {
+                    text: 'CSS', base: '/base/css/', items: [
+                        { text: '核心机制', link: '核心机制' },
+                        { text: '布局系统', link: '布局系统' },
+                        { text: '视觉表现', link: '视觉表现' },
+                        { text: '工程化', link: '工程化' },
+                        { text: '性能优化', link: '性能优化' },
+                    ]
+                },
+                {
+                    text: 'JavaScript', base: '/base/js/', items: [
+                        { text: '语言核心', link: '语言核心' },
+                        { text: '异步编程', link: '异步编程' },
+                        { text: '浏览器相关', link: '浏览器相关' },
+                        { text: '现代特性', link: '现代特性' },
+                        { text: '设计模式', link: '设计模式' },
+                        { text: '性能优化', link: '性能优化' },
+                    ]
+                }
             ],
             '/framework/': [
                 {
@@ -71,126 +95,3 @@ export default defineConfig({
         }
     }
 })
-
-function sidebarHTML(): DefaultTheme.SidebarItem[] {
-    return [
-        {
-            text: '基础概念', collapsed: false, items: [
-                { text: 'HTML 概述', link: 'index' },
-                { text: 'HTML 文档结构', link: '' },
-                { text: '常用标签', link: '' },
-            ]
-        },
-        {
-            text: '文本内容', collapsed: false, items: [
-                { text: '段落和标题', link: '' },
-                { text: '列表（有序/无序）', link: '' },
-                { text: '链接', link: '' },
-                { text: '图像', link: '' },
-                { text: '表格', link: '' },
-            ]
-        },
-        {
-            text: '表单', collapsed: false, items: [
-                { text: '输入元素（文本框、单选框、复选框、下拉框）', link: '' },
-                { text: '表单属性（action、method）', link: '' },
-                { text: '表单验证', link: '' },
-            ]
-        },
-        {
-            text: '语义化 HTML', collapsed: false, items: [
-                { text: '语义标签（header、footer、article、section）', link: '' },
-                { text: 'SEO 优化', link: '' },
-            ]
-        },
-        {
-            text: 'HTML5 新特性', collapsed: false, items: [
-                { text: '多媒体（音频、视频）', link: '' },
-                { text: 'Canvas', link: '' },
-                { text: '本地存储（localStorage、sessionStorage）', link: '' },
-            ]
-        },
-    ]
-}
-
-function sidebarCSS(): DefaultTheme.SidebarItem[] {
-    return [
-        {
-            text: '基础概念', collapsed: false, items: [
-                { text: 'CSS 概述', link: 'index' },
-                { text: '选择器（元素选择器、类选择器、ID 选择器）', link: '' },
-                { text: '盒模型', link: '' },
-            ]
-        },
-        {
-            text: '布局', collapsed: false, items: [
-                { text: '布局模型（块级、行内、行内块）', link: '' },
-                { text: 'Flexbox', link: '' },
-                { text: 'Grid', link: '' },
-                { text: '浮动与定位（相对定位、绝对定位、固定定位）', link: '' },
-            ]
-        },
-        {
-            text: '样式', collapsed: false, items: [
-                { text: '颜色与背景', link: '' },
-                { text: '字体与文本', link: '' },
-                { text: '边框与圆角', link: '' },
-                { text: '动画与过渡', link: '' },
-            ]
-        },
-        {
-            text: '响应式设计', collapsed: false, items: [
-                { text: '媒体查询', link: '' },
-                { text: '响应式单位（百分比、vw、vh）', link: '' },
-                { text: '移动优先设计', link: '' },
-            ]
-        },
-        {
-            text: 'CSS 预处理器', collapsed: false, items: [
-                { text: 'SASS/SCSS', link: '' },
-                { text: 'LESS', link: '' },
-            ]
-        },
-    ]
-}
-
-function sidebarJavaScript(): DefaultTheme.SidebarItem[] {
-    return [
-        {
-            text: '基础概念', collapsed: false, items: [
-                { text: '变量与数据类型', link: 'index' },
-                { text: '运算符与表达式', link: '' },
-                { text: '控制结构（条件语句、循环）', link: '' },
-            ]
-        },
-        {
-            text: '函数', collapsed: false, items: [
-                { text: '函数声明与表达式', link: '' },
-                { text: '箭头函数', link: '' },
-                { text: '回调函数', link: '' },
-                { text: '作用域与闭包', link: '' },
-            ]
-        },
-        {
-            text: '对象与数组', collapsed: false, items: [
-                { text: '对象的创建与操作', link: '' },
-                { text: '数组的操作（push、pop、map、filter）', link: '' },
-                { text: 'ES6 新特性（解构赋值、扩展运算符）', link: '' },
-            ]
-        },
-        {
-            text: 'DOM 操作', collapsed: false, items: [
-                { text: '选择元素', link: '' },
-                { text: '修改元素内容与样式', link: '' },
-                { text: '事件处理', link: '' },
-            ]
-        },
-        {
-            text: '异步编程', collapsed: false, items: [
-                { text: 'Promise', link: '' },
-                { text: 'async/await', link: '' },
-                { text: 'Fetch API', link: '' },
-            ]
-        }
-    ]
-}
