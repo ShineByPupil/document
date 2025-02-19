@@ -1,4 +1,4 @@
-import { defineConfig, type DefaultTheme } from 'vitepress'
+import { defineConfig } from 'vitepress'
 
 export default defineConfig({
     title: "前端知识体系",
@@ -7,10 +7,16 @@ export default defineConfig({
     appearance: 'dark', // 默认深色模式
 
     themeConfig: {
+        outline: {
+            label: '页面导航',
+            level: 'deep' // 如果需要显示多级标题
+        },
+
         nav: [
             { text: '基础', link: '/base/html/文档结构', activeMatch: '/base/' },
             { text: '框架', link: '/framework/vue', activeMatch: '/framework/' },
             { text: '工程化', link: '/engineering/webpack', activeMatch: '/engineering/' },
+            { text: '设计范式', link: '/dp/位操作艺术', activeMatch: '/dp/' },
         ],
 
         sidebar: {
@@ -20,7 +26,7 @@ export default defineConfig({
                         { text: '文档结构', link: '文档结构' },
                         { text: '元素体系', link: '元素体系' },
                         { text: '通信与存储', link: '通信与存储' },
-                        { text: '高级特性', link: '通信与存储' },
+                        { text: '高级特性', link: '高级特性' },
                     ]
                 },
                 {
@@ -62,6 +68,19 @@ export default defineConfig({
                         { text: 'CI/CD 流水线', link: '/engineering/cicd' }
                     ]
                 }
+            ],
+            '/dp/': [
+                {
+                    text: '设计范式', base: '/dp/', items: [
+                        { text: '位操作艺术', link: '位操作艺术' },
+                        { text: '状态管理范式', link: '状态管理范式' },
+                        { text: '设计模式精选', link: '设计模式精选' },
+                        { text: '函数式范式', link: '函数式范式' },
+                        { text: '性能优化模式', link: '性能优化模式' },
+                        { text: '架构模式', link: '架构模式' },
+                        { text: '元编程技巧', link: '元编程技巧' },
+                    ]
+                }
             ]
         },
 
@@ -93,5 +112,11 @@ export default defineConfig({
                 timeStyle: 'medium'
             }
         }
-    }
+    },
+
+    vite: {
+        server: {
+            host: true,
+        }
+    },
 })
