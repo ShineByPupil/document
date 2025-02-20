@@ -1,4 +1,12 @@
 import { defineConfig } from 'vitepress'
+import path from 'path'
+import fs from 'fs'
+import mdContainer from 'markdown-it-container'
+import Components from 'unplugin-vue-components/vite'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
+import { MarkdownTransform } from './demo/plugins/markdown-transform'
+import UnoCSS from 'unocss/vite'
 
 export default defineConfig({
     title: "前端知识体系",
@@ -115,8 +123,70 @@ export default defineConfig({
     },
 
     vite: {
+        plugins: [
+            Components({
+                dirs: ['.vitepress/demo/components'],
+
+                allowOverrides: true,
+
+                // custom resolvers
+                resolvers: [
+                    // auto import icons
+                    // https://github.com/antfu/unplugin-icons
+                    IconsResolver(),
+                ],
+
+                // allow auto import and register components used in markdown
+                include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+            }),
+            Icons({
+                compiler: 'vue3',
+                autoInstall: true,
+            }),
+            MarkdownTransform(),
+            UnoCSS()
+        ],
         server: {
             host: true,
         }
     },
+
+    markdown: {
+        config: (md) => {
+            md.use(mdContainer, 'demo', {
+                validate(params) {
+                    return !!params.trim().match(/^demo\s*(.*)$/)
+                    // return params.trim().startsWith('demo')
+                },
+                render(tokens, idx) {
+                    const m = tokens[idx].info.trim().match(/^demo\s+(.*)$/)
+
+                    if (tokens[idx].nesting === 1) {
+                        const description = m ? m[1] : ''
+                        const sourceFileToken = tokens[idx + 2]
+                        let source = ''
+                        const sourceFile = sourceFileToken.children?.[0].content ?? ''
+
+                        if (sourceFileToken.type === 'inline') {
+                            source = fs.readFileSync(
+                                path.resolve(__dirname, '..', 'examples', `${ sourceFile }.vue`),
+                                'utf-8'
+                            )
+                        }
+                        if (!source) throw new Error(`Incorrect source file: ${ sourceFile }`)
+
+                        return `<Demo source="${ encodeURIComponent(md.render(`\`\`\` vue\n${ source }\`\`\``)) }"
+                                      path="${ sourceFile }"
+                                      raw-source="${ encodeURIComponent(source) }"
+                                      description="${ encodeURIComponent(md.render(description)) }">
+                                    <template #source>
+                                        <ep-${ sourceFile.replaceAll('/', '-') }/>
+                                    </template>`
+                    } else {
+                        return '</Demo>\n'
+                    }
+                }
+            })
+        }
+    }
 })
