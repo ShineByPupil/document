@@ -42,7 +42,7 @@ export default defineConfig({
                         { text: '核心机制', link: '核心机制' },
                         { text: '布局系统', link: '布局系统' },
                         { text: '视觉表现', link: '视觉表现' },
-                        { text: '工程化', link: '工程化' },
+                        { text: '工程实践', link: '工程实践' },
                         { text: '性能优化', link: '性能优化' },
                     ]
                 },
