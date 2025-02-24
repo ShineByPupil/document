@@ -166,7 +166,7 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
       transform: translate(-50%, -50%);
       font-size: 0.7rem;
       white-space: nowrap;
-      background-color: var(--bg-color);
+      background-color: var(--vp-c-bg);
       padding: 0.3rem;
       color: #444;
       line-height: 12px;
@@ -219,7 +219,7 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
       transform-origin: left center;
       font-size: 0.7rem;
       white-space: nowrap;
-      background: var(--bg-color);
+      background: var(--vp-c-bg);
       padding: 0.3rem;
       color: #444;
       line-height: 12px;
