@@ -1,5 +1,3 @@
-import path from 'path'
-import fs from 'fs'
 import type { Plugin } from 'vite'
 import { camelize } from 'vue'
 
@@ -30,6 +28,6 @@ function combineScriptSetup(markdown: string): string {
         imports.push(`import ${ name } from '../../examples/${ cleanPath }.vue'`)
     }
 
-    return imports.length ? `\n<script setup>\n${ imports.join('\n') }\n</script>` : ''
+    return imports.length ? `\n<script setup>\n${ imports.join('\n') }\n</script>\n` : ''
 }
 

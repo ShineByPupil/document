@@ -148,7 +148,6 @@ export default defineConfig({
             md.use(mdContainer, 'demo', {
                 validate(params) {
                     return !!params.trim().match(/^demo\s*(.*)$/)
-                    // return params.trim().startsWith('demo')
                 },
                 render(tokens, idx) {
                     const m = tokens[idx].info.trim().match(/^demo\s+(.*)$/)
@@ -164,21 +163,26 @@ export default defineConfig({
                                 path.resolve(__dirname, '..', 'examples', `${ sourceFile }.vue`),
                                 'utf-8'
                             )
+                            sourceFileToken.children[0].content = '';
                         }
+
                         if (!source) throw new Error(`Incorrect source file: ${ sourceFile }`)
 
-                        return `<Demo source="${ encodeURIComponent(md.render(`\`\`\` vue\n${ source }\`\`\``)) }"
-                                      path="${ sourceFile }"
-                                      raw-source="${ encodeURIComponent(source) }"
-                                      description="${ encodeURIComponent(md.render(description)) }">
-                                    <template #source>
-                                        <ep-${ sourceFile.replaceAll('/', '-') }/>
-                                    </template>`
+                        return description === 'onlyShow'
+                            ? `<ep-${ sourceFile.replaceAll('/', '-') }/>`
+                            : `<Demo source="${ encodeURIComponent(md.render(`\`\`\` vue\n${ source }\`\`\``)) }"
+                                     path="${ sourceFile }"
+                                     raw-source="${ encodeURIComponent(source) }"
+                                     description="${ encodeURIComponent(md.render(description)) }">
+                                  <template #source>
+                                      <ep-${ sourceFile.replaceAll('/', '-') }/>
+                                  </template>
+                               </Demo>`
                     } else {
-                        return '</Demo>\n'
+                        return '\n'
                     }
                 }
-            })
+            });
         }
     }
 })
