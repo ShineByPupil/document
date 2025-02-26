@@ -27,6 +27,12 @@ const removeItem = function ()  {
 const reset = function ()  {
   items.splice(0, items.length)
   items.push(createNewItem(), createNewItem(), createNewItem())
+  containerProps.flexDirection.value = 'row'
+  containerProps.flexWrap.value = 'nowrap'
+  containerProps.justifyContent.value = 'flex-start'
+  containerProps.alignItems.value = 'stretch'
+  containerProps.alignContent.value = 'stretch'
+  containerProps.gap.value = 0
 }
 </script>
 
@@ -67,6 +73,7 @@ const reset = function ()  {
         <el-button-group size="small">
           <el-button :disabled="amount >= 6" @click="addItem">增加</el-button>
           <el-button :disabled="amount <= 3" @click="removeItem">减少</el-button>
+          <el-button @click="reset">重置</el-button>
         </el-button-group>
       </el-form-item>
       <el-form-item
