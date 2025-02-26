@@ -116,7 +116,7 @@ $colors: #c3e6cb, #ffeeba, #ffa94d, #b8daff, #f5b6cd, #9ee7ff;
     background: var(--vp-c-bg-soft);
     border-radius: 8px;
     margin: 20px auto;
-    padding: 20px;
+    padding: 10px;
 
     .flex-item {
       display: flex;
