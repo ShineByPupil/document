@@ -119,6 +119,8 @@ $colors: #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEEAD, #D4A5A5;
     padding: 10px;
 
     .flex-item {
+      color: #FFFFFF;
+      text-shadow: 0 2px 4px #000000;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -127,7 +129,6 @@ $colors: #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEEAD, #D4A5A5;
       border-radius: 6px;
       transition: all 0.3s;
       cursor: pointer;
-      color: #FFFFFF;
 
       @for $i from 0 to 24 { // 支持最多24个项目循环
         &:nth-child(#{length($colors)}n + #{$i + 1}) {

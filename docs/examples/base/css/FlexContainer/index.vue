@@ -111,6 +111,7 @@ $colors: #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEEAD, #D4A5A5;
 
     .flex-item {
       color: #FFFFFF;
+      text-shadow: 0 2px 4px #000000;
       transition: all 1s;
       border-radius: 4px;
       display: flex;
