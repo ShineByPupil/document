@@ -91,7 +91,7 @@ const reset = function ()  {
 
 
 <style lang="scss" scoped>
-$colors: #c3e6cb, #ffeeba, #ffa94d, #b8daff, #f5b6cd, #9ee7ff;
+$colors: #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEEAD, #D4A5A5;
 
 .flex-playground {
   margin-top: 6px;
@@ -110,7 +110,7 @@ $colors: #c3e6cb, #ffeeba, #ffa94d, #b8daff, #f5b6cd, #9ee7ff;
     border-radius: 4px;
 
     .flex-item {
-      color: #444;
+      color: #FFFFFF;
       transition: all 1s;
       border-radius: 4px;
       display: flex;
@@ -122,7 +122,6 @@ $colors: #c3e6cb, #ffeeba, #ffa94d, #b8daff, #f5b6cd, #9ee7ff;
       @for $i from 0 to 24 { // 支持最多24个项目循环
         &:nth-child(#{length($colors)}n + #{$i + 1}) {
           background: nth($colors, ($i % length($colors)) + 1);
-          border: 1px solid rgba(darken(nth($colors, ($i % length($colors)) + 1), 20%), 0.3);
         }
       }
     }
