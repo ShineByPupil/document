@@ -194,6 +194,7 @@ const copyCode = async () => {
 
 <style scoped lang="scss">
 .example {
+  margin-top: 20px;
   border: 1px solid var(--border-color);
   border-radius: var(--el-border-radius-base);
 
