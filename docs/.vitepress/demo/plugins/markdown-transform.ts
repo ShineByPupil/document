@@ -9,7 +9,7 @@ export function MarkdownTransform(): Plugin {
         async transform(code, id) {
             if (!id.endsWith('.md')) return
 
-            return combineScriptSetup(code) + code
+            return code + combineScriptSetup(code)
         }
     }
 }
