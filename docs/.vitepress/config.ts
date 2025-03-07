@@ -49,7 +49,6 @@ export default defineConfig({
                 },
                 {
                     text: 'JavaScript', base: '/base/js/', items: [
-                        { text: '存储', link: '存储' },
                         { text: '语言核心', link: '语言核心' },
                         { text: '异步编程', link: '异步编程' },
                         { text: '浏览器相关', link: '浏览器相关' },
