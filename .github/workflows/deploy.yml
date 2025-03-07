@@ -27,18 +27,12 @@ jobs:
         with:
           fetch-depth: 0  # 拉取完整历史（若需要 lastUpdated 功能）
 
-      # --- 包管理器配置（按需选择） ---
-      - uses: pnpm/action-setup@v3  # 如果使用 pnpm
-        with:
-          version: 9
-      # - uses: oven-sh/setup-bun@v1  # 如果使用 Bun
-
       # --- Node.js 环境 ---
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm  # 缓存策略（与包管理器一致）
+          cache: npm  # 缓存策略（与包管理器一致）
 
       # --- GitHub Pages 初始化 ---
       - name: Setup Pages
@@ -46,9 +40,9 @@ jobs:
 
       # --- 依赖安装和构建 ---
       - name: Install dependencies
-        run: pnpm install  # 根据包管理器调整
+        run: npm install  # 根据包管理器调整
       - name: Build with VitePress
-        run: pnpm docs:build
+        run: npm docs:build
 
       # --- 上传构建产物 ---
       - name: Upload artifact
