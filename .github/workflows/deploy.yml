@@ -42,7 +42,7 @@ jobs:
       - name: Install dependencies
         run: npm install  # 根据包管理器调整
       - name: Build with VitePress
-        run: npm docs:build
+        run: npm run docs:build
 
       # --- 上传构建产物 ---
       - name: Upload artifact
