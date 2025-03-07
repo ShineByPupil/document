@@ -1,0 +1,69 @@
+# 工作流名称
+name: Deploy VitePress site to Pages
+
+# 触发条件
+on:
+  push:
+    branches: [ main ]  # 仅在 main 分支推送时触发
+  workflow_dispatch:   # 允许手动在 GitHub 网页端触发
+
+# 权限配置（关键区别！）
+permissions:
+  contents: read      # 读取仓库代码
+  pages: write        # 写入 GitHub Pages（必须）
+  id-token: write     # 生成部署令牌（必须）
+
+# 并发控制（防止多个部署同时运行）
+concurrency:
+  group: pages        # 同一组的部署会被排队
+  cancel-in-progress: false  # 不取消正在运行的部署
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 拉取完整历史（若需要 lastUpdated 功能）
+
+      # --- 包管理器配置（按需选择） ---
+      - uses: pnpm/action-setup@v3  # 如果使用 pnpm
+        with:
+          version: 9
+      # - uses: oven-sh/setup-bun@v1  # 如果使用 Bun
+
+      # --- Node.js 环境 ---
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm  # 缓存策略（与包管理器一致）
+
+      # --- GitHub Pages 初始化 ---
+      - name: Setup Pages
+        uses: actions/configure-pages@v4  # 官方推荐的新方式
+
+      # --- 依赖安装和构建 ---
+      - name: Install dependencies
+        run: pnpm install  # 根据包管理器调整
+      - name: Build with VitePress
+        run: pnpm docs:build
+
+      # --- 上传构建产物 ---
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3  # 专用上传插件
+        with:
+          path: docs/.vitepress/dist  # 构建输出路径
+
+  # --- 部署阶段 ---
+  deploy:
+    environment:
+      name: github-pages  # 关联 GitHub Pages 环境
+      url: ${{ steps.deployment.outputs.page_url }}  # 部署后的 URL
+    needs: build          # 依赖 build 任务
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4  # 官方部署插件

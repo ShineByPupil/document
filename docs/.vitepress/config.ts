@@ -9,6 +9,7 @@ import { MarkdownTransform } from './demo/plugins/markdown-transform'
 import UnoCSS from 'unocss/vite'
 
 export default defineConfig({
+    base: '/document/',
     title: "前端知识体系",
     description: "系统性整理前端开发核心知识",
     lang: 'zh-CN',
@@ -48,6 +49,7 @@ export default defineConfig({
                 },
                 {
                     text: 'JavaScript', base: '/base/js/', items: [
+                        { text: '存储', link: '存储' },
                         { text: '语言核心', link: '语言核心' },
                         { text: '异步编程', link: '异步编程' },
                         { text: '浏览器相关', link: '浏览器相关' },
