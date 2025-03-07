@@ -10,8 +10,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     IRiCodeLine: typeof import('~icons/ri/code-line')['default']
     IRiFileCopyLine: typeof import('~icons/ri/file-copy-line')['default']
-    IRiFlaskLine: typeof import('~icons/ri/flask-line')['default']
-    IRiGithubLine: typeof import('~icons/ri/github-line')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     VpDemo: typeof import('./.vitepress/demo/components/vp-demo.vue')['default']
