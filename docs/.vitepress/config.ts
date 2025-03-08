@@ -32,8 +32,7 @@ export default defineConfig({
             '/base/': [
                 {
                     text: 'HTML', base: '/base/html/', items: [
-                        { text: '文档结构', link: '文档结构' },
-                        { text: '元素体系', link: '元素体系' },
+                        { text: '基础语法与结构', link: '基础语法与结构' },
                         { text: '通信与存储', link: '通信与存储' },
                         { text: '高级特性', link: '高级特性' },
                     ]
