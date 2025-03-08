@@ -3,6 +3,7 @@ import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
+import './custom.scss'
 import ElementPlus, { ID_INJECTION_KEY, ZINDEX_INJECTION_KEY, } from 'element-plus'
 import 'element-plus/dist/index.css'
 import '../demo/styles/css-vars.scss';
