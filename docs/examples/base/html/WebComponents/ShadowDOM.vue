@@ -4,13 +4,14 @@ import { ref, onMounted } from 'vue';
 const shadowDOMRef = ref();
 
 onMounted(() => {
-  class ShadowButton extends HTMLElement {
-    constructor() {
-      super();
-      const shadow = this.attachShadow({ mode: 'open' });
+  if (customElements.get('shadow-button') === undefined) {
+    class ShadowButton extends HTMLElement {
+      constructor() {
+        super();
+        const shadow = this.attachShadow({ mode: 'open' });
 
-      // 添加样式和结构
-      shadow.innerHTML = `
+        // 添加样式和结构
+        shadow.innerHTML = `
       <style>
         button {
           padding: 10px 20px;
@@ -22,10 +23,11 @@ onMounted(() => {
       </style>
       <button><slot></slot></button>
     `;
+      }
     }
-  }
 
-  customElements.define('shadow-button', ShadowButton);
+    customElements.define('shadow-button', ShadowButton);
+  }
 
   const shadowButton = document.createElement('shadow-button');
   shadowButton.textContent = '按钮';
