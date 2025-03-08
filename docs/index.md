@@ -6,7 +6,7 @@ hero:
   text: "技术精进之路"
   tagline: 积跬步以至千里，构建完整前端知识图谱
   image:
-    src: /public/images/康娜.png
+    src: /images/康娜.png
     alt: 前端知识
   actions:
     - theme: brand
