@@ -58,6 +58,7 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
 .controls {
   display: flex;
   justify-content: center;
+  color: var(--text-color);
 
   .switch-container {
     $switch-width: 60px;
@@ -69,7 +70,6 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
     align-items: center;
     gap: 15px;
     font-size: 14px;
-    color: #666;
 
     .switch {
       position: relative;
@@ -133,7 +133,7 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
     .measure-line {
       position: relative;
       height: 2px;
-      background: #666;
+      background: var(--text-color);
 
       // 左右箭头
       &::before,
@@ -148,13 +148,13 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
 
       &::before { // 左箭头
         left: 0;
-        border-right-color: #666;
+        border-right-color: var(--text-color);
         transform: translate(-6px, -4px);
       }
 
       &::after { // 右箭头
         right: 0;
-        border-left-color: #666;
+        border-left-color: var(--text-color);
         transform: translate(6px, -4px);
       }
 
@@ -168,7 +168,6 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
       white-space: nowrap;
       background-color: var(--vp-c-bg);
       padding: 0.3rem;
-      color: #444;
       line-height: 12px;
     }
   }
@@ -185,7 +184,7 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
       position: relative;
       width: 2px;
       height: 100%;
-      background: #666;
+      background: var(--text-color);
       margin: 0 auto;
 
       // 上下箭头
@@ -200,13 +199,13 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
 
       &::before { // 上箭头
         top: 0;
-        border-bottom-color: #666;
+        border-bottom-color: var(--text-color);
         transform: translate(-4px, -6px);
       }
 
       &::after { // 下箭头
         bottom: 0;
-        border-top-color: #666;
+        border-top-color: var(--text-color);
         transform: translate(-4px, 6px);
       }
     }
@@ -221,7 +220,6 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
       white-space: nowrap;
       background: var(--vp-c-bg);
       padding: 0.3rem;
-      color: #444;
       line-height: 12px;
     }
   }
