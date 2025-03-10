@@ -1,14 +1,14 @@
 export const sidebars = {
     '/base/': [
         {
-            text: 'HTML', base: '/base/html/', items: [
+            text: 'HTML', base: '/base/html/', collapsed: false, items: [
                 { text: '基础语法与结构', link: '基础语法与结构' },
                 { text: '通信与存储', link: '通信与存储' },
                 { text: '高级特性', link: '高级特性' },
             ]
         },
         {
-            text: 'CSS', base: '/base/css/', items: [
+            text: 'CSS', base: '/base/css/', collapsed: false, items: [
                 { text: '核心机制', link: '核心机制' },
                 { text: '布局系统', link: '布局系统' },
                 { text: '视觉表现', link: '视觉表现' },
@@ -17,9 +17,24 @@ export const sidebars = {
             ]
         },
         {
-            text: 'JavaScript', base: '/base/js/', items: [
+            text: 'JavaScript', base: '/base/js/', collapsed: false, items: [
                 { text: '语言核心', link: '语言核心' },
                 { text: '异步编程', link: '异步编程' },
+                {
+                    text: '通信体系', link: 'network/通信体系', collapsed: true, items: [
+                        { text: 'XMLHttpRequest', link: 'network/XMLHttpRequest' },
+                        { text: 'fetch', link: 'network/fetch' },
+                        { text: 'WebSocket', link: 'network/WebSocket' },
+                        { text: 'postMessage', link: 'network/postMessage' },
+                        { text: 'EventSource', link: 'network/EventSource' },
+                        { text: 'Beacon', link: 'network/Beacon' },
+                        { text: 'WebRTC', link: 'network/WebRTC' },
+                        { text: 'WebTransport', link: 'network/WebTransport' },
+                        { text: 'BroadcastChannel', link: 'network/BroadcastChannel' },
+                        { text: 'SharedWorker', link: 'network/SharedWorker' },
+                        { text: 'MessageChannel', link: 'network/MessageChannel' },
+                    ]
+                },
                 { text: '浏览器相关', link: '浏览器相关' },
                 { text: '现代特性', link: '现代特性' },
                 { text: '设计模式', link: '设计模式' },
