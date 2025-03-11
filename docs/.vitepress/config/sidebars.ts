@@ -35,9 +35,14 @@ export const sidebars = {
                         { text: 'MessageChannel', link: 'network/MessageChannel' },
                     ]
                 },
-                { text: '浏览器相关', link: '浏览器相关' },
-                { text: '现代特性', link: '现代特性' },
-                { text: '设计模式', link: '设计模式' },
+                {
+                    text: '浏览器相关', link: 'browser/浏览器相关', collapsed: true, items: [
+                        { text: 'Web Workers', link: 'browser/WebWorkers' },
+                        { text: 'Service Worker', link: 'browser/ServiceWorkers' },
+                        { text: 'Web Components', link: 'browser/WebComponents' },
+                    ]
+                },
+                { text: '安全策略', link: '安全策略' },
                 { text: '性能优化', link: '性能优化' },
             ]
         }
