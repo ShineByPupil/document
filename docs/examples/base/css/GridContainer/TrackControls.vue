@@ -5,20 +5,28 @@ const reset = inject('reset')
 const prop = defineProps({
   modelValue: {
     type: Object,
-    required: true
+    required: true,
   },
   count: {
     type: Number,
-    required: true
-  }
+    required: true,
+  },
 })
 const emit = defineEmits(['update:count'])
 
 const options1 = ['start', 'end', 'center', 'stretch']
-const options2 = ['start', 'end', 'center', 'stretch', 'space-around', 'space-between', 'space-evenly']
+const options2 = [
+  'start',
+  'end',
+  'center',
+  'stretch',
+  'space-around',
+  'space-between',
+  'space-evenly',
+]
 
 const toggleEx = function (type) {
-  reset();
+  reset()
 
   switch (type) {
     case 'fr':
@@ -27,14 +35,14 @@ const toggleEx = function (type) {
         columns: '1fr 2fr 1fr',
         rows: '1fr 1fr',
       })
-      break;
+      break
     case 'repeat':
       emit('update:count', 25)
       Object.assign(prop.modelValue, {
         columns: 'repeat(5, 1fr)',
         rows: 'repeat(5, 1fr)',
       })
-      break;
+      break
     case 'autoTrack':
       emit('update:count', 3)
       Object.assign(prop.modelValue, {
@@ -42,14 +50,14 @@ const toggleEx = function (type) {
         rows: '',
         autoRows: '1fr',
       })
-      break;
+      break
     case 'align':
       emit('update:count', 4)
       Object.assign(prop.modelValue, {
         columns: 'repeat(2, 50px)',
         rows: 'repeat(2, 50px)',
       })
-      break;
+      break
   }
 }
 </script>
@@ -64,11 +72,11 @@ const toggleEx = function (type) {
 
   <el-form-item label="count" prop="count">
     <el-input-number
-        size="small"
-        :model-value="count"
-        @input="val => $emit('update:count', val)"
-        :min="1"
-        :max="25"
+      size="small"
+      :model-value="count"
+      @input="(val) => $emit('update:count', val)"
+      :min="1"
+      :max="25"
     />
   </el-form-item>
 
@@ -85,7 +93,10 @@ const toggleEx = function (type) {
       <el-radio-button label="row" value="row"></el-radio-button>
       <el-radio-button label="column" value="column"></el-radio-button>
       <el-radio-button label="row dense" value="row dense"></el-radio-button>
-      <el-radio-button label="column dense" value="column dense"></el-radio-button>
+      <el-radio-button
+        label="column dense"
+        value="column dense"
+      ></el-radio-button>
     </el-radio-group>
   </el-form-item>
 
@@ -111,25 +122,41 @@ const toggleEx = function (type) {
 
   <el-form-item label="justify-items" prop="justifyItems">
     <el-radio-group size="small" v-model="modelValue.justifyItems">
-      <el-radio-button v-for="opt in options1" :label="opt" :value="opt"></el-radio-button>
+      <el-radio-button
+        v-for="opt in options1"
+        :label="opt"
+        :value="opt"
+      ></el-radio-button>
     </el-radio-group>
   </el-form-item>
 
   <el-form-item label="align-items" prop="alignItems">
     <el-radio-group size="small" v-model="modelValue.alignItems">
-      <el-radio-button v-for="opt in options1" :label="opt" :value="opt"></el-radio-button>
+      <el-radio-button
+        v-for="opt in options1"
+        :label="opt"
+        :value="opt"
+      ></el-radio-button>
     </el-radio-group>
   </el-form-item>
 
   <el-form-item label="justify-content" prop="justifyContent">
     <el-radio-group size="small" v-model="modelValue.justifyContent">
-      <el-radio-button v-for="opt in options2" :label="opt" :value="opt"></el-radio-button>
+      <el-radio-button
+        v-for="opt in options2"
+        :label="opt"
+        :value="opt"
+      ></el-radio-button>
     </el-radio-group>
   </el-form-item>
 
   <el-form-item label="align-content" prop="alignContent">
     <el-radio-group size="small" v-model="modelValue.alignContent">
-      <el-radio-button v-for="opt in options2" :label="opt" :value="opt"></el-radio-button>
+      <el-radio-button
+        v-for="opt in options2"
+        :label="opt"
+        :value="opt"
+      ></el-radio-button>
     </el-radio-group>
   </el-form-item>
 </template>

@@ -23,38 +23,38 @@
 
 ```js
 // 1. 创建事件源连接
-const eventSource = new EventSource('/sse-endpoint');
+const eventSource = new EventSource('/sse-endpoint')
 
 // 2. 监听默认消息事件
 eventSource.onmessage = (e) => {
-    console.log('收到消息:', e.data);
-};
+  console.log('收到消息:', e.data)
+}
 
 // 3. 监听自定义事件类型
 eventSource.addEventListener('stockUpdate', (e) => {
-    const data = JSON.parse(e.data);
-    updateStockChart(data);
-});
+  const data = JSON.parse(e.data)
+  updateStockChart(data)
+})
 
 // 4. 错误处理（含自动重连）
 eventSource.onerror = () => {
-    console.log('连接异常，尝试重连中...');
-    // eventSource.close() 可手动关闭
-};
+  console.log('连接异常，尝试重连中...')
+  // eventSource.close() 可手动关闭
+}
 
 // 5. 自定义配置（示例：携带认证信息）
 const authSource = new EventSource('/private-events', {
-    withCredentials: true // 发送 cookies
-});
+  withCredentials: true, // 发送 cookies
+})
 ```
 
 ## 浏览器兼容性提示
 
 ```js
 if ('EventSource' in window) {
-    // 启用 SSE 功能
+  // 启用 SSE 功能
 } else {
-    // 降级方案（如长轮询）
+  // 降级方案（如长轮询）
 }
 ```
 
@@ -62,16 +62,16 @@ if ('EventSource' in window) {
 
 ```js
 app.get('/sse-endpoint', (req, res) => {
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
+  res.setHeader('Content-Type', 'text/event-stream')
+  res.setHeader('Cache-Control', 'no-cache')
+  res.setHeader('Connection', 'keep-alive')
 
-    // 定时推送
-    const timer = setInterval(() => {
-        res.write(`data: ${ JSON.stringify({ time: Date.now() }) }\n\n`);
-    }, 1000);
+  // 定时推送
+  const timer = setInterval(() => {
+    res.write(`data: ${JSON.stringify({ time: Date.now() })}\n\n`)
+  }, 1000)
 
-    // 连接关闭时清理
-    req.on('close', () => clearInterval(timer));
-});
+  // 连接关闭时清理
+  req.on('close', () => clearInterval(timer))
+})
 ```

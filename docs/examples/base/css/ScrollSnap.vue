@@ -1,6 +1,4 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="scroll-snap">
@@ -22,7 +20,7 @@
 
 <style scoped lang="scss">
 .scroll-snap {
-  $colors: #FF6B6B, #4ECDC4, #45B7D1;
+  $colors: #ff6b6b, #4ecdc4, #45b7d1;
 
   background: var(--bg-color-soft);
   color: white;

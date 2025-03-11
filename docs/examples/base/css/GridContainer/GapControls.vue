@@ -2,8 +2,8 @@
 const prop = defineProps({
   modelValue: {
     type: Object,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const toggleEx = function (id) {
@@ -12,16 +12,16 @@ const toggleEx = function (id) {
       Object.assign(prop.modelValue, {
         gap: '',
         rowGap: '10px',
-        columnGap: ''
+        columnGap: '',
       })
-      break;
+      break
     case 2:
       Object.assign(prop.modelValue, {
         gap: '',
         rowGap: '',
-        columnGap: '10px'
+        columnGap: '10px',
       })
-      break;
+      break
   }
 }
 </script>
@@ -33,15 +33,27 @@ const toggleEx = function (id) {
   </el-button-group>
 
   <el-form-item label="gap" prop="gap">
-    <el-input size="small" v-model="modelValue.gap" placeholder="例如：10px"></el-input>
+    <el-input
+      size="small"
+      v-model="modelValue.gap"
+      placeholder="例如：10px"
+    ></el-input>
   </el-form-item>
 
   <el-form-item label="row-gap" prop="rowGap">
-    <el-input size="small" v-model="modelValue.rowGap" placeholder="覆盖整体行间距"></el-input>
+    <el-input
+      size="small"
+      v-model="modelValue.rowGap"
+      placeholder="覆盖整体行间距"
+    ></el-input>
   </el-form-item>
 
   <el-form-item label="column-gap" prop="columnGap">
-    <el-input size="small" v-model="modelValue.columnGap" placeholder="覆盖整体列间距"></el-input>
+    <el-input
+      size="small"
+      v-model="modelValue.columnGap"
+      placeholder="覆盖整体列间距"
+    ></el-input>
   </el-form-item>
 </template>
 

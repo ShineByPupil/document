@@ -14,13 +14,13 @@
 
 ### API
 
-| 生命周期方法                                               | 说明                                                     |
-|------------------------------------------------------|--------------------------------------------------------|
+| 生命周期方法                                         | 说明                                                                      |
+| ---------------------------------------------------- | ------------------------------------------------------------------------- |
 | `customElements.define(name, constructor)`           | 注册自定义元素，`name` 需包含连字符，`constructor` 需继承自 `HTMLElement` |
-| `connectedCallback()`                                | 元素首次插入 DOM 时触发，用于初始化 DOM 或资源加载                         |
-| `disconnectedCallback()`                             | 元素从 DOM 移除时触发，用于清理资源                                   |
-| `attributeChangedCallback(attrName, oldVal, newVal)` | 元素的被观察属性变化时触发，需配合 `observedAttributes` 静态属性使用          |
-| `static observedAttributes`                          | 返回需要监听的属性名数组（如 `return ['name', 'age']`）               |
+| `connectedCallback()`                                | 元素首次插入 DOM 时触发，用于初始化 DOM 或资源加载                        |
+| `disconnectedCallback()`                             | 元素从 DOM 移除时触发，用于清理资源                                       |
+| `attributeChangedCallback(attrName, oldVal, newVal)` | 元素的被观察属性变化时触发，需配合 `observedAttributes` 静态属性使用      |
+| `static observedAttributes`                          | 返回需要监听的属性名数组（如 `return ['name', 'age']`）                   |
 
 ### 代码示例
 
@@ -40,12 +40,12 @@ base/html/WebComponents/CustomElements
 
 ### API
 
-| 属性                               | 说明                                                  |
-|----------------------------------|-----------------------------------------------------|
+| 属性                             | 说明                                                              |
+| -------------------------------- | ----------------------------------------------------------------- |
 | `Element.attachShadow({ mode })` | 创建 Shadow DOM，`mode: 'open'` 允许外部访问，`'closed'` 禁止访问 |
-| `ShadowRoot.innerHTML`           | 设置 Shadow DOM 内部结构                                  |
+| `ShadowRoot.innerHTML`           | 设置 Shadow DOM 内部结构                                          |
 | `::slotted(selector)`            | CSS 伪类，用于样式化被 `<slot>` 投影的内容                        |
-| `<slot name="...">`              | 内容投影插槽，可通过 `name` 属性实现具名插槽                          |
+| `<slot name="...">`              | 内容投影插槽，可通过 `name` 属性实现具名插槽                      |
 
 ### 代码示例
 
@@ -65,11 +65,11 @@ base/html/WebComponents/ShadowDOM
 
 ### API
 
-| 属性                 | 说明                                                       |
-|--------------------|----------------------------------------------------------|
-| `<template>`       | 定义可复用的 HTML 模板，内容不会被渲染，直到被 JavaScript 激活                 |
+| 属性               | 说明                                                                        |
+| ------------------ | --------------------------------------------------------------------------- |
+| `<template>`       | 定义可复用的 HTML 模板，内容不会被渲染，直到被 JavaScript 激活              |
 | `template.content` | 获取模板的文档片段（`DocumentFragment`），可通过 `cloneNode(true)` 克隆使用 |
-| `<slot>` 在模板中      | 结合 Custom Elements 使用时，实现内容投影（需在 Shadow DOM 中）           |
+| `<slot>` 在模板中  | 结合 Custom Elements 使用时，实现内容投影（需在 Shadow DOM 中）             |
 
 ### 代码示例
 

@@ -2,12 +2,12 @@
 const prop = defineProps({
   modelValue: {
     type: Object,
-    required: true
+    required: true,
   },
   count: {
     type: Number,
-    required: true
-  }
+    required: true,
+  },
 })
 const emit = defineEmits(['update:count'])
 
@@ -16,11 +16,11 @@ const toggleEx = function (id) {
     case 1:
       emit('update:count', 5)
       prop.modelValue.areas = '"a1 a2 a2"\n"a1 a5 a3"\n"a4 a4 a3"'
-      break;
+      break
     case 2:
       emit('update:count', 5)
       prop.modelValue.areas = '"a1 . a2"\n". a3 ."\n"a4 . a5"'
-      break;
+      break
   }
 }
 </script>
@@ -33,16 +33,21 @@ const toggleEx = function (id) {
 
   <el-form-item label="count" prop="count">
     <el-input-number
-        size="small"
-        :model-value="count"
-        @input="val => $emit('update:count', val)"
-        :min="1"
-        :max="6"
+      size="small"
+      :model-value="count"
+      @input="(val) => $emit('update:count', val)"
+      :min="1"
+      :max="6"
     />
   </el-form-item>
 
   <el-form-item label="*-template-areas" prop="areas">
-    <el-input type="textarea" size="small" :rows="4" v-model="modelValue.areas"></el-input>
+    <el-input
+      type="textarea"
+      size="small"
+      :rows="4"
+      v-model="modelValue.areas"
+    ></el-input>
   </el-form-item>
 </template>
 

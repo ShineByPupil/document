@@ -25,104 +25,104 @@
 
 ```js
 // shared-worker.js
-const connections = [];
+const connections = []
 
-// 新连接建立时触发  
+// 新连接建立时触发
 onconnect = function (e) {
-    const port = e.ports[0];
-    connections.push(port);
+  const port = e.ports[0]
+  connections.push(port)
 
-    // 消息处理器  
-    port.onmessage = function (event) {
-        // 广播消息到所有连接页面  
-        connections.forEach(conn => {
-            if (conn !== port) {
-                conn.postMessage({
-                    from: event.data.clientId,
-                    message: event.data.text
-                });
-            }
-        });
-    };
+  // 消息处理器
+  port.onmessage = function (event) {
+    // 广播消息到所有连接页面
+    connections.forEach((conn) => {
+      if (conn !== port) {
+        conn.postMessage({
+          from: event.data.clientId,
+          message: event.data.text,
+        })
+      }
+    })
+  }
 
-    // 初始化连接  
-    port.postMessage({ type: 'CONNECTED', workerId: self.workerId });
-};
+  // 初始化连接
+  port.postMessage({ type: 'CONNECTED', workerId: self.workerId })
+}
 ```
 
 ### 页面连接使用
 
 ```js
-// 创建共享线程连接  
-const worker = new SharedWorker('shared-worker.js');
-let clientId = crypto.randomUUID();
+// 创建共享线程连接
+const worker = new SharedWorker('shared-worker.js')
+let clientId = crypto.randomUUID()
 
-// 通过 port 通信  
+// 通过 port 通信
 worker.port.onmessage = function (e) {
-    if (e.data.type === 'CONNECTED') {
-        console.log('Connected to worker:', e.data.workerId);
-    } else {
-        console.log('Received:', e.data.message);
-    }
-};
+  if (e.data.type === 'CONNECTED') {
+    console.log('Connected to worker:', e.data.workerId)
+  } else {
+    console.log('Received:', e.data.message)
+  }
+}
 
-// 发送聊天消息  
+// 发送聊天消息
 document.querySelector('#sendBtn').addEventListener('click', () => {
-    worker.port.postMessage({
-        clientId: clientId,
-        text: document.querySelector('#input').value
-    });
-});
+  worker.port.postMessage({
+    clientId: clientId,
+    text: document.querySelector('#input').value,
+  })
+})
 
-// 显式打开端口连接  
-worker.port.start();
+// 显式打开端口连接
+worker.port.start()
 ```
 
 ### 共享状态管理
 
 ```js
 let sharedState = {
-    counter: 0,
-    lastUpdated: Date.now()
-};
-
-function updateState(updater) {
-    sharedState = { ...sharedState, ...updater() };
-    connections.forEach(port => {
-        port.postMessage({
-            type: 'STATE_UPDATE',
-            state: sharedState
-        });
-    });
+  counter: 0,
+  lastUpdated: Date.now(),
 }
 
-// 示例：定时更新  
+function updateState(updater) {
+  sharedState = { ...sharedState, ...updater() }
+  connections.forEach((port) => {
+    port.postMessage({
+      type: 'STATE_UPDATE',
+      state: sharedState,
+    })
+  })
+}
+
+// 示例：定时更新
 setInterval(() => {
-    updateState(() => ({
-        counter: sharedState.counter + 1,
-        lastUpdated: Date.now()
-    }));
-}, 1000);
+  updateState(() => ({
+    counter: sharedState.counter + 1,
+    lastUpdated: Date.now(),
+  }))
+}, 1000)
 ```
 
 ### 错误处理
 
 ```js
 worker.onerror = (error) => {
-    console.error('SharedWorker 错误:', error.message);
-};
+  console.error('SharedWorker 错误:', error.message)
+}
 
 worker.port.onmessageerror = (event) => {
-    console.error('消息解析失败:', event);
-};
+  console.error('消息解析失败:', event)
+}
 ```
 
 ## 浏览器兼容性提示
 
 ```js
 if ('SharedWorker' in window) {
-    // 支持  
+  // 支持
 } else {
-    // 降级方案（如主线程处理）  
+  // 降级方案（如主线程处理）
 }
 ```

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue'
 
-const shadowDOMRef = ref();
+const shadowDOMRef = ref()
 
 onMounted(() => {
   if (customElements.get('shadow-button') === undefined) {
     class ShadowButton extends HTMLElement {
       constructor() {
-        super();
-        const shadow = this.attachShadow({ mode: 'open' });
+        super()
+        const shadow = this.attachShadow({ mode: 'open' })
 
         // 添加样式和结构
         shadow.innerHTML = `
@@ -22,16 +22,16 @@ onMounted(() => {
         }
       </style>
       <button><slot></slot></button>
-    `;
+    `
       }
     }
 
-    customElements.define('shadow-button', ShadowButton);
+    customElements.define('shadow-button', ShadowButton)
   }
 
-  const shadowButton = document.createElement('shadow-button');
-  shadowButton.textContent = '按钮';
-  shadowDOMRef.value.appendChild(shadowButton);
+  const shadowButton = document.createElement('shadow-button')
+  shadowButton.textContent = '按钮'
+  shadowDOMRef.value.appendChild(shadowButton)
 })
 </script>
 

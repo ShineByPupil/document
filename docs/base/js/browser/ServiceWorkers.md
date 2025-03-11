@@ -21,35 +21,30 @@
 ## 代码示例
 
 ```js
-// 注册 Service Worker  
+// 注册 Service Worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js')
-    .then(reg => console.log('注册成功:', reg.scope));
+  navigator.serviceWorker
+    .register('/sw.js')
+    .then((reg) => console.log('注册成功:', reg.scope))
 }
 
-// sw.js  
-const CACHE_NAME = 'v1';
-const ASSETS = ['/', '/app.js', '/style.css'];
+// sw.js
+const CACHE_NAME = 'v1'
+const ASSETS = ['/', '/app.js', '/style.css']
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(ASSETS))
-  );
-});
+  e.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)))
+})
 
 self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request)
-      .then(res => res || fetch(e.request))
-  );
-});
+  e.respondWith(caches.match(e.request).then((res) => res || fetch(e.request)))
+})
 
 self.addEventListener('push', (e) => {
-  const data = e.data.json();
+  const data = e.data.json()
   self.registration.showNotification(data.title, {
     body: data.message,
-    icon: '/icon.png'
-  });
-});
+    icon: '/icon.png',
+  })
+})
 ```

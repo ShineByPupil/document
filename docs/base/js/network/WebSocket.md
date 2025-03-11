@@ -24,36 +24,36 @@
 ### 客户端实现
 
 ```js
-// 1. 创建 WebSocket 连接  
-const socket = new WebSocket('wss://example.com/ws');
+// 1. 创建 WebSocket 连接
+const socket = new WebSocket('wss://example.com/ws')
 
-// 2. 连接建立事件  
+// 2. 连接建立事件
 socket.addEventListener('open', (event) => {
-    console.log('连接已建立');
-    socket.send('Hello Server!'); // 发送文本消息  
-});
+  console.log('连接已建立')
+  socket.send('Hello Server!') // 发送文本消息
+})
 
-// 3. 接收消息事件  
+// 3. 接收消息事件
 socket.addEventListener('message', (event) => {
-    console.log('收到消息:', event.data);
-    const data = JSON.parse(event.data);
-    updateUI(data); // 更新界面  
-});
+  console.log('收到消息:', event.data)
+  const data = JSON.parse(event.data)
+  updateUI(data) // 更新界面
+})
 
-// 4. 发送二进制数据  
-const buffer = new ArrayBuffer(8);
-socket.send(buffer);
+// 4. 发送二进制数据
+const buffer = new ArrayBuffer(8)
+socket.send(buffer)
 
-// 5. 错误处理与重连  
+// 5. 错误处理与重连
 socket.addEventListener('error', (error) => {
-    console.error('连接错误:', error);
-    setTimeout(connect, 3000); // 3秒后重连  
-});
+  console.error('连接错误:', error)
+  setTimeout(connect, 3000) // 3秒后重连
+})
 
-// 6. 主动关闭连接  
+// 6. 主动关闭连接
 document.getElementById('closeBtn').onclick = () => {
-    socket.close(1000, '用户主动断开'); // 状态码+原因  
-};
+  socket.close(1000, '用户主动断开') // 状态码+原因
+}
 ```
 
 ### 服务端实现
@@ -61,47 +61,49 @@ document.getElementById('closeBtn').onclick = () => {
 > （Node.js + ws 库）
 
 ```js
-const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 8080 });
+const WebSocket = require('ws')
+const wss = new WebSocket.Server({ port: 8080 })
 
 wss.on('connection', (ws) => {
-    console.log('新客户端连接');
+  console.log('新客户端连接')
 
-    // 接收客户端消息  
-    ws.on('message', (data) => {
-        console.log('收到客户端数据:', data);
-        // 广播给所有客户端  
-        wss.clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify({
-                    type: 'broadcast',
-                    content: data.toString()
-                }));
-            }
-        });
-    });
+  // 接收客户端消息
+  ws.on('message', (data) => {
+    console.log('收到客户端数据:', data)
+    // 广播给所有客户端
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(
+          JSON.stringify({
+            type: 'broadcast',
+            content: data.toString(),
+          }),
+        )
+      }
+    })
+  })
 
-    // 发送心跳包保持连接  
-    const heartbeat = setInterval(() => {
-        if (ws.readyState === WebSocket.OPEN) {
-            ws.ping();
-        }
-    }, 30000);
+  // 发送心跳包保持连接
+  const heartbeat = setInterval(() => {
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.ping()
+    }
+  }, 30000)
 
-    // 连接关闭处理  
-    ws.on('close', () => {
-        clearInterval(heartbeat);
-        console.log('客户端断开');
-    });
-});
+  // 连接关闭处理
+  ws.on('close', () => {
+    clearInterval(heartbeat)
+    console.log('客户端断开')
+  })
+})
 ```
 
 ## 浏览器兼容性提示
 
 ```js
 if ('WebSocket' in window) {
-    // 使用原生 WebSocket  
+  // 使用原生 WebSocket
 } else {
-    // 降级到轮询或第三方库（如 Socket.IO）  
+  // 降级到轮询或第三方库（如 Socket.IO）
 }
 ```

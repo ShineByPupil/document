@@ -19,7 +19,7 @@ const decoded = computed(() => {
 
 <template>
   <div v-show="visible" class="example-source-wrapper">
-    <div class="example-source" v-html="decoded"/>
+    <div class="example-source" v-html="decoded" />
   </div>
 </template>
 

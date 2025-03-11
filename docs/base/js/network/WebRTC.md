@@ -24,105 +24,109 @@
 ### 视频通话实现
 
 ```js
-// 获取本地媒体流  
+// 获取本地媒体流
 async function initLocalStream() {
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: { width: 1280, height: 720 },
-            audio: true
-        });
-        document.getElementById('localVideo').srcObject = stream;
-        return stream;
-    } catch (e) {
-        console.error('设备访问失败:', e);
-    }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { width: 1280, height: 720 },
+      audio: true,
+    })
+    document.getElementById('localVideo').srcObject = stream
+    return stream
+  } catch (e) {
+    console.error('设备访问失败:', e)
+  }
 }
 
-// 创建P2P连接  
+// 创建P2P连接
 const pc = new RTCPeerConnection({
-    iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' },
-        { urls: 'turn:turn.example.com', username: 'user', credential: 'pass' }
-    ]
-});
+  iceServers: [
+    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'turn:turn.example.com', username: 'user', credential: 'pass' },
+  ],
+})
 
-// 交换ICE候选  
+// 交换ICE候选
 pc.onicecandidate = (event) => {
-    if (event.candidate) {
-        signaling.send({ type: 'ice', candidate: event.candidate });
-    }
-};
-
-// 接收远程流  
-pc.ontrack = (event) => {
-    document.getElementById('remoteVideo').srcObject = event.streams[0];
-};
-
-// 发起呼叫  
-async function call() {
-    const stream = await initLocalStream();
-    stream.getTracks().forEach(track => pc.addTrack(track, stream));
-
-    const offer = await pc.createOffer();
-    await pc.setLocalDescription(offer);
-    signaling.send({ type: 'offer', sdp: offer.sdp });
+  if (event.candidate) {
+    signaling.send({ type: 'ice', candidate: event.candidate })
+  }
 }
 
-// 应答处理  
+// 接收远程流
+pc.ontrack = (event) => {
+  document.getElementById('remoteVideo').srcObject = event.streams[0]
+}
+
+// 发起呼叫
+async function call() {
+  const stream = await initLocalStream()
+  stream.getTracks().forEach((track) => pc.addTrack(track, stream))
+
+  const offer = await pc.createOffer()
+  await pc.setLocalDescription(offer)
+  signaling.send({ type: 'offer', sdp: offer.sdp })
+}
+
+// 应答处理
 signaling.onMessage(async (message) => {
-    if (message.type === 'offer') {
-        await pc.setRemoteDescription(new RTCSessionDescription({
-            type: 'offer',
-            sdp: message.sdp
-        }));
-        const answer = await pc.createAnswer();
-        await pc.setLocalDescription(answer);
-        signaling.send({ type: 'answer', sdp: answer.sdp });
-    }
-    if (message.type === 'ice') {
-        pc.addIceCandidate(new RTCIceCandidate(message.candidate));
-    }
-});
+  if (message.type === 'offer') {
+    await pc.setRemoteDescription(
+      new RTCSessionDescription({
+        type: 'offer',
+        sdp: message.sdp,
+      }),
+    )
+    const answer = await pc.createAnswer()
+    await pc.setLocalDescription(answer)
+    signaling.send({ type: 'answer', sdp: answer.sdp })
+  }
+  if (message.type === 'ice') {
+    pc.addIceCandidate(new RTCIceCandidate(message.candidate))
+  }
+})
 ```
 
 ### 数据通道传输
 
 ```js
-// 创建数据通道  
-const dc = pc.createDataChannel('fileTransfer');
+// 创建数据通道
+const dc = pc.createDataChannel('fileTransfer')
 
 dc.onopen = () => {
-    console.log('数据通道就绪');
-    const file = new Blob([/* 文件数据 */]);
-    const chunkSize = 16384;
-    const reader = file.stream().getReader();
+  console.log('数据通道就绪')
+  const file = new Blob([
+    /* 文件数据 */
+  ])
+  const chunkSize = 16384
+  const reader = file.stream().getReader()
 
-    function sendChunk() {
-        reader.read().then(({ done, value }) => {
-            if (done) {
-                dc.send(JSON.stringify({ type: 'EOF' }));
-                return;
-            }
-            dc.send(value);
-            sendChunk();
-        });
-    }
+  function sendChunk() {
+    reader.read().then(({ done, value }) => {
+      if (done) {
+        dc.send(JSON.stringify({ type: 'EOF' }))
+        return
+      }
+      dc.send(value)
+      sendChunk()
+    })
+  }
 
-    sendChunk();
-};
+  sendChunk()
+}
 
-// 接收端处理  
+// 接收端处理
 pc.ondatachannel = (event) => {
-    const dc = event.channel;
-    dc.onmessage = (e) => {
-        if (typeof e.data === 'string') {
-            const cmd = JSON.parse(e.data);
-            if (cmd.type === 'EOF') completeFile();
-        } else {
-            buffer.push(e.data);
-        }
-    };
-};
+  const dc = event.channel
+  dc.onmessage = (e) => {
+    if (typeof e.data === 'string') {
+      const cmd = JSON.parse(e.data)
+      if (cmd.type === 'EOF') completeFile()
+    } else {
+      buffer.push(e.data)
+    }
+  }
+}
 ```
 
 ## RTCPeerConnection
@@ -140,22 +144,22 @@ pc.ondatachannel = (event) => {
 
 ```js
 // 创建 RTCPeerConnection
-const pc = new RTCPeerConnection();
+const pc = new RTCPeerConnection()
 
 // 创建数据通道
-const dc = pc.createDataChannel('chat');
-dc.onmessage = (e) => console.log('对方消息:', e.data);
-dc.onopen = () => dc.send('Hello Peer!');
+const dc = pc.createDataChannel('chat')
+dc.onmessage = (e) => console.log('对方消息:', e.data)
+dc.onopen = () => dc.send('Hello Peer!')
 
 // ICE 协商处理
 pc.onicecandidate = (e) => {
-    if (e.candidate) {
-        // 发送 candidate 到对方
-    }
-};
+  if (e.candidate) {
+    // 发送 candidate 到对方
+  }
+}
 
 // 接收远程描述
-pc.setRemoteDescription(remoteDescription);
+pc.setRemoteDescription(remoteDescription)
 ```
 
 ## RTCDataChannel
@@ -175,43 +179,43 @@ pc.setRemoteDescription(remoteDescription);
 ```js
 // 创建带配置的数据通道
 const dc = pc.createDataChannel('fileTransfer', {
-    ordered: false,          // 是否保证顺序
-    maxRetransmits: 3,       // 最大重传次数
-    protocol: 'binary'       // 传输协议类型
-});
+  ordered: false, // 是否保证顺序
+  maxRetransmits: 3, // 最大重传次数
+  protocol: 'binary', // 传输协议类型
+})
 
 // 二进制数据传输
-dc.binaryType = 'arraybuffer';
+dc.binaryType = 'arraybuffer'
 
 // 接收方监听数据通道
 pc.ondatachannel = ({ channel }) => {
-    channel.onmessage = ({ data }) => {
-        if (data instanceof ArrayBuffer) {
-            // 处理二进制数据
-        } else {
-            console.log('Received:', data);
-        }
-    };
-};
+  channel.onmessage = ({ data }) => {
+    if (data instanceof ArrayBuffer) {
+      // 处理二进制数据
+    } else {
+      console.log('Received:', data)
+    }
+  }
+}
 
 // 大文件分片发送示例
 function sendFile(file) {
-    const chunkSize = 16384;
-    let offset = 0;
+  const chunkSize = 16384
+  let offset = 0
 
-    const reader = new FileReader();
-    reader.onload = () => {
-        dc.send(reader.result);
-        offset += chunkSize;
-        if (offset < file.size) readNext();
-    };
+  const reader = new FileReader()
+  reader.onload = () => {
+    dc.send(reader.result)
+    offset += chunkSize
+    if (offset < file.size) readNext()
+  }
 
-    function readNext() {
-        const slice = file.slice(offset, offset + chunkSize);
-        reader.readAsArrayBuffer(slice);
-    }
+  function readNext() {
+    const slice = file.slice(offset, offset + chunkSize)
+    reader.readAsArrayBuffer(slice)
+  }
 
-    readNext();
+  readNext()
 }
 ```
 
@@ -231,33 +235,32 @@ function sendFile(file) {
 ```js
 // 获取屏幕共享流
 async function shareScreen() {
-    try {
-        const stream = await navigator.mediaDevices.getDisplayMedia({
-            video: { cursor: 'always' },
-            audio: false
-        });
+  try {
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+      video: { cursor: 'always' },
+      audio: false,
+    })
 
-        // 替换现有视频轨道
-        const [videoTrack] = stream.getVideoTracks();
-        const sender = pc.getSenders().find(s => s.track.kind === 'video');
-        await sender.replaceTrack(videoTrack);
-
-    } catch (err) {
-        console.error('屏幕共享失败:', err);
-    }
+    // 替换现有视频轨道
+    const [videoTrack] = stream.getVideoTracks()
+    const sender = pc.getSenders().find((s) => s.track.kind === 'video')
+    await sender.replaceTrack(videoTrack)
+  } catch (err) {
+    console.error('屏幕共享失败:', err)
+  }
 }
 
 // 动态切换摄像头
 async function switchCamera(deviceId) {
-    const stream = await navigator.mediaDevices.getUserMedia({
-        video: { deviceId: { exact: deviceId } }
-    });
+  const stream = await navigator.mediaDevices.getUserMedia({
+    video: { deviceId: { exact: deviceId } },
+  })
 
-    const newVideoTrack = stream.getVideoTracks()[0];
-    const sender = pc.getSenders().find(s => s.track.kind === 'video');
-    await sender.replaceTrack(newVideoTrack);
+  const newVideoTrack = stream.getVideoTracks()[0]
+  const sender = pc.getSenders().find((s) => s.track.kind === 'video')
+  await sender.replaceTrack(newVideoTrack)
 
-    // 关闭旧轨道
-    sender.track.stop();
+  // 关闭旧轨道
+  sender.track.stop()
 }
 ```

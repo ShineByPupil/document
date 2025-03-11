@@ -23,26 +23,26 @@
 
 ```js
 // 主线程 main.js
-const worker = new Worker('worker.js', { type: 'module' });
+const worker = new Worker('worker.js', { type: 'module' })
 
 worker.postMessage({
   type: 'CALC_FIB',
-  num: 40
-});
+  num: 40,
+})
 
 worker.onmessage = (e) => {
-  console.log('结果:', e.data);
-};
+  console.log('结果:', e.data)
+}
 
 // worker.js
 self.onmessage = function (e) {
   if (e.data.type === 'CALC_FIB') {
-    const result = fibonacci(e.data.num);
-    self.postMessage(result);
+    const result = fibonacci(e.data.num)
+    self.postMessage(result)
   }
-};
+}
 
 function fibonacci(n) {
-  return n <= 1 ? n : fibonacci(n - 1) + fibonacci(n - 2);
+  return n <= 1 ? n : fibonacci(n - 1) + fibonacci(n - 2)
 }
 ```

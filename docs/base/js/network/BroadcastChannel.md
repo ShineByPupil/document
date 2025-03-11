@@ -23,100 +23,99 @@
 ### 基础通信实现
 
 ```js
-// 页面A：创建频道并发送消息  
-const channelA = new BroadcastChannel('app_channel');
+// 页面A：创建频道并发送消息
+const channelA = new BroadcastChannel('app_channel')
 channelA.postMessage({
-    type: 'USER_UPDATE',
-    data: { id: 123, name: 'Alice' }
-});
+  type: 'USER_UPDATE',
+  data: { id: 123, name: 'Alice' },
+})
 
-// 页面B：订阅相同频道  
-const channelB = new BroadcastChannel('app_channel');
+// 页面B：订阅相同频道
+const channelB = new BroadcastChannel('app_channel')
 channelB.onmessage = (event) => {
-    if (event.data.type === 'USER_UPDATE') {
-        updateUserProfile(event.data.data);
-    }
-};
+  if (event.data.type === 'USER_UPDATE') {
+    updateUserProfile(event.data.data)
+  }
+}
 
-// 页面C：使用事件监听器  
-const channelC = new BroadcastChannel('app_channel');
+// 页面C：使用事件监听器
+const channelC = new BroadcastChannel('app_channel')
 channelC.addEventListener('message', (event) => {
-    console.log('收到广播消息:', event.data);
-});
+  console.log('收到广播消息:', event.data)
+})
 ```
 
 ### 消息类型过滤
 
 ```js
-// 发送带类型标识的消息  
+// 发送带类型标识的消息
 broadcastChannel.postMessage({
-    __type: 'SYSTEM_ALERT',
-    content: '服务器即将维护',
-    level: 'warning'
-});
+  __type: 'SYSTEM_ALERT',
+  content: '服务器即将维护',
+  level: 'warning',
+})
 
-// 接收端过滤处理  
+// 接收端过滤处理
 broadcastChannel.onmessage = (event) => {
-    const msg = event.data;
-    switch (msg.__type) {
-        case 'SYSTEM_ALERT':
-            showAlert(msg.content, msg.level);
-            break;
-        case 'DATA_REFRESH':
-            fetchNewData();
-            break;
-    }
-};
+  const msg = event.data
+  switch (msg.__type) {
+    case 'SYSTEM_ALERT':
+      showAlert(msg.content, msg.level)
+      break
+    case 'DATA_REFRESH':
+      fetchNewData()
+      break
+  }
+}
 ```
 
 ### 频道管理
 
 ```js
-// 动态切换频道  
-let currentChannel = null;
+// 动态切换频道
+let currentChannel = null
 
 function connectChannel(channelName) {
-    if (currentChannel) currentChannel.close();
-    currentChannel = new BroadcastChannel(channelName);
-    currentChannel.onmessage = handleMessage;
+  if (currentChannel) currentChannel.close()
+  currentChannel = new BroadcastChannel(channelName)
+  currentChannel.onmessage = handleMessage
 }
 
-// 发送二进制数据  
-const fileInput = document.querySelector('input[type="file"]');
+// 发送二进制数据
+const fileInput = document.querySelector('input[type="file"]')
 fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    currentChannel.postMessage({
-        type: 'FILE_UPLOAD',
-        data: file
-    });
-});
+  const file = e.target.files[0]
+  currentChannel.postMessage({
+    type: 'FILE_UPLOAD',
+    data: file,
+  })
+})
 
-// 显式关闭连接  
+// 显式关闭连接
 window.addEventListener('beforeunload', () => {
-    if (currentChannel) currentChannel.close();
-});
+  if (currentChannel) currentChannel.close()
+})
 ```
 
 ## 浏览器兼容性提示
 
 ```js
-// 特性检测与降级  
+// 特性检测与降级
 if ('BroadcastChannel' in window) {
-    // 使用原生 API  
+  // 使用原生 API
 } else {
-    // 使用 localStorage 事件模拟  
-    const pseudoChannel = {
-        postMessage: (data) => {
-            localStorage.setItem('broadcast', JSON.stringify(data));
-            localStorage.removeItem('broadcast');
-        },
-        onmessage: () => {
-        }
-    };
-    window.addEventListener('storage', (e) => {
-        if (e.key === 'broadcast') {
-            pseudoChannel.onmessage({ data: JSON.parse(e.newValue) });
-        }
-    });
+  // 使用 localStorage 事件模拟
+  const pseudoChannel = {
+    postMessage: (data) => {
+      localStorage.setItem('broadcast', JSON.stringify(data))
+      localStorage.removeItem('broadcast')
+    },
+    onmessage: () => {},
+  }
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'broadcast') {
+      pseudoChannel.onmessage({ data: JSON.parse(e.newValue) })
+    }
+  })
 }
 ```

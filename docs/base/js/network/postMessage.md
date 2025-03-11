@@ -27,31 +27,31 @@
 <!-- 父页面 parent.html -->
 <iframe src="child.html" id="childFrame"></iframe>
 <script>
-    const iframe = document.getElementById('childFrame');
-    // 发送消息到子窗口
-    iframe.contentWindow.postMessage(
-            { type: 'AUTH_TOKEN', value: 'xyz123' },
-            'https://child-domain.com' // 指定目标origin
-    );
+  const iframe = document.getElementById('childFrame')
+  // 发送消息到子窗口
+  iframe.contentWindow.postMessage(
+    { type: 'AUTH_TOKEN', value: 'xyz123' },
+    'https://child-domain.com', // 指定目标origin
+  )
 
-    // 接收子窗口消息
-    window.addEventListener('message', (event) => {
-        if (event.origin !== 'https://child-domain.com') return;
-        console.log('收到子窗口数据:', event.data);
-    });
+  // 接收子窗口消息
+  window.addEventListener('message', (event) => {
+    if (event.origin !== 'https://child-domain.com') return
+    console.log('收到子窗口数据:', event.data)
+  })
 </script>
 
 <!-- 子页面 child.html -->
 <script>
-    // 接收父窗口消息
-    window.addEventListener('message', (event) => {
-        if (event.origin !== 'https://parent-domain.com') return;
-        if (event.data.type === 'AUTH_TOKEN') {
-            localStorage.setItem('token', event.data.value);
-        }
-        // 响应消息  
-        event.source.postMessage('TOKEN_SAVED', event.origin);
-    });
+  // 接收父窗口消息
+  window.addEventListener('message', (event) => {
+    if (event.origin !== 'https://parent-domain.com') return
+    if (event.data.type === 'AUTH_TOKEN') {
+      localStorage.setItem('token', event.data.value)
+    }
+    // 响应消息
+    event.source.postMessage('TOKEN_SAVED', event.origin)
+  })
 </script>
 ```
 
@@ -59,27 +59,27 @@
 
 ```js
 // 主线程 main.js
-const worker = new Worker('worker.js');
+const worker = new Worker('worker.js')
 
 // 发送复杂对象
 worker.postMessage({
-    action: 'CALCULATE',
-    data: new Float32Array([1.2, 3.4, 5.6])
-});
+  action: 'CALCULATE',
+  data: new Float32Array([1.2, 3.4, 5.6]),
+})
 
 // 接收处理结果
 worker.onmessage = (e) => {
-    console.log('计算结果:', e.data);
-};
+  console.log('计算结果:', e.data)
+}
 
-// worker.js  
+// worker.js
 self.onmessage = function (e) {
-    const input = e.data;
-    if (input.action === 'CALCULATE') {
-        const result = input.data.reduce((a, b) => a + b);
-        self.postMessage(result);
-    }
-};
+  const input = e.data
+  if (input.action === 'CALCULATE') {
+    const result = input.data.reduce((a, b) => a + b)
+    self.postMessage(result)
+  }
+}
 ```
 
 ### Service Worker 通信示例
@@ -87,35 +87,35 @@ self.onmessage = function (e) {
 ```js
 // 页面端 page.js
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.controller.postMessage({
-        type: 'UPDATE_CACHE',
-        urls: ['/data.json']
-    });
+  navigator.serviceWorker.controller.postMessage({
+    type: 'UPDATE_CACHE',
+    urls: ['/data.json'],
+  })
 
-    navigator.serviceWorker.addEventListener('message', event => {
-        console.log('Service Worker 响应:', event.data);
-    });
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    console.log('Service Worker 响应:', event.data)
+  })
 }
 
 // Service Worker sw.js
-self.addEventListener('message', event => {
-    if (event.data.type === 'UPDATE_CACHE') {
-        caches.open('v1').then(cache => {
-            cache.addAll(event.data.urls).then(() => {
-                event.source.postMessage('CACHE_UPDATED');
-            });
-        });
-    }
-});
+self.addEventListener('message', (event) => {
+  if (event.data.type === 'UPDATE_CACHE') {
+    caches.open('v1').then((cache) => {
+      cache.addAll(event.data.urls).then(() => {
+        event.source.postMessage('CACHE_UPDATED')
+      })
+    })
+  }
+})
 ```
 
 ## 浏览器兼容性提示
 
 ```js
-// 兼容性检测  
+// 兼容性检测
 if (window.postMessage && window.addEventListener) {
-    // 标准实现
+  // 标准实现
 } else {
-    // 使用 window.name 或 hash 降级方案
+  // 使用 window.name 或 hash 降级方案
 }
 ```

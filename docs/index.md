@@ -2,8 +2,8 @@
 layout: home
 
 hero:
-  name: "前端知识体系"
-  text: "技术精进之路"
+  name: '前端知识体系'
+  text: '技术精进之路'
   tagline: 积跬步以至千里，构建完整前端知识图谱
   image:
     src: /images/康娜.png

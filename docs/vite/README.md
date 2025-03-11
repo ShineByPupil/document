@@ -12,34 +12,49 @@ dist/
 # 资源分类
 
 ```ts
-import {defineConfig} from 'vite';
-import {RollupOptions, PreRenderedAsset} from 'rollup';
+import { defineConfig } from 'vite'
+import { RollupOptions, PreRenderedAsset } from 'rollup'
 
 export default defineConfig({
-    build: {
-        rollupOptions: {
-            output: {
-                entryFileNames: 'js/[name]-[hash].js',
-                chunkFileNames: 'js/[name]-[hash].js',
-                assetFileNames(assetInfo: PreRenderedAsset) {
-                    if (assetInfo.names?.some(name => name.endsWith('.css'))) {
-                        return 'css/[name]-[hash][extname]';
-                    }
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: 'js/[name]-[hash].js',
+        chunkFileNames: 'js/[name]-[hash].js',
+        assetFileNames(assetInfo: PreRenderedAsset) {
+          if (assetInfo.names?.some((name) => name.endsWith('.css'))) {
+            return 'css/[name]-[hash][extname]'
+          }
 
-                    const imageExtensions = [
-                        '.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp',
-                        '.bmp', '.ico', '.tiff', '.tif', '.psd', '.cdr', '.ai'
-                    ];
-                    if (assetInfo.names?.some(name => imageExtensions.some(ext => name.endsWith(ext)))) {
-                        return 'images/[name]-[hash][extname]'; // 处理图片
-                    }
+          const imageExtensions = [
+            '.jpg',
+            '.jpeg',
+            '.png',
+            '.gif',
+            '.svg',
+            '.webp',
+            '.bmp',
+            '.ico',
+            '.tiff',
+            '.tif',
+            '.psd',
+            '.cdr',
+            '.ai',
+          ]
+          if (
+            assetInfo.names?.some((name) =>
+              imageExtensions.some((ext) => name.endsWith(ext)),
+            )
+          ) {
+            return 'images/[name]-[hash][extname]' // 处理图片
+          }
 
-                    return 'assets/[name]-[hash][extname]';
-                }
-            } as RollupOptions['output'] // 指定类型
-        }
-    }
-});
+          return 'assets/[name]-[hash][extname]'
+        },
+      } as RollupOptions['output'], // 指定类型
+    },
+  },
+})
 ```
 
 dist/
@@ -58,38 +73,37 @@ dist/
 
 ```vue
 <script setup lang="ts">
-    import {defineAsyncComponent} from 'vue';
+import { defineAsyncComponent } from 'vue'
 
-    const Footer = defineAsyncComponent(() => import('./components/Footer.vue'));
+const Footer = defineAsyncComponent(() => import('./components/Footer.vue'))
 </script>
 ```
 
 ```vue
 <script setup lang="ts">
-    import {defineAsyncComponent} from 'vue';
+import { defineAsyncComponent } from 'vue'
 
-    const Footer = defineAsyncComponent({
-        loader: () => import('./components/Footer.vue'),
-        loadingComponent: () => import('./components/Loading.vue'), // 加载时显示的组件
-        errorComponent: () => import('./components/Error.vue'),   // 加载失败时显示的组件
-        delay: 200, // 延迟加载，避免快速切换时频繁加载
-        timeout: 3000 // 超时，超过这个时间后会触发错误组件
-    });
+const Footer = defineAsyncComponent({
+  loader: () => import('./components/Footer.vue'),
+  loadingComponent: () => import('./components/Loading.vue'), // 加载时显示的组件
+  errorComponent: () => import('./components/Error.vue'), // 加载失败时显示的组件
+  delay: 200, // 延迟加载，避免快速切换时频繁加载
+  timeout: 3000, // 超时，超过这个时间后会触发错误组件
+})
 </script>
 ```
 
 ## 路由懒加载
 
 ```js
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-    {
-        path: '/',
-        name: 'home',
-        component: () => import('@/views/home/index.vue'),
-    },
-    // ...
-];
+  {
+    path: '/',
+    name: 'home',
+    component: () => import('@/views/home/index.vue'),
+  },
+  // ...
+]
 ```
-

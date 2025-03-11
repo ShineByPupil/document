@@ -12,24 +12,24 @@ export const getCssVarName = (namespace: string, type: string) => {
  */
 export const getCssVarValue = (name: string) => {
   const val = ref(
-    getComputedStyle(document.documentElement).getPropertyValue(name)
+    getComputedStyle(document.documentElement).getPropertyValue(name),
   )
   watch(
     () => isDark.value,
     () => {
       setTimeout(() => {
         val.value = getComputedStyle(document.documentElement).getPropertyValue(
-          name
+          name,
         )
       }, 100)
-    }
+    },
   )
   return val
 }
 
 export const getColorValue = (type: string) => {
   const color = getComputedStyle(document.documentElement).getPropertyValue(
-    `--el-color-${type}`
+    `--el-color-${type}`,
   )
   return color
 }

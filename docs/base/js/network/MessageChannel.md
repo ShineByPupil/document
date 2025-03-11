@@ -24,24 +24,24 @@
 ### 基础通道创建
 
 ```js
-// 创建通信管道  
-const channel = new MessageChannel();
+// 创建通信管道
+const channel = new MessageChannel()
 
-// 端口1监听消息  
+// 端口1监听消息
 channel.port1.onmessage = (event) => {
-    console.log('Port1 收到:', event.data);
-    channel.port1.postMessage('Response from Port1');
-};
+  console.log('Port1 收到:', event.data)
+  channel.port1.postMessage('Response from Port1')
+}
 
-// 端口2发送初始消息  
-channel.port2.postMessage('Hello from Port2');
+// 端口2发送初始消息
+channel.port2.postMessage('Hello from Port2')
 channel.port2.onmessage = (event) => {
-    console.log('Port2 收到响应:', event.data);
-};
+  console.log('Port2 收到响应:', event.data)
+}
 
-// 必须显式启动端口  
-channel.port1.start();
-channel.port2.start();
+// 必须显式启动端口
+channel.port1.start()
+channel.port2.start()
 ```
 
 ### 跨文档通信实现
@@ -81,65 +81,65 @@ channel.port2.start();
 ### Worker 精准通信
 
 ```js
-// 主线程  
-const worker = new Worker('worker.js');
-const channel = new MessageChannel();
+// 主线程
+const worker = new Worker('worker.js')
+const channel = new MessageChannel()
 
-// 发送 port2 给 Worker  
-worker.postMessage('SETUP', [channel.port2]);
+// 发送 port2 给 Worker
+worker.postMessage('SETUP', [channel.port2])
 
 channel.port1.onmessage = (e) => {
-    console.log('Worker 计算结果:', e.data);
-};
-channel.port1.postMessage({ task: 'CALC', data: 42 });
+  console.log('Worker 计算结果:', e.data)
+}
+channel.port1.postMessage({ task: 'CALC', data: 42 })
 
-// worker.js  
+// worker.js
 self.onmessage = (e) => {
-    if (e.data === 'SETUP') {
-        const [port] = e.ports;
-        port.onmessage = (e) => {
-            if (e.data.task === 'CALC') {
-                const result = e.data.data * 2;
-                port.postMessage(result);
-            }
-        };
-        port.start();
+  if (e.data === 'SETUP') {
+    const [port] = e.ports
+    port.onmessage = (e) => {
+      if (e.data.task === 'CALC') {
+        const result = e.data.data * 2
+        port.postMessage(result)
+      }
     }
-};
+    port.start()
+  }
+}
 ```
 
 ### 性能监控管道
 
 ```js
-// 创建专用监控通道  
-const perfChannel = new MessageChannel();
+// 创建专用监控通道
+const perfChannel = new MessageChannel()
 
-// 业务端口  
+// 业务端口
 perfChannel.port1.onmessage = (e) => {
-    performance.mark(`task_${ e.data.id }_end`);
-    const measure = performance.measure(
-        `task_${ e.data.id }`,
-        `task_${ e.data.id }_start`,
-        `task_${ e.data.id }_end`
-    );
-    console.log('任务耗时:', measure.duration);
-};
+  performance.mark(`task_${e.data.id}_end`)
+  const measure = performance.measure(
+    `task_${e.data.id}`,
+    `task_${e.data.id}_start`,
+    `task_${e.data.id}_end`,
+  )
+  console.log('任务耗时:', measure.duration)
+}
 
-// 业务代码中埋点  
+// 业务代码中埋点
 function criticalTask() {
-    performance.mark('task_001_start');
-    perfChannel.port2.postMessage({ id: '001' });
-    // ...执行任务  
+  performance.mark('task_001_start')
+  perfChannel.port2.postMessage({ id: '001' })
+  // ...执行任务
 }
 ```
 
 ## 浏览器兼容性提示
 
 ```js
-// 兼容性检测  
+// 兼容性检测
 if ('MessageChannel' in window) {
-    // 使用原生实现  
+  // 使用原生实现
 } else {
-    // 使用 setTimeout 模拟（功能受限）  
+  // 使用 setTimeout 模拟（功能受限）
 }
 ```

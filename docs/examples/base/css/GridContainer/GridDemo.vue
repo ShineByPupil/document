@@ -3,33 +3,37 @@
     <div class="grid-container" :style="gridStyles">
       <template v-if="activeTab === 'areasConfig'">
         <div
-            class="grid-item"
-            v-for="n in itemCount"
-            :key="n"
-            :style="{ gridArea: `a${ n }` }"
-        >{{ `a${ n }` }}
+          class="grid-item"
+          v-for="n in itemCount"
+          :key="n"
+          :style="{ gridArea: `a${n}` }"
+        >
+          {{ `a${n}` }}
         </div>
       </template>
 
       <template v-else>
         <div class="grid-item" v-for="n in itemCount" :key="n">{{ n }}</div>
       </template>
-
     </div>
 
     <div class="controls">
-      <el-tabs type="border-card" v-model="activeTab" @tabChange="handleTabChange">
+      <el-tabs
+        type="border-card"
+        v-model="activeTab"
+        @tabChange="handleTabChange"
+      >
         <el-form ref="formRef" :model="gridConfig" label-width="auto">
           <el-tab-pane label="轨道设置" name="trackConfig">
-            <TrackControls v-model="gridConfig" v-model:count="itemCount"/>
+            <TrackControls v-model="gridConfig" v-model:count="itemCount" />
           </el-tab-pane>
 
           <el-tab-pane label="区域设置" name="areasConfig">
-            <AreasControls v-model="gridConfig" v-model:count="itemCount"/>
+            <AreasControls v-model="gridConfig" v-model:count="itemCount" />
           </el-tab-pane>
 
           <el-tab-pane label="间距设置" name="gapConfig">
-            <GapControls v-model="gridConfig"/>
+            <GapControls v-model="gridConfig" />
           </el-tab-pane>
         </el-form>
       </el-tabs>
@@ -60,7 +64,7 @@ const gridConfig = reactive({
   areas: `"a1 a1 a1"\n"a2 a3 a3"\n"a2 a3 a3"`,
   gap: '10px',
   rowGap: '',
-  columnGap: ''
+  columnGap: '',
 })
 
 const gridStyles = computed(() => {
@@ -75,21 +79,21 @@ const gridStyles = computed(() => {
     alignItems: gridConfig.alignItems,
     justifyContent: gridConfig.justifyContent,
     alignContent: gridConfig.alignContent,
-    gridTemplateAreas: activeTab.value === 'areasConfig' ? gridConfig.areas : undefined,
+    gridTemplateAreas:
+      activeTab.value === 'areasConfig' ? gridConfig.areas : undefined,
     gap: '10px',
-    ...activeTab.value === 'gapConfig' && {
+    ...(activeTab.value === 'gapConfig' && {
       gap: gridConfig.gap,
       rowGap: gridConfig.rowGap || 'auto',
       columnGap: gridConfig.columnGap || 'auto',
-    },
-
+    }),
   }
 })
 
 const handleTabChange = function (tab) {
   reset()
 
-  itemCount.value = tab === 'areasConfig' ? 3 : 9;
+  itemCount.value = tab === 'areasConfig' ? 3 : 9
 }
 
 const reset = function () {
@@ -99,7 +103,7 @@ provide('reset', reset)
 </script>
 
 <style lang="scss" scoped>
-$colors: #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEEAD, #D4A5A5;
+$colors: #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeead, #d4a5a5;
 
 .grid-demo {
   border: 1px solid var(--vp-c-divider);
@@ -121,10 +125,11 @@ $colors: #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEEAD, #D4A5A5;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #FFFFFF;
+      color: #ffffff;
       text-shadow: 0 2px 4px #000000;
 
-      @for $i from 0 to 9 { // 支持最多24个项目循环
+      @for $i from 0 to 9 {
+        // 支持最多24个项目循环
         &:nth-child(#{length($colors)}n + #{$i + 1}) {
           background: nth($colors, ($i % length($colors)) + 1);
         }
@@ -141,7 +146,6 @@ $colors: #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEEAD, #D4A5A5;
       .el-collapse-item__content {
         padding-bottom: 0;
       }
-
     }
   }
 }

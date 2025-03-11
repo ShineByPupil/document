@@ -32,7 +32,7 @@
     <div class="switch-container">
       <span>标准模型</span>
       <label class="switch">
-        <input type="checkbox" v-model="isIEModel">
+        <input type="checkbox" v-model="isIEModel" />
         <span class="slider"></span>
       </label>
       <span>IE模型</span>
@@ -41,11 +41,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed } from 'vue'
 
-const isIEModel = ref(false);
-const width = computed(() => !isIEModel.value ? '4rem' : '10rem')
-const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
+const isIEModel = ref(false)
+const width = computed(() => (!isIEModel.value ? '4rem' : '10rem'))
+const height = computed(() => (!isIEModel.value ? '3rem' : '9rem'))
 </script>
 
 <style scoped lang="scss">
@@ -96,7 +96,7 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
 
         &::before {
           position: absolute;
-          content: "";
+          content: '';
           height: $slider-size;
           width: $slider-size;
           left: 4px;
@@ -108,7 +108,7 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
       }
 
       input:checked + .slider {
-        background-color: #2196F3;
+        background-color: #2196f3;
 
         &::before {
           transform: translateX($switch-width - $slider-size - 8px);
@@ -145,19 +145,19 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
         border: 5px solid transparent;
       }
 
-
-      &::before { // 左箭头
+      &::before {
+        // 左箭头
         left: 0;
         border-right-color: var(--text-color);
         transform: translate(-6px, -4px);
       }
 
-      &::after { // 右箭头
+      &::after {
+        // 右箭头
         right: 0;
         border-left-color: var(--text-color);
         transform: translate(6px, -4px);
       }
-
     }
 
     .measure-text {
@@ -197,13 +197,15 @@ const height = computed(() => !isIEModel.value ? '3rem' : '9rem')
         border: 5px solid transparent;
       }
 
-      &::before { // 上箭头
+      &::before {
+        // 上箭头
         top: 0;
         border-bottom-color: var(--text-color);
         transform: translate(-4px, -6px);
       }
 
-      &::after { // 下箭头
+      &::after {
+        // 下箭头
         bottom: 0;
         border-top-color: var(--text-color);
         transform: translate(-4px, 6px);

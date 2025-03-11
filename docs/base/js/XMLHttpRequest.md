@@ -3,19 +3,19 @@
 XHR 对象用于与服务器交互，在不刷新页面的情况下请求特定 URL，获取数据
 
 ```js
-let xhr = new XMLHttpRequest();
+let xhr = new XMLHttpRequest()
 
-xhr.open(method, url); // 初始化新的请求
+xhr.open(method, url) // 初始化新的请求
 
-xhr.setRequestHeader(header, value); // 设置请求头
+xhr.setRequestHeader(header, value) // 设置请求头
 
-xhr.send(); // 发送请求
+xhr.send() // 发送请求
 
-xhr.onload = function () {}; // 请求完成时的回调函数
+xhr.onload = function () {} // 请求完成时的回调函数
 
-xhr.onreadystatechange = function () {}; // 监听 readyState 变化的事件
+xhr.onreadystatechange = function () {} // 监听 readyState 变化的事件
 
-xhr.onerror = function () {}; // 请求发生错误时的回调函数
+xhr.onerror = function () {} // 请求发生错误时的回调函数
 ```
 
 ## 实例属性
@@ -46,7 +46,7 @@ xhr.onerror = function () {}; // 请求发生错误时的回调函数
 ### open
 
 ```ts
-type method = "GET" | "POST" | "PUT" | "DELETE" | "HEAD";
+type method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD'
 
 interface open {
   (
@@ -54,8 +54,8 @@ interface open {
     url: string,
     async?: boolean, // 是否异步执行操作，默认为 true
     user?: string | null, // 可选的用户名用于认证用途；默认为 null
-    password?: string | null // 可选的密码用于认证用途，默认为 null
-  ): void;
+    password?: string | null, // 可选的密码用于认证用途，默认为 null
+  ): void
 }
 ```
 
@@ -63,9 +63,7 @@ interface open {
 
 ```ts
 interface send {
-  (
-    body?: string | FormData | Blob | ArrayBuffer | ArrayBufferView | null
-  ): void;
+  (body?: string | FormData | Blob | ArrayBuffer | ArrayBufferView | null): void
 }
 ```
 
@@ -73,6 +71,6 @@ interface send {
 
 ```ts
 interface setRequestHeader {
-  (header: string, value: string): void;
+  (header: string, value: string): void
 }
 ```

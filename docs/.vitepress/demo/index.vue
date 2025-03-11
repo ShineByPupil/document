@@ -1,8 +1,8 @@
 <template>
   <div class="demo-container">
-    <div class="demo-description" v-html="decodedDescription"/>
+    <div class="demo-description" v-html="decodedDescription" />
     <div class="demo-example">
-      <component :is="demoComponent"/>
+      <component :is="demoComponent" />
     </div>
     <div class="demo-actions">
       <button @click="showCode = !showCode">
@@ -20,7 +20,7 @@ import { computed, inject, ref } from 'vue'
 
 const props = defineProps({
   path: String,
-  description: String
+  description: String,
 })
 
 const decodedPath = computed(() => decodeURIComponent(props.path))
@@ -30,11 +30,11 @@ const demos = inject('demos')
 const sources = inject('sources')
 
 const demoComponent = computed(() => {
-  return demos[`../examples/${ decodedPath.value }.vue`]?.default
+  return demos[`../examples/${decodedPath.value}.vue`]?.default
 })
 
 const sourceCode = computed(() => {
-  return sources[`../examples/${ decodedPath.value }.vue`]
+  return sources[`../examples/${decodedPath.value}.vue`]
 })
 
 const showCode = ref(false)

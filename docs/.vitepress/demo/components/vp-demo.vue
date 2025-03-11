@@ -31,16 +31,16 @@ const sourceCodeRef = ref<HTMLButtonElement>()
 
 // const locale = computed(() => demoBlockLocale[lang.value])
 const locale = {
-  "view-source": "View source",
-  "hide-source": "Hide source",
-  "edit-in-editor": "Edit in Playground",
-  "edit-on-github": "Edit on GitHub",
-  "edit-in-codepen": "Edit in Codepen.io",
-  "copy-code": "Copy code",
-  "switch-button-option-text": "Switch to Options API",
-  "switch-button-setup-text": "Switch to Composition API",
-  "copy-success": "Copied!",
-  "copy-error": "This browser does not support automatic copy！"
+  'view-source': 'View source',
+  'hide-source': 'Hide source',
+  'edit-in-editor': 'Edit in Playground',
+  'edit-on-github': 'Edit on GitHub',
+  'edit-in-codepen': 'Edit in Codepen.io',
+  'copy-code': 'Copy code',
+  'switch-button-option-text': 'Switch to Options API',
+  'switch-button-setup-text': 'Switch to Composition API',
+  'copy-success': 'Copied!',
+  'copy-error': 'This browser does not support automatic copy！',
 }
 const decodedDescription = computed(() => decodeURIComponent(props.description))
 
@@ -53,7 +53,7 @@ const onPlaygroundClick = () => {
 const onSourceVisibleKeydown = (e: KeyboardEvent) => {
   if (
     [EVENT_CODE.enter, EVENT_CODE.numpadEnter, EVENT_CODE.space].includes(
-      e.code
+      e.code,
     )
   ) {
     e.preventDefault()

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -93,18 +93,18 @@
   <script>
     // 死循环
     const fn = (timestamp) => {
-      let end = Date.now() + timestamp;
+      let end = Date.now() + timestamp
       while (Date.now() < end) {}
-    };
+    }
 
-    const box_web_animations = document.querySelector('.box.web-animations');
+    const box_web_animations = document.querySelector('.box.web-animations')
     box_web_animations.animate(
       [{ transform: 'translateX(0)' }, { transform: 'translateX(100px)' }],
       {
         duration: 2000,
         iterations: Infinity,
         direction: 'alternate',
-      }
-    );
+      },
+    )
   </script>
 </html>

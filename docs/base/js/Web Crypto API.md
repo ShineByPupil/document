@@ -23,21 +23,21 @@ Web Crypto API （发音 `/ˈkrɪptəʊ/`）提供了一套关于密码学原语
 ## 属性 & 方法
 
 - `crypto`
-    - `subtle`
-        - [`decrypt()`](#windowcryptosubtledecrypt) 解密数据
-        - `deriveBits()`
-        - `deriveKey()`
-        - `digest()`
-        - [`encrypt()`](#windowcryptosubtleencrypt) 加密数据
-        - `exportKey()`
-        - `generateKey()`
-        - [`importKey()`](#windowcryptosubtleimportKey) 生成 CryptoKey 秘钥对象
-        - `sign()`
-        - `unwrapKey()`
-        - `verify()`
-        - `wrapKey()`
-    - `getRandomValues()`
-    - `randomUUID()`
+  - `subtle`
+    - [`decrypt()`](#windowcryptosubtledecrypt) 解密数据
+    - `deriveBits()`
+    - `deriveKey()`
+    - `digest()`
+    - [`encrypt()`](#windowcryptosubtleencrypt) 加密数据
+    - `exportKey()`
+    - `generateKey()`
+    - [`importKey()`](#windowcryptosubtleimportKey) 生成 CryptoKey 秘钥对象
+    - `sign()`
+    - `unwrapKey()`
+    - `verify()`
+    - `wrapKey()`
+  - `getRandomValues()`
+  - `randomUUID()`
 
 <details>
 <summary>公共的类型定义</summary>
@@ -47,40 +47,47 @@ type AlgorithmIdentifier = Algorithm | string
 
 // RSA-OAEP
 interface RsaOaepParams extends Algorithm {
-    label?: BufferSource
+  label?: BufferSource
 }
 
 // AES-CTR
 interface AesCtrParams extends Algorithm {
-    counter: BufferSource,
-    length: number
+  counter: BufferSource
+  length: number
 }
 
 // ES-CBC
 interface AesCbcParams extends Algorithm {
-    iv: BufferSource
+  iv: BufferSource
 }
 
 // AES-GCM
 interface AesGcmParams extends Algorithm {
-    additionalData?: BufferSource,
-    iv: BufferSource,
-    tagLength?: number
+  additionalData?: BufferSource
+  iv: BufferSource
+  tagLength?: number
 }
 
 // 秘钥对象
 interface CryptoKey {
-    readonly algorithm: KeyAlgorithm,
-    readonly extractable: boolean,
-    readonly type: KeyType,
-    readonly usages: KeyUsage[]
+  readonly algorithm: KeyAlgorithm
+  readonly extractable: boolean
+  readonly type: KeyType
+  readonly usages: KeyUsage[]
 }
 
 type BufferSource = ArrayBufferView | ArrayBuffer
 type Exclude<T, U> = T extends U ? never : T
-type KeyFormat = "jwk" | "pkcs8" | "raw" | "spki"
-type KeyUsage = "decrypt" | "deriveBits" | "deriveKey" | "encrypt"
-    | "sign" | "unwrapKey" | "verify" | "wrapKey"
+type KeyFormat = 'jwk' | 'pkcs8' | 'raw' | 'spki'
+type KeyUsage =
+  | 'decrypt'
+  | 'deriveBits'
+  | 'deriveKey'
+  | 'encrypt'
+  | 'sign'
+  | 'unwrapKey'
+  | 'verify'
+  | 'wrapKey'
 ```
 
 </details>
@@ -89,20 +96,24 @@ type KeyUsage = "decrypt" | "deriveBits" | "deriveKey" | "encrypt"
 
 ```ts
 interface SubtleCrypto {
-    /**
-     * 使用指定的算法和密钥解密数据。
-     *
-     * @param algorithm - 用于解密的算法。可以是字符串或指定算法详细信息的对象。
-     * @param key - 用于解密的密钥。必须是 CryptoKey 对象。
-     * @param data - 要解密的加密数据。可以是 ArrayBuffer 或 ArrayBufferView（例如 Uint8Array）。
-     * @returns 一个 Promise，解析为包含解密后数据的 ArrayBuffer。
-     */
-    decrypt(
-        algorithm: AlgorithmIdentifier | RsaOaepParams | AesCtrParams | AesCbcParams
-            | AesGcmParams,
-        key: CryptoKey,
-        data: BufferSource
-    ): Promise<ArrayBuffer>;
+  /**
+   * 使用指定的算法和密钥解密数据。
+   *
+   * @param algorithm - 用于解密的算法。可以是字符串或指定算法详细信息的对象。
+   * @param key - 用于解密的密钥。必须是 CryptoKey 对象。
+   * @param data - 要解密的加密数据。可以是 ArrayBuffer 或 ArrayBufferView（例如 Uint8Array）。
+   * @returns 一个 Promise，解析为包含解密后数据的 ArrayBuffer。
+   */
+  decrypt(
+    algorithm:
+      | AlgorithmIdentifier
+      | RsaOaepParams
+      | AesCtrParams
+      | AesCbcParams
+      | AesGcmParams,
+    key: CryptoKey,
+    data: BufferSource,
+  ): Promise<ArrayBuffer>
 }
 ```
 
@@ -116,19 +127,24 @@ interface SubtleCrypto {
 
 ```ts
 interface SubtleCrypto {
-    /**
-     * 使用指定的算法和密钥加密数据。
-     *
-     * @param algorithm - 用于加密的算法。可以是字符串或指定算法详细信息的对象。
-     * @param key - 用于加密的密钥。必须是 CryptoKey 对象。
-     * @param data - 需要加密的数据。可以是 ArrayBuffer 或 ArrayBufferView（例如 Uint8Array）。
-     * @returns 一个 Promise，解析为包含加密后数据的 ArrayBuffer。
-     */
-    encrypt(
-        algorithm: AlgorithmIdentifier | RsaOaepParams | AesCtrParams | AesCbcParams | AesGcmParams,
-        key: CryptoKey,
-        data: BufferSource
-    ): Promise<ArrayBuffer>;
+  /**
+   * 使用指定的算法和密钥加密数据。
+   *
+   * @param algorithm - 用于加密的算法。可以是字符串或指定算法详细信息的对象。
+   * @param key - 用于加密的密钥。必须是 CryptoKey 对象。
+   * @param data - 需要加密的数据。可以是 ArrayBuffer 或 ArrayBufferView（例如 Uint8Array）。
+   * @returns 一个 Promise，解析为包含加密后数据的 ArrayBuffer。
+   */
+  encrypt(
+    algorithm:
+      | AlgorithmIdentifier
+      | RsaOaepParams
+      | AesCtrParams
+      | AesCbcParams
+      | AesGcmParams,
+    key: CryptoKey,
+    data: BufferSource,
+  ): Promise<ArrayBuffer>
 }
 ```
 
@@ -140,27 +156,31 @@ interface SubtleCrypto {
 
 ```ts
 interface SubtleCrypto {
-    /**
-     * SubtleCrypto 接口的 importKey() 方法用于导入密钥：它接受外部可移植格式的密钥作为输入，
-     * 并返回一个可以在 Web Crypto API 中使用的 CryptoKey 对象。
-     *
-     * @param format - 描述要导入的键的数据格式的字符串。
-     * @param keyData - 一个 ArrayBuffer、一个 TypedArray、一个 DataView，或一个包含以
-     * 给定格式表示的密钥的 JSONWebKey 对象。
-     * @param algorithm - 用于解密的算法。可以是字符串或指定算法详细信息的对象。
-     * @param extractable - 一个布尔值，指示是否可以使用 SubtleCrypto.exportKey() 或
-     * SubtleCrypto.wrapKey() 导出该密钥。
-     * @param keyUsages - 一个数组，指示可以对密钥执行的操作。
-     * @returns 一个 Promise，解析为包含导入的密钥的 CryptoKey 对象。
-     */
-    importKey(
-        format: Exclude<KeyFormat, "jwk">,
-        keyData: BufferSource,
-        algorithm: AlgorithmIdentifier | RsaHashedImportParams | EcKeyImportParams
-            | HmacImportParams | AesKeyAlgorithm,
-        extractable: boolean,
-        keyUsages: KeyUsage[]
-    ): Promise<CryptoKey>;
+  /**
+   * SubtleCrypto 接口的 importKey() 方法用于导入密钥：它接受外部可移植格式的密钥作为输入，
+   * 并返回一个可以在 Web Crypto API 中使用的 CryptoKey 对象。
+   *
+   * @param format - 描述要导入的键的数据格式的字符串。
+   * @param keyData - 一个 ArrayBuffer、一个 TypedArray、一个 DataView，或一个包含以
+   * 给定格式表示的密钥的 JSONWebKey 对象。
+   * @param algorithm - 用于解密的算法。可以是字符串或指定算法详细信息的对象。
+   * @param extractable - 一个布尔值，指示是否可以使用 SubtleCrypto.exportKey() 或
+   * SubtleCrypto.wrapKey() 导出该密钥。
+   * @param keyUsages - 一个数组，指示可以对密钥执行的操作。
+   * @returns 一个 Promise，解析为包含导入的密钥的 CryptoKey 对象。
+   */
+  importKey(
+    format: Exclude<KeyFormat, 'jwk'>,
+    keyData: BufferSource,
+    algorithm:
+      | AlgorithmIdentifier
+      | RsaHashedImportParams
+      | EcKeyImportParams
+      | HmacImportParams
+      | AesKeyAlgorithm,
+    extractable: boolean,
+    keyUsages: KeyUsage[],
+  ): Promise<CryptoKey>
 }
 ```
 
@@ -185,88 +205,88 @@ interface SubtleCrypto {
 
 ```js
 async function deriveKeyFromPassword(password, salt) {
-    const keyMaterial = await window.crypto.subtle.importKey(
-        "raw",
-        new TextEncoder().encode(password),
-        {name: "PBKDF2"},
-        false,
-        ["deriveBits", "deriveKey"]
-    );
+  const keyMaterial = await window.crypto.subtle.importKey(
+    'raw',
+    new TextEncoder().encode(password),
+    { name: 'PBKDF2' },
+    false,
+    ['deriveBits', 'deriveKey'],
+  )
 
-    const key = await window.crypto.subtle.deriveKey(
-        {
-            name: "PBKDF2",
-            salt: salt,
-            iterations: 100000,
-            hash: "SHA-256"
-        },
-        keyMaterial,
-        {name: "AES-GCM", length: 256},
-        true,
-        ["encrypt", "decrypt"]
-    );
+  const key = await window.crypto.subtle.deriveKey(
+    {
+      name: 'PBKDF2',
+      salt: salt,
+      iterations: 100000,
+      hash: 'SHA-256',
+    },
+    keyMaterial,
+    { name: 'AES-GCM', length: 256 },
+    true,
+    ['encrypt', 'decrypt'],
+  )
 
-    return key;
+  return key
 }
 
 // 加密
 async function encryptData(password, data) {
-    // 生成盐
-    const salt = window.crypto.getRandomValues(new Uint8Array(16));
-    // 派生密钥
-    const key = await deriveKeyFromPassword(password, salt);
+  // 生成盐
+  const salt = window.crypto.getRandomValues(new Uint8Array(16))
+  // 派生密钥
+  const key = await deriveKeyFromPassword(password, salt)
 
-    // 生成随机 IV
-    const iv = window.crypto.getRandomValues(new Uint8Array(12));
+  // 生成随机 IV
+  const iv = window.crypto.getRandomValues(new Uint8Array(12))
 
-    // 加密数据
-    const encryptedData = await window.crypto.subtle.encrypt(
-        {
-            name: "AES-GCM",
-            iv: iv,
-            tagLength: 128
-        },
-        key,
-        new TextEncoder().encode(data)
-    );
+  // 加密数据
+  const encryptedData = await window.crypto.subtle.encrypt(
+    {
+      name: 'AES-GCM',
+      iv: iv,
+      tagLength: 128,
+    },
+    key,
+    new TextEncoder().encode(data),
+  )
 
-    return {
-        iv: iv,
-        salt: salt,
-        encryptedData: new Uint8Array(encryptedData)
-    };
+  return {
+    iv: iv,
+    salt: salt,
+    encryptedData: new Uint8Array(encryptedData),
+  }
 }
 
 // 解密
 async function decryptData(password, salt, iv, encryptedData) {
-    // 派生密钥
-    const key = await deriveKeyFromPassword(password, salt);
+  // 派生密钥
+  const key = await deriveKeyFromPassword(password, salt)
 
-    // 解密数据
-    const decryptedData = await window.crypto.subtle.decrypt(
-        {
-            name: "AES-GCM",
-            iv: iv,
-            tagLength: 128
-        },
-        key,
-        encryptedData
-    );
+  // 解密数据
+  const decryptedData = await window.crypto.subtle.decrypt(
+    {
+      name: 'AES-GCM',
+      iv: iv,
+      tagLength: 128,
+    },
+    key,
+    encryptedData,
+  )
 
-    return new TextDecoder().decode(decryptedData);
+  return new TextDecoder().decode(decryptedData)
 }
 
-const password = "用户指定的口令";
-const data = "这是需要加密的明文数据";
+const password = '用户指定的口令'
+const data = '这是需要加密的明文数据'
 // 加密
-const {iv, salt, encryptedData} = await encryptData(password, data);
-console.log("加密后的数据:", encryptedData);
-console.log("IV:", iv);
-console.log("Salt:", salt);
+const { iv, salt, encryptedData } = await encryptData(password, data)
+console.log('加密后的数据:', encryptedData)
+console.log('IV:', iv)
+console.log('Salt:', salt)
 
 // 解密
-const decryptedData = await decryptData(password, salt, iv, encryptedData);
-console.log("解密后的数据:", decryptedData);
+const decryptedData = await decryptData(password, salt, iv, encryptedData)
+console.log('解密后的数据:', decryptedData)
 ```
 
 <table>
@@ -295,37 +315,40 @@ console.log("解密后的数据:", decryptedData);
 ```js
 // 将字符串转换为ArrayBuffer
 function str2ab(str) {
-    const buf = new ArrayBuffer(str.length);
-    const bufView = new Uint8Array(buf);
-    for (let i = 0, strLen = str.length; i < strLen; i++) {
-        bufView[i] = str.charCodeAt(i);
-    }
-    return buf;
+  const buf = new ArrayBuffer(str.length)
+  const bufView = new Uint8Array(buf)
+  for (let i = 0, strLen = str.length; i < strLen; i++) {
+    bufView[i] = str.charCodeAt(i)
+  }
+  return buf
 }
 
 function importPrivateKey(pem) {
-    //获取页眉和页脚之间的PEM字符串
-    const pemHeader = "-----BEGIN PRIVATE KEY-----";
-    const pemFooter = "-----END PRIVATE KEY-----";
-    const pemContents = pem.substring(pemHeader.length, pem.length - pemFooter.length);
-    // base64解码字符串以获得二进制数据
-    const binaryDerString = window.atob(pemContents);
-    //将二进制字符串转换为ArrayBuffer
-    const binaryDer = str2ab(binaryDerString);
+  //获取页眉和页脚之间的PEM字符串
+  const pemHeader = '-----BEGIN PRIVATE KEY-----'
+  const pemFooter = '-----END PRIVATE KEY-----'
+  const pemContents = pem.substring(
+    pemHeader.length,
+    pem.length - pemFooter.length,
+  )
+  // base64解码字符串以获得二进制数据
+  const binaryDerString = window.atob(pemContents)
+  //将二进制字符串转换为ArrayBuffer
+  const binaryDer = str2ab(binaryDerString)
 
-    return window.crypto.subtle.importKey(
-        "pkcs8",
-        binaryDer,
-        {
-            name: "RSA-PSS",
-            //对于需要长期安全的系统，可以考虑使用4096位密钥
-            modulusLength: 2048,
-            publicExponent: new Uint8Array([1, 0, 1]),
-            hash: "SHA-256",
-        },
-        true,
-        ["sign"]
-    );
+  return window.crypto.subtle.importKey(
+    'pkcs8',
+    binaryDer,
+    {
+      name: 'RSA-PSS',
+      //对于需要长期安全的系统，可以考虑使用4096位密钥
+      modulusLength: 2048,
+      publicExponent: new Uint8Array([1, 0, 1]),
+      hash: 'SHA-256',
+    },
+    true,
+    ['sign'],
+  )
 }
 
 const pkcs8PrivateKey = `-----BEGIN PRIVATE KEY-----
@@ -353,10 +376,10 @@ l04dzV7nJb5cRak6CrgXxay/mBJRFtaHxVlaZGxYPGSYE6UFS0+3EOmmevvDZQBf4qECg
 YEA0ZF6Vavz28+8wLO6SP3w8NmpHk7K9tGEvUfQ30SgDx4G7qPIgfPrbB4OP/E0qCfsII
 mi3sCPpjvUMQdVVZyPOIMuB+rV3ZOxkrzxEUOrpOpR48FZbL7RN90yRQsAsrp9e4iv8Qw
 B3VxLe7X0TDqqnRyqrc/osGzuS2ZcHOKmCU8=
------END PRIVATE KEY-----`;
+-----END PRIVATE KEY-----`
 const cryptoKey = await importPrivateKey(pkcs8PrivateKey)
 
-console.log('cryptoKey:', cryptoKey);
+console.log('cryptoKey:', cryptoKey)
 ```
 
 </details>
@@ -367,34 +390,37 @@ console.log('cryptoKey:', cryptoKey);
 ```js
 // 将字符串转换为ArrayBuffer
 function str2ab(str) {
-    const buf = new ArrayBuffer(str.length);
-    const bufView = new Uint8Array(buf);
-    for (let i = 0, strLen = str.length; i < strLen; i++) {
-        bufView[i] = str.charCodeAt(i);
-    }
-    return buf;
+  const buf = new ArrayBuffer(str.length)
+  const bufView = new Uint8Array(buf)
+  for (let i = 0, strLen = str.length; i < strLen; i++) {
+    bufView[i] = str.charCodeAt(i)
+  }
+  return buf
 }
 
 function importPublicKey(pem) {
-    //获取页眉和页脚之间的PEM字符串
-    const pemHeader = "-----BEGIN PUBLIC KEY-----";
-    const pemFooter = "-----END PUBLIC KEY-----";
-    const pemContents = pem.substring(pemHeader.length, pem.length - pemFooter.length);
-    // base64解码字符串以获得二进制数据
-    const binaryDerString = window.atob(pemContents);
-    // 将二进制字符串转换为ArrayBuffer
-    const binaryDer = str2ab(binaryDerString);
+  //获取页眉和页脚之间的PEM字符串
+  const pemHeader = '-----BEGIN PUBLIC KEY-----'
+  const pemFooter = '-----END PUBLIC KEY-----'
+  const pemContents = pem.substring(
+    pemHeader.length,
+    pem.length - pemFooter.length,
+  )
+  // base64解码字符串以获得二进制数据
+  const binaryDerString = window.atob(pemContents)
+  // 将二进制字符串转换为ArrayBuffer
+  const binaryDer = str2ab(binaryDerString)
 
-    return window.crypto.subtle.importKey(
-        "spki",
-        binaryDer,
-        {
-            name: "RSA-OAEP",
-            hash: "SHA-256"
-        },
-        true,
-        ["encrypt"]
-    );
+  return window.crypto.subtle.importKey(
+    'spki',
+    binaryDer,
+    {
+      name: 'RSA-OAEP',
+      hash: 'SHA-256',
+    },
+    true,
+    ['encrypt'],
+  )
 }
 
 const pemEncodedKey = `-----BEGIN PUBLIC KEY-----
@@ -403,10 +429,10 @@ BFtxIhOAJWohiHuIRMctv7dzx47TLlmARSKvTRjd0dF92jx/xY20Lz+DXp8YL5yUWAFgA3XkO3LSJgEO
 B8jfkmgSb7QIudTVvbbUDfd5fwIBmCtaCwWx7NyeWWDb7A9cFxj7EjRdrDaK3ux/ToMLHFXVLqSL341TkCf4Z
 Qoz96RFPUGPPLOfvN0x66CM1PQCkdhzjE6U5XGE964ZkkYUPPsy6Dcie4obhW4vDjgUmLzv0z7UD010RLIneU
 gDE2FqBfY/C+uWigNPBPkkQ+Bv/UigS6dHqTCVeD5wgyBQIDAQAB
------END PUBLIC KEY-----`;
-const cryptoKey = await importPublicKey(pemEncodedKey);
+-----END PUBLIC KEY-----`
+const cryptoKey = await importPublicKey(pemEncodedKey)
 
-console.log('cryptoKey:', cryptoKey);
+console.log('cryptoKey:', cryptoKey)
 ```
 
 </details>
@@ -416,21 +442,21 @@ console.log('cryptoKey:', cryptoKey);
 
 ```js
 const jwkKey = {
-    kty: "oct",  // 密钥类型
-    k: "GawgguFyGrWKavO8P4KORI0yA0D1w1M2S8Yg2h0d3z8", // 密钥材料（Base64Url 编码）
-    alg: "A256GCM", // 算法
-    ext: true // 是否可导出
-};
+  kty: 'oct', // 密钥类型
+  k: 'GawgguFyGrWKavO8P4KORI0yA0D1w1M2S8Yg2h0d3z8', // 密钥材料（Base64Url 编码）
+  alg: 'A256GCM', // 算法
+  ext: true, // 是否可导出
+}
 
 const cryptoKey = await window.crypto.subtle.importKey(
-    "jwk", // 密钥格式
-    jwkKey, // 原始密钥字节
-    {name: "AES-GCM", length: 256}, // 算法参数
-    true, // 是否可导出
-    ["encrypt", "decrypt"] // 允许的用途
-);
+  'jwk', // 密钥格式
+  jwkKey, // 原始密钥字节
+  { name: 'AES-GCM', length: 256 }, // 算法参数
+  true, // 是否可导出
+  ['encrypt', 'decrypt'], // 允许的用途
+)
 
-console.log('cryptoKey:', cryptoKey);
+console.log('cryptoKey:', cryptoKey)
 ```
 
 </details>
@@ -439,18 +465,19 @@ console.log('cryptoKey:', cryptoKey);
 <summary>rawKey 代码示例</summary>
 
 ```js
-const rawKey = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
+const rawKey = new Uint8Array([
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+])
 
 const cryptoKey = await window.crypto.subtle.importKey(
-    "raw", // 密钥格式
-    rawKey, // 原始密钥字节
-    {name: "AES-GCM", length: 128}, // 算法参数
-    true, // 是否可导出
-    ["encrypt", "decrypt"] // 允许的用途
-);
+  'raw', // 密钥格式
+  rawKey, // 原始密钥字节
+  { name: 'AES-GCM', length: 128 }, // 算法参数
+  true, // 是否可导出
+  ['encrypt', 'decrypt'], // 允许的用途
+)
 
-console.log('cryptoKey:', cryptoKey);
+console.log('cryptoKey:', cryptoKey)
 ```
 
 </details>
-

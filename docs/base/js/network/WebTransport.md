@@ -23,45 +23,44 @@
 
 ```js
 // 1. 创建连接
-const url = 'https://example.com:4433/webtransport';
-const transport = new WebTransport(url);
+const url = 'https://example.com:4433/webtransport'
+const transport = new WebTransport(url)
 
 try {
-    await transport.ready; // 等待连接就绪
-    console.log('WebTransport 连接成功');
+  await transport.ready // 等待连接就绪
+  console.log('WebTransport 连接成功')
 
-    // 2. 发送不可靠数据报（UDP-like）
-    const writer = transport.datagrams.writable.getWriter();
-    await writer.write(new Uint8Array([1, 2, 3]));
-    writer.releaseLock();
+  // 2. 发送不可靠数据报（UDP-like）
+  const writer = transport.datagrams.writable.getWriter()
+  await writer.write(new Uint8Array([1, 2, 3]))
+  writer.releaseLock()
 
-    // 3. 创建可靠双向流
-    const stream = await transport.createBidirectionalStream();
-    const readable = stream.readable;
-    const writable = stream.writable;
+  // 3. 创建可靠双向流
+  const stream = await transport.createBidirectionalStream()
+  const readable = stream.readable
+  const writable = stream.writable
 
-    // 4. 接收数据
-    const reader = readable.getReader();
-    const { value, done } = await reader.read();
-    console.log('收到数据:', value);
+  // 4. 接收数据
+  const reader = readable.getReader()
+  const { value, done } = await reader.read()
+  console.log('收到数据:', value)
 
-    // 5. 错误处理
-    transport.closed
-        .then(() => console.log('连接正常关闭'))
-        .catch((e) => console.error('异常断开:', e));
-
+  // 5. 错误处理
+  transport.closed
+    .then(() => console.log('连接正常关闭'))
+    .catch((e) => console.error('异常断开:', e))
 } catch (e) {
-    console.error('连接失败:', e);
+  console.error('连接失败:', e)
 }
 
 // 6. 主动关闭
-await transport.close();
+await transport.close()
 ```
 
 ## 浏览器兼容性提示
 
 ```js
 if ('WebTransport' in window) {
-    // 启用 WebTransport 功能
+  // 启用 WebTransport 功能
 }
 ```

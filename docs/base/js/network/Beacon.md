@@ -49,8 +49,8 @@ console.log('数据已加入队列：', success);
 
 ```js
 if ('sendBeacon' in navigator) {
-    // 启用 Beacon 功能
+  // 启用 Beacon 功能
 } else {
-    // 降级方案（如同步 XMLHttpRequest）
+  // 降级方案（如同步 XMLHttpRequest）
 }
 ```
