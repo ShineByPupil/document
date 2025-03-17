@@ -46,3 +46,18 @@ function fibonacci(n) {
   return n <= 1 ? n : fibonacci(n - 1) + fibonacci(n - 2)
 }
 ```
+
+:::warning 注意事项
+
+1. 频繁的大数据量传递（如巨型数组）会因结构化克隆产生性能损耗
+
+   ```js
+   worker.postMessage(buffer, [buffer]) // 转移所有权，零拷贝
+   ```
+
+2. 兼容性与作用域
+   - Worker 内无法访问 `document`、`window`、`localStorage`（但支持 `IndexedDB`、`WebSockets`）
+   - 存在同源策略限制
+3. 错误处理 `worker.onerror` 捕获 Worker 内部异常，避免静默失败
+
+:::
