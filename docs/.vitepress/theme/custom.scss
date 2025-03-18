@@ -8,3 +8,36 @@
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
 }
+
+/* 头部吸附样式 */
+
+.custom-block.details {
+  position: relative;
+  padding-top: 0;
+}
+.custom-block.details > summary {
+  position: sticky;
+  margin-bottom: 0;
+  padding: 16px 0 8px;
+  top: 48px;
+  background: #eff0f3;
+  z-index: 10;
+}
+.dark .custom-block.details > summary {
+  background: #272a2f;
+}
+
+@media (min-width: 960px) {
+  .custom-block.details > summary {
+    top: calc(48px + var(--vp-nav-height));
+  }
+}
+
+@media (min-width: 1280px) {
+  .custom-block.details > summary {
+    top: var(--vp-nav-height);
+  }
+}
+
+
+
