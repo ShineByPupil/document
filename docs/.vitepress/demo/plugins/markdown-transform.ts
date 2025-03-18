@@ -18,7 +18,7 @@ export function MarkdownTransform(): Plugin {
 function combineScriptSetup(markdown: string, id: string): string {
   const imports = []
   // 匹配结构：:::demo 任意内容 + 换行 + 路径 + 换行 + :::
-  const demoRE = /:::demo[\s\S]*?\r?\n(\S+)\r?\n\s*:::/g
+  const demoRE = /:::demo[\s\S]*?\r?\n\s*(\S+)\r?\n\s*:::/g
   let match: RegExpExecArray | null
 
   while ((match = demoRE.exec(markdown)) !== null) {
