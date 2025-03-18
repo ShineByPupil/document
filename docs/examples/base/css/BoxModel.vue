@@ -1,41 +1,43 @@
 <template>
-  <div class="container">
-    <div class="box-model">
-      <!-- 宽度标注线 -->
-      <div class="width-indicator">
-        <div class="measure-line"></div>
-        <span class="measure-text">width</span>
-      </div>
+  <div class="demo-only-show">
+    <div class="container">
+      <div class="box-model">
+        <!-- 宽度标注线 -->
+        <div class="width-indicator">
+          <div class="measure-line"></div>
+          <span class="measure-text">width</span>
+        </div>
 
-      <div class="height-indicator">
-        <div class="measure-line"></div>
-        <span class="measure-text">height</span>
-      </div>
+        <div class="height-indicator">
+          <div class="measure-line"></div>
+          <span class="measure-text">height</span>
+        </div>
 
-      <div class="margin-area">
-        <span class="label margin-label">margin</span>
-        <div class="border-area">
-          <span class="label border-label">border</span>
-          <div class="padding-area">
-            <span class="label padding-label">padding</span>
-            <div class="content-area">
-              <span class="label content-label">content</span>
+        <div class="margin-area">
+          <span class="label margin-label">margin</span>
+          <div class="border-area">
+            <span class="label border-label">border</span>
+            <div class="padding-area">
+              <span class="label padding-label">padding</span>
+              <div class="content-area">
+                <span class="label content-label">content</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- 控制面板 -->
-  <div class="controls">
-    <div class="switch-container">
-      <span>标准模型</span>
-      <label class="switch">
-        <input type="checkbox" v-model="isIEModel" />
-        <span class="slider"></span>
-      </label>
-      <span>IE模型</span>
+    <!-- 控制面板 -->
+    <div class="controls">
+      <div class="switch-container">
+        <span>标准模型</span>
+        <label class="switch">
+          <input type="checkbox" v-model="isIEModel" />
+          <span class="slider"></span>
+        </label>
+        <span>IE模型</span>
+      </div>
     </div>
   </div>
 </template>
