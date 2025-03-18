@@ -50,4 +50,4 @@ Linux 是一个免费、开源的类 Unix 操作系统内核，最初由 Linus T
   ```bash
   sudo yum install nodejs npm
   ```
-- [mysql](./mysql.md)
+- [mysql](mysql.md)
