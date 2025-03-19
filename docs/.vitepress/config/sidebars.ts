@@ -30,20 +30,42 @@ export const sidebars = {
             { text: '异步编程', link: '异步编程' },
           ],
         },
-
-        // 浏览器 API（合并安全策略、性能优化，细化子类）
         {
-          text: '浏览器 API',
+          text: 'WEB API',
           items: [
             { text: 'BOM', link: 'browser/BOM' },
             { text: 'DOM', link: 'browser/DOM' },
             { text: '事件体系', link: 'browser/事件体系' },
-            { text: '存储体系', link: 'browser/存储体系' },
             {
-              text: '通信体系',
-              link: 'network/通信体系',
+              text: '存储体系',
+              base: '/base/js/browser/storage/',
               collapsed: true,
               items: [
+                {
+                  text: '会话级存储',
+                  items: [
+                    { text: 'cookie', link: 'cookie' },
+                    { text: 'sessionStorage', link: 'sessionStorage' },
+                  ],
+                },
+                {
+                  text: '持久化存储',
+                  items: [
+                    { text: 'localStorage', link: 'localStorage' },
+                    { text: 'IndexedDB', link: 'IndexedDB' },
+                  ],
+                },
+                {
+                  text: '资源存储',
+                  items: [{ text: 'Cache API', link: 'CacheAPI' }],
+                },
+              ],
+            },
+            {
+              text: '通信体系',
+              collapsed: true,
+              items: [
+                { text: '前言', link: 'network/通信体系' },
                 {
                   text: '传统请求',
                   items: [
