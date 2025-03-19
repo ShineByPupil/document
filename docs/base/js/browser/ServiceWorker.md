@@ -1,4 +1,4 @@
-# Service Workers
+# ServiceWorker - WEB API
 
 > 浏览器实现的网络代理和离线缓存技术，充当 Web 应用与网络间的中间层。支持离线优先策略，是 PWA（渐进式 Web 应用）的核心技术。
 
@@ -21,7 +21,7 @@
 ## 代码示例
 
 ```js
-// 注册 Service Worker
+// 注册 ServiceWorker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
     .register('/sw.js')

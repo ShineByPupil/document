@@ -1,4 +1,4 @@
-# Web Components
+# Web Components - WEB API
 
 > W3C 标准化的原生组件化方案，其以浏览器原生支持取代框架依赖
 

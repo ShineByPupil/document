@@ -4,11 +4,7 @@ export const sidebars = {
       text: 'HTML',
       base: '/base/html/',
       collapsed: false,
-      items: [
-        { text: '基础语法与结构', link: '基础语法与结构' },
-        { text: '通信与存储', link: '通信与存储' },
-        { text: '高级特性', link: '高级特性' },
-      ],
+      items: [{ text: '基础语法与结构', link: '基础语法与结构' }],
     },
     {
       text: 'CSS',
@@ -27,38 +23,76 @@ export const sidebars = {
       base: '/base/js/',
       collapsed: false,
       items: [
-        { text: '语言核心', link: '语言核心' },
-        { text: '异步编程', link: '异步编程' },
         {
-          text: '通信体系',
-          link: 'network/通信体系',
-          collapsed: true,
+          text: 'ECMAScript 核心',
           items: [
-            { text: 'XMLHttpRequest', link: 'network/XMLHttpRequest' },
-            { text: 'fetch', link: 'network/fetch' },
-            { text: 'WebSocket', link: 'network/WebSocket' },
-            { text: 'postMessage', link: 'network/postMessage' },
-            { text: 'EventSource', link: 'network/EventSource' },
-            { text: 'Beacon', link: 'network/Beacon' },
-            { text: 'WebRTC', link: 'network/WebRTC' },
-            { text: 'WebTransport', link: 'network/WebTransport' },
-            { text: 'BroadcastChannel', link: 'network/BroadcastChannel' },
-            { text: 'SharedWorker', link: 'network/SharedWorker' },
-            { text: 'MessageChannel', link: 'network/MessageChannel' },
+            { text: '语言核心', link: '语言核心' },
+            { text: '异步编程', link: '异步编程' },
           ],
         },
+
+        // 浏览器 API（合并安全策略、性能优化，细化子类）
         {
-          text: '浏览器相关',
-          link: 'browser/浏览器相关',
-          collapsed: true,
+          text: '浏览器 API',
           items: [
-            { text: 'Web Workers', link: 'browser/WebWorkers' },
-            { text: 'Service Worker', link: 'browser/ServiceWorkers' },
+            { text: 'BOM', link: 'browser/BOM' },
+            { text: 'DOM', link: 'browser/DOM' },
+            { text: '事件体系', link: 'browser/事件体系' },
+            { text: '存储体系', link: 'browser/存储体系' },
+            {
+              text: '通信体系',
+              link: 'network/通信体系',
+              collapsed: true,
+              items: [
+                {
+                  text: '传统请求',
+                  items: [
+                    { text: 'XMLHttpRequest', link: 'network/XMLHttpRequest' },
+                    { text: 'fetch', link: 'network/fetch' },
+                  ],
+                },
+                {
+                  text: '实时通信',
+                  items: [
+                    { text: 'WebSocket', link: 'network/WebSocket' },
+                    { text: 'WebRTC', link: 'network/WebRTC' },
+                    { text: 'WebTransport', link: 'network/WebTransport' },
+                  ],
+                },
+                {
+                  text: '跨上下文通信',
+                  items: [
+                    { text: 'postMessage', link: 'network/postMessage' },
+                    {
+                      text: 'BroadcastChannel',
+                      link: 'network/BroadcastChannel',
+                    },
+                    { text: 'MessageChannel', link: 'network/MessageChannel' },
+                  ],
+                },
+                {
+                  text: '数据上报与推送',
+                  items: [
+                    { text: 'EventSource', link: 'network/EventSource' },
+                    { text: 'Beacon', link: 'network/Beacon' },
+                  ],
+                },
+              ],
+            },
+            {
+              text: '多线程与后台任务',
+              collapsed: true,
+              items: [
+                { text: 'WebWorker', link: 'browser/WebWorker' },
+                { text: 'SharedWorker', link: 'network/SharedWorker' },
+                { text: 'ServiceWorker', link: 'browser/ServiceWorker' },
+              ],
+            },
             { text: 'Web Components', link: 'browser/WebComponents' },
+            { text: '安全策略', link: 'browser/安全策略' },
+            { text: '性能优化', link: 'browser/性能优化' },
           ],
         },
-        { text: '安全策略', link: '安全策略' },
-        { text: '性能优化', link: '性能优化' },
       ],
     },
   ],

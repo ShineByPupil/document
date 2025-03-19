@@ -6,18 +6,18 @@
 ## 核心特性
 
 1. 跨域安全通信。通过指定目标 origin 白名单，防止恶意站点窃听
-2. 结构化克隆支持。自动序列化复杂对象（包含 Map/Set/Blob 等类型）
-3. 多线程通信能力。支持与 Web Worker/Service Worker 进行主线程通信
-4. 异步事件驱动。基于 message 事件实现非阻塞式通信
+2. 结构化克隆支持。自动序列化复杂对象（包含 `Map`/`Set`/`Blob` 等类型）
+3. 多线程通信能力。支持与 `WebWorker`/`ServiceWorker` 进行主线程通信
+4. 异步事件驱动。基于 `message` 事件实现非阻塞式通信
 5. 通道复用性。单个窗口可同时与多个目标进行独立通信
 
 ## 应用场景
 
 1. 跨域单点登录。不同子域间安全传递用户认证信息
 2. 微前端架构。主子应用间的状态同步与事件通知
-3. 高性能计算。主线程与 Web Worker 交换大数据计算结果
-4. 第三方插件通信。与沙盒化 iframe 组件进行安全数据交互
-5. PWA 离线通信。Service Worker 与页面间的缓存状态同步
+3. 高性能计算。主线程与 `WebWorker` 交换大数据计算结果
+4. 第三方插件通信。与沙盒化 `iframe` 组件进行安全数据交互
+5. PWA 离线通信。`ServiceWorker` 与页面间的缓存状态同步
 
 ## 基本用法
 
@@ -55,7 +55,7 @@
 </script>
 ```
 
-### Web Worker 通信示例
+### WebWorker 通信示例
 
 ```js
 // 主线程 main.js
@@ -82,7 +82,7 @@ self.onmessage = function (e) {
 }
 ```
 
-### Service Worker 通信示例
+### ServiceWorker 通信示例
 
 ```js
 // 页面端 page.js
@@ -93,11 +93,11 @@ if ('serviceWorker' in navigator) {
   })
 
   navigator.serviceWorker.addEventListener('message', (event) => {
-    console.log('Service Worker 响应:', event.data)
+    console.log('ServiceWorker 响应:', event.data)
   })
 }
 
-// Service Worker sw.js
+// ServiceWorker sw.js
 self.addEventListener('message', (event) => {
   if (event.data.type === 'UPDATE_CACHE') {
     caches.open('v1').then((cache) => {
