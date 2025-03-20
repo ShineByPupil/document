@@ -1,0 +1,118 @@
+{
+  "/base/": [
+    {
+      "text": "HTML",
+      "base": "/base/html/",
+      "collapsed": false,
+      "items": ["基础语法与结构"]
+    },
+    {
+      "text": "CSS",
+      "base": "/base/css/",
+      "collapsed": false,
+      "items": ["核心机制", "布局系统", "视觉表现", "工程实践", "性能优化"]
+    },
+    {
+      "text": "JavaScript",
+      "base": "/base/js/",
+      "collapsed": false,
+      "items": [
+        { "text": "ECMAScript 核心", "items": ["语言核心", "异步编程"] },
+        {
+          "text": "WEB API",
+          "base": "/base/js/browser/",
+          "items": [
+            "BOM",
+            "DOM",
+            "事件体系",
+            {
+              "text": "存储体系",
+              "base": "/base/js/browser/storage/",
+              "collapsed": true,
+              "items": [
+                {
+                  "text": "会话级存储",
+                  "items": ["cookie", "sessionStorage"]
+                },
+                {
+                  "text": "持久化存储",
+                  "items": ["localStorage", "IndexedDB"]
+                },
+                { "text": "资源存储", "items": ["CacheAPI"] }
+              ]
+            },
+            {
+              "text": "通信体系",
+              "collapsed": true,
+              "base": "/base/js/network/",
+              "items": [
+                { "text": "前言", "link": "通信体系" },
+                {
+                  "text": "传统请求",
+                  "items": ["XMLHttpRequest", "fetch"]
+                },
+                {
+                  "text": "实时通信",
+                  "items": ["WebSocket", "WebRTC", "WebTransport"]
+                },
+                {
+                  "text": "跨上下文通信",
+                  "items": ["postMessage", "BroadcastChannel", "MessageChannel"]
+                },
+                {
+                  "text": "数据上报与推送",
+                  "items": ["EventSource", "Beacon"]
+                }
+              ]
+            },
+            {
+              "text": "多线程与后台任务",
+              "collapsed": true,
+              "items": ["WebWorker", "SharedWorker", "ServiceWorker"]
+            },
+            "WebComponents",
+            "安全策略",
+            "性能优化"
+          ]
+        }
+      ]
+    }
+  ],
+  "/framework/": [
+    {
+      "text": "主流框架",
+      "base": "/framework/",
+      "items": [
+        { "text": "Vue 生态", "link": "vue" },
+        { "text": "React 体系", "link": "react" },
+        { "text": "跨端开发", "link": "cross-platform" }
+      ]
+    }
+  ],
+  "/engineering/": [
+    {
+      "text": "工程化体系",
+      "base": "/engineering/",
+      "items": [
+        { "text": "Webpack 原理", "link": "webpack" },
+        { "text": "Vite 实践", "link": "vite" },
+        { "text": "CI/CD 流水线", "link": "cicd" }
+      ]
+    }
+  ],
+  "/dp/": [
+    {
+      "text": "设计范式",
+      "base": "/dp/",
+      "items": [
+        { "text": "位操作艺术", "link": "位操作艺术" },
+        { "text": "状态管理范式", "link": "状态管理范式" },
+        { "text": "设计模式精选", "link": "设计模式精选" },
+        { "text": "函数式范式", "link": "函数式范式" },
+        { "text": "性能优化模式", "link": "性能优化模式" },
+        { "text": "架构模式", "link": "架构模式" },
+        { "text": "元编程技巧", "link": "元编程技巧" }
+      ]
+    }
+  ]
+}
