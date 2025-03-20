@@ -3,6 +3,8 @@ import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
 import { MarkdownTransform } from '../demo/plugins/markdown-transform'
 import UnoCSS from 'unocss/vite'
+import fs from 'fs'
+import path from 'path'
 
 export const vite = {
   plugins: [
@@ -29,6 +31,10 @@ export const vite = {
     UnoCSS(),
   ],
   server: {
-    host: true,
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname, '../certs/key.pem')),
+      cert: fs.readFileSync(path.resolve(__dirname, '../certs/cert.pem')),
+    },
+    host: 'localhost', // 明确指定 host
   },
 }
