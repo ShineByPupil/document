@@ -21,11 +21,6 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/your-username/your-repo' },
     ],
-    editLink: {
-      pattern:
-        'https://github.com/your-username/your-repo/edit/main/docs/:path',
-      text: '完善此页面',
-    },
     search: {
       provider: 'local',
       options: {
