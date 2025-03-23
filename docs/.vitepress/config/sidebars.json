@@ -80,13 +80,9 @@
   ],
   "/framework/": [
     {
-      "text": "主流框架",
-      "base": "/framework/",
-      "items": [
-        { "text": "Vue 生态", "link": "vue" },
-        { "text": "React 体系", "link": "react" },
-        { "text": "跨端开发", "link": "cross-platform" }
-      ]
+      "text": "Vue3",
+      "base": "/framework/vue3/",
+      "items": ["前言", "生命周期"]
     }
   ],
   "/engineering/": [

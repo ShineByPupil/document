@@ -1,6 +1,10 @@
 export const nav = [
   { text: '基础', link: '/base/html/基础语法与结构', activeMatch: '/base/' },
-  { text: '框架', link: '/framework/vue', activeMatch: '/framework/' },
+  {
+    text: '框架',
+    link: '/framework/vue3/前言',
+    activeMatch: '/framework/',
+  },
   {
     text: '工程化',
     link: '/engineering/webpack',
