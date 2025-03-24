@@ -82,7 +82,7 @@
     {
       "text": "Vue3",
       "base": "/framework/vue3/",
-      "items": ["前言", "生命周期"]
+      "items": ["前言", "生命周期", "编译器宏"]
     }
   ],
   "/engineering/": [
