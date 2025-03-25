@@ -4,7 +4,7 @@ import UseAttrsChildren from './UseAttrsChildren.vue'
 
 <template>
   <div class="parent demo-container">
-    <p>children 组件</p>
+    <p>Parent 组件</p>
 
     <UseAttrsChildren
       class="child"
