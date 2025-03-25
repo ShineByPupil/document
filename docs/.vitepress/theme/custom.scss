@@ -9,7 +9,7 @@
   border-radius: 8px;
 }
 
-.vp-doc .demo-container {
+.vp-doc > .demo-container {
   margin-top: 6px;
 }
 .demo-container {
@@ -36,8 +36,19 @@
   background: #272a2f;
 }
 
+.vp-code-group .tabs {
+  position: sticky;
+  top: 48px;
+  z-index: 10;
+}
+
+
 @media (min-width: 960px) {
   .custom-block.details > summary {
+    top: calc(48px + var(--vp-nav-height));
+  }
+
+  .vp-code-group .tabs {
     top: calc(48px + var(--vp-nav-height));
   }
 }
@@ -46,7 +57,9 @@
   .custom-block.details > summary {
     top: var(--vp-nav-height);
   }
+  .vp-code-group .tabs {
+    top: calc(var(--vp-nav-height));
+  }
 }
-
 
 

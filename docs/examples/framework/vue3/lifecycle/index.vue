@@ -1,48 +1,80 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import Lifecycle from './lifecycle.vue'
 
+const config = reactive({
+  isKeepalive: true, // 开启缓存
+  isShow: true, // 挂载组件
+  isDebug: false, // 调试钩子
+  isNested: true, // 嵌套组件启用状态
+})
 const keepalive = ref(true)
 const show = ref(true)
 const logs = ref<Array<{ time: string; hook: string; data?: any }>>([])
 
-const toggleKeepalive = function () {
-  clear()
-  keepalive.value = !keepalive.value
-}
-const clear = function () {
+const handleClear = function () {
   logs.value = []
 }
 const addLog = function (data) {
   logs.value.unshift(data)
 }
+const logFormat = computed(() =>
+  config.isDebug
+    ? logs.value
+    : logs.value.filter(
+        (n) => !['onRenderTriggered', 'onRenderTracked'].includes(n.hook),
+      ),
+)
+window.logFormat = logFormat
 </script>
 
 <template>
   <div class="demo-only-show">
-    <el-button-group>
-      <el-button @click="toggleKeepalive" type="primary">
-        {{ keepalive ? '关闭缓存' : '开启缓存' }}
-      </el-button>
-      <el-button @click="show = !show" type="primary">
-        {{ show ? '卸载组件' : '挂载组件' }}
-      </el-button>
-      <el-button @click="clear" type="primary">清除日志</el-button>
-    </el-button-group>
+    <!-- 面板 -->
+    <el-form :model="config" inline>
+      <el-form-item>
+        <el-checkbox v-model="config.isKeepalive">开启缓存</el-checkbox>
+      </el-form-item>
+      <el-form-item>
+        <el-checkbox v-model="config.isShow">挂载组件</el-checkbox>
+      </el-form-item>
+      <el-form-item>
+        <el-checkbox v-model="config.isDebug">调试钩子</el-checkbox>
+      </el-form-item>
+      <el-form-item>
+        <el-checkbox v-model="config.isNested">嵌套组件</el-checkbox>
+      </el-form-item>
+      <el-form-item>
+        <el-button-group>
+          <el-button @click="handleClear">清除日志</el-button>
+        </el-button-group>
+      </el-form-item>
+    </el-form>
 
-    <KeepAlive v-if="keepalive">
-      <Lifecycle v-if="show" @log="addLog" />
+    <!-- 组件 -->
+    <KeepAlive v-if="config.isKeepalive">
+      <Lifecycle
+        v-if="config.isShow"
+        :isNested="config.isNested"
+        @log="addLog"
+      />
     </KeepAlive>
-    <Lifecycle v-else-if="show" @log="addLog" />
+    <Lifecycle
+      v-else-if="config.isShow"
+      :isNested="config.isNested"
+      @log="addLog"
+    />
 
+    <!-- 日志 -->
     <div class="log-container">
       <div
-        v-for="(log, index) in logs"
+        v-for="(log, index) in logFormat"
         :key="index"
         class="log-item"
         :class="[log.hook.toLowerCase()]"
       >
         <span class="timestamp">{{ log.time }}</span>
+        <span v-if="config.isNested" class="type-name">{{ log.type }}</span>
         <span class="hook-name">{{ log.hook }}</span>
         <pre v-if="log.data" class="hook-data">{{ log.data }}</pre>
       </div>
@@ -53,7 +85,6 @@ const addLog = function (data) {
 <style scoped lang="scss">
 .demo-only-show {
   display: grid;
-  grid-template-columns: auto 1fr;
   gap: 10px;
 }
 
@@ -68,17 +99,27 @@ const addLog = function (data) {
 }
 
 .log-item {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
+  gap: 10px;
   padding: 8px 12px;
   margin: 4px 0;
   border-radius: 4px;
   background: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   font-family: monospace;
+  font-size: 0.9em;
 }
 
 .timestamp {
   color: #909399;
-  margin-right: 10px;
+  font-weight: bold;
+}
+
+.type-name {
+  color: #06a60f;
+  font-weight: bold;
 }
 
 .hook-name {
@@ -87,28 +128,40 @@ const addLog = function (data) {
 }
 
 .hook-data {
+  grid-column: 1 / -1;
   color: #67c23a;
   margin: 4px 0 0 20px;
-  font-size: 0.9em;
 }
 
-/* 不同生命周期阶段的颜色标记 */
+/* 挂载阶段 - 黄绿色系 */
 .onbeforemount {
-  border-left: 4px solid #e6a23c;
+  border-left: 4px solid #e6a23c; /* 琥珀色 - 挂载前 */
 }
 .onmounted {
-  border-left: 4px solid #67c23a;
+  border-left: 4px solid #67c23a; /* 草绿色 - 挂载完成 */
 }
+
+/* 更新阶段 - 蓝红色系 */
 .onbeforeupdate {
-  border-left: 4px solid #409eff;
+  border-left: 4px solid #409eff; /* 天空蓝 - 更新前 */
 }
 .onupdated {
-  border-left: 4px solid #f56c6c;
+  border-left: 4px solid #f56c6c; /* 珊瑚红 - 更新完成 */
 }
+
+/* 缓存阶段 - 灰色系 */
 .onactivated {
-  border-left: 4px solid #909399;
+  border-left: 4px solid #909399; /* 深灰色 - 激活 */
 }
 .ondeactivated {
-  border-left: 4px solid #909399;
+  border-left: 4px solid #909399; /* 深灰色 - 失活 */
+}
+
+/* 卸载阶段 - 紫色系 */
+.onbeforeunmount {
+  border-left: 4px solid #9c27b0; /* 品紫色 - 卸载前 */
+}
+.onunmounted {
+  border-left: 4px solid #673ab7; /* 深紫色 - 卸载完成 */
 }
 </style>

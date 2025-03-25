@@ -12,17 +12,18 @@ import {
   onRenderTriggered,
   onRenderTracked,
 } from 'vue'
-import { ElInputNumber, ElButton } from 'element-plus'
+import LifecycleChildren from './LifecycleChildren.vue'
 
 const emit = defineEmits(['log'])
+const prop = defineProps<{ isNested: boolean }>()
 
 const now = performance.now()
-const getTime = () => ((performance.now() - now) / 1000).toFixed(5) + 's'
+const getTime = () => ((performance.now() - now) / 1000).toFixed(4) + 's'
 
 const num = ref(0)
 
-const addLog = (hook: string, data?: any) => {
-  emit('log', { time: getTime(), hook, data })
+const addLog = (hook: string, data?: any, type?: string) => {
+  emit('log', { time: getTime(), hook, data, type: type || 'parent' })
 }
 
 // 初始化阶段
@@ -30,12 +31,8 @@ onBeforeMount(() => addLog('onBeforeMount'))
 onMounted(() => addLog('onMounted'))
 
 // 更新阶段
-onBeforeUpdate(() => {
-  addLog('onBeforeUpdate')
-})
-onUpdated(() => {
-  addLog('onUpdated')
-})
+onBeforeUpdate(() => addLog('onBeforeUpdate'))
+onUpdated(() => addLog('onUpdated'))
 
 // 卸载阶段
 onBeforeUnmount(() => addLog('onBeforeUnmount'))
@@ -67,7 +64,27 @@ onRenderTracked((e) => {
 </script>
 
 <template>
-  <el-input-number v-model="num" :max="99999" />
+  <div class="parent demo-container">
+    <p v-show="prop.isNested">parent 组件</p>
+
+    <el-input-number v-model="num" :max="99999" />
+
+    <LifecycleChildren
+      v-if="prop.isNested"
+      @log="(...args) => addLog(...args, 'child')"
+    ></LifecycleChildren>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.parent {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px; /* 可选间距 */
+}
+
+p {
+  margin: 0;
+}
+</style>
