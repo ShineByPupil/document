@@ -133,6 +133,11 @@ window.logFormat = logFormat
   margin: 4px 0 0 20px;
 }
 
+/* 初始化阶段 - 橙黄色系 */
+.setup {
+  border-left: 4px solid #ff9800; /* 落日橙 - 组合式API初始化 */
+}
+
 /* 挂载阶段 - 黄绿色系 */
 .onbeforemount {
   border-left: 4px solid #e6a23c; /* 琥珀色 - 挂载前 */
@@ -149,15 +154,15 @@ window.logFormat = logFormat
   border-left: 4px solid #f56c6c; /* 珊瑚红 - 更新完成 */
 }
 
-/* 缓存阶段 - 灰色系 */
+/* 缓存阶段 - 双灰色系 */
 .onactivated {
-  border-left: 4px solid #909399; /* 深灰色 - 激活 */
+  border-left: 4px solid #c0c4cc; /* 浅灰色 - 激活 */
 }
 .ondeactivated {
   border-left: 4px solid #909399; /* 深灰色 - 失活 */
 }
 
-/* 卸载阶段 - 紫色系 */
+/* 卸载阶段 - 紫红色系 */
 .onbeforeunmount {
   border-left: 4px solid #9c27b0; /* 品紫色 - 卸载前 */
 }

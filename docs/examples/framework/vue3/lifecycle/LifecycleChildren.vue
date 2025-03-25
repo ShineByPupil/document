@@ -12,6 +12,8 @@ const emit = defineEmits(['log'])
 const addLog = (hook: string, data?: any) => {
   emit('log', hook, data)
 }
+
+addLog('setup')
 // 初始化阶段
 onBeforeMount(() => addLog('onBeforeMount'))
 onMounted(() => addLog('onMounted'))

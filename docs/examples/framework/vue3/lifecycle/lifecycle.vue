@@ -26,6 +26,8 @@ const addLog = (hook: string, data?: any, type?: string) => {
   emit('log', { time: getTime(), hook, data, type: type || 'parent' })
 }
 
+addLog('setup')
+
 // 初始化阶段
 onBeforeMount(() => addLog('onBeforeMount'))
 onMounted(() => addLog('onMounted'))
