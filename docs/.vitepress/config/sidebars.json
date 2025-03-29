@@ -102,7 +102,7 @@
             {
               "text": "数据与状态管理",
               "base": "/framework/vue3/coreSyntax/data/",
-              "items": ["响应式API", "组件状态管理", "全局状态管理（Pinia）"]
+              "items": ["响应式API", "组件状态管理", "全局状态管理"]
             }
           ]
         },
@@ -141,6 +141,13 @@
       "text": "设计范式",
       "base": "/dp/",
       "items": ["位操作艺术", "状态管理范式", "加密解密"]
+    }
+  ],
+  "/service/": [
+    {
+      "text": "服务端",
+      "base": "/service/",
+      "items": ["nginx"]
     }
   ]
 }
