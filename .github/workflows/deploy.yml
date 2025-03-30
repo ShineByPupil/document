@@ -64,10 +64,13 @@ jobs:
 
       - name: Validate SSH Key
         run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
           echo "${{ secrets.SERVER_SSH_KEY }}" > key.pem
           chmod 600 key.pem
-          ssh-keyscan ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts  # 预存主机密钥
-          ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} "echo Connection Test"
+          ssh-keyscan ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+          ssh -v -i key.pem ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} "echo Connection Test"
 
       - name: Deploy via SSH
         uses: easingthemes/ssh-deploy@v2.1.5
@@ -87,4 +90,3 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             ls -la /app/src/document
-            df -h /app/src/document  # 检查挂载点
