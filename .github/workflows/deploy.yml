@@ -62,15 +62,15 @@ jobs:
           name: pages-artifact
           path: dist
 
-      - name: Sync to Server via Rsync
-        uses: burnett01/rsync-deployments@v1
+      # 使用推荐的 ssh-deploy 方案
+      - name: Deploy via SSH
+        uses: easingthemes/ssh-deploy@v2.1.5
         with:
-          switches: -avz --delete
-          path: dist/
-          remote_path: /app/src/document/
-          remote_host: ${{ secrets.SERVER_IP }}
-          remote_user: ${{ secrets.SERVER_USERNAME }}
-          remote_key: ${{ secrets.SERVER_SSH_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SOURCE: "dist/"
+          REMOTE_HOST: ${{ secrets.SERVER_IP }}
+          REMOTE_USER: ${{ secrets.SERVER_USERNAME }}
+          TARGET: "/app/src/document/"
 
       - name: Verify Deployment
         uses: appleboy/ssh-action@v1
