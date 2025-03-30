@@ -1,63 +1,82 @@
-# 工作流名称
-name: Deploy VitePress site to Pages
+name: Deploy to GitHub Pages & Self-Hosted Server
 
-# 触发条件
 on:
   push:
-    branches: [ main ]  # 仅在 main 分支推送时触发
-  workflow_dispatch:   # 允许手动在 GitHub 网页端触发
+    branches: [main]
+  workflow_dispatch:
 
-# 权限配置（关键区别！）
 permissions:
-  contents: read      # 读取仓库代码
-  pages: write        # 写入 GitHub Pages（必须）
-  id-token: write     # 生成部署令牌（必须）
-
-# 并发控制（防止多个部署同时运行）
-concurrency:
-  group: pages        # 同一组的部署会被排队
-  cancel-in-progress: false  # 不取消正在运行的部署
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
+  # --- 构建阶段（共享） ---
   build:
     runs-on: ubuntu-latest
+    outputs:
+      artifact_path: ${{ steps.upload_artifact.outputs.artifact_path }}
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # 拉取完整历史（若需要 lastUpdated 功能）
 
-      # --- Node.js 环境 ---
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm  # 缓存策略（与包管理器一致）
+          cache: npm
 
-      # --- GitHub Pages 初始化 ---
-      - name: Setup Pages
-        uses: actions/configure-pages@v4  # 官方推荐的新方式
+      - name: Install Dependencies
+        run: npm install
 
-      # --- 依赖安装和构建 ---
-      - name: Install dependencies
-        run: npm install  # 根据包管理器调整
-      - name: Build with VitePress
+      - name: Build Project
         run: npm run docs:build
 
-      # --- 上传构建产物 ---
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3  # 专用上传插件
+      # 上传产物供后续 Jobs 使用
+      - name: Upload Artifact
+        id: upload_artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/.vitepress/dist  # 构建输出路径
+          path: docs/.vitepress/dist
 
-  # --- 部署阶段 ---
-  deploy:
+  # --- 部署到 GitHub Pages ---
+  deploy_to_github_pages:
+    needs: build
     environment:
-      name: github-pages  # 关联 GitHub Pages 环境
-      url: ${{ steps.deployment.outputs.page_url }}  # 部署后的 URL
-    needs: build          # 依赖 build 任务
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4  # 官方部署插件
+        uses: actions/deploy-pages@v4
+
+  # --- 部署到自有服务器 ---
+  deploy_to_self_hosted:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pages-artifact
+          path: dist
+
+      - name: Sync to Server via Rsync
+        uses: burnett01/rsync-deployments@v1
+        with:
+          switches: -avz --delete
+          path: dist/
+          remote_path: /app/src/document/
+          remote_host: ${{ secrets.SERVER_IP }}
+          remote_user: ${{ secrets.SERVER_USERNAME }}
+          remote_key: ${{ secrets.SERVER_SSH_KEY }}
+
+      - name: Verify Deployment
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            ls -la /app/src/document
