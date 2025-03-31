@@ -147,7 +147,7 @@
     {
       "text": "服务端",
       "base": "/service/",
-      "items": ["nginx"]
+      "items": ["nginx", "ssh"]
     }
   ]
 }
