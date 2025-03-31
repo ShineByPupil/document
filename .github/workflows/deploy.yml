@@ -11,7 +11,6 @@ permissions:
   id-token: write
 
 jobs:
-  # --- 构建阶段（共享） ---
   build:
     runs-on: ubuntu-latest
     outputs:
@@ -32,14 +31,11 @@ jobs:
       - name: Build Project
         run: npm run docs:build
 
-      # 上传产物供后续 Jobs 使用
-      - name: Upload Artifact
-        id: upload_artifact
+      - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist
 
-  # --- 部署到 GitHub Pages ---
   deploy_to_github_pages:
     needs: build
     environment:
@@ -51,7 +47,6 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  # --- 部署到自有服务器 ---
   deploy_to_self_hosted:
     needs: build
     runs-on: ubuntu-latest
@@ -59,8 +54,21 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
-          name: github-pages  # 与默认名称匹配
-          path: dist
+          name: github-pages
+          path: temp-artifact
+
+      - name: Extract Artifact
+        run: |
+          mkdir -p dist
+          tar -xf temp-artifact/artifact.tar -C dist
+
+      - name: Clean Remote Directory
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: rm -rf /app/src/document/*
 
       - name: Deploy via SSH
         uses: easingthemes/ssh-deploy@v2.1.5
@@ -77,5 +85,4 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            ls -la /app/src/document
+          script: ls -la /app/src/document
