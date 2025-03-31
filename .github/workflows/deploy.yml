@@ -59,18 +59,8 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
-          name: github-pages
+          name: github-pages  # 与默认名称匹配
           path: dist
-
-      - name: Validate SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-          echo "${{ secrets.SERVER_SSH_KEY }}" > key.pem
-          chmod 600 key.pem
-          ssh-keyscan ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
-          ssh -v -i key.pem ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} "echo Connection Test"
 
       - name: Deploy via SSH
         uses: easingthemes/ssh-deploy@v2.1.5
@@ -80,7 +70,6 @@ jobs:
           REMOTE_HOST: ${{ secrets.SERVER_IP }}
           REMOTE_USER: ${{ secrets.SERVER_USERNAME }}
           TARGET: "/app/src/document/"
-          ARGS: "-avz --delete --rsync-path='mkdir -p /app/src/document && rsync'"
 
       - name: Verify Deployment
         uses: appleboy/ssh-action@v1
