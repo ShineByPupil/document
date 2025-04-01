@@ -1,76 +1,78 @@
-<script setup lang="ts"></script>
+<style scoped lang="scss">
+.scroll-snap-x {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory; /* X轴强制对齐 */
+  scrollbar-width: none;
+}
+.scroll-snap-x div {
+  scroll-snap-align: start; /* 对齐起始位置: start, center, end */
+}
+
+.scroll-snap-y {
+  overflow-y: auto;
+  scroll-snap-type: y proximity; /* Y轴接近对齐 */
+}
+</style>
 
 <template>
   <div class="scroll-snap">
     <!-- 横向轮播图 -->
-    <div class="carousel">
-      <div class="product-card">商品1</div>
-      <div class="product-card">商品2</div>
-      <div class="product-card">商品3</div>
+    <div class="carousel scroll-snap-x">
+      <template v-for="i in 10">
+        <div class="product-card">商品{{ i }}</div>
+      </template>
     </div>
 
     <!-- 垂直分页 -->
-    <div class="page-container">
-      <div class="page">第一页</div>
-      <div class="page">第二页</div>
-      <div class="page">第三页</div>
+    <div class="page-container scroll-snap-y">
+      <template v-for="i in 10">
+        <div class="page">第{{ i }}页</div>
+      </template>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.scroll-snap {
-  $colors: #ff6b6b, #4ecdc4, #45b7d1;
+$colors: #ff6b6b, #4ecdc4, #45b7d1;
 
+.scroll-snap {
   background: var(--bg-color-soft);
   color: white;
   text-shadow: 0 2px 4px #000000;
+}
 
-  /* 横向商品轮播图 */
-  .carousel {
-    overflow-x: auto; /* 允许横向滚动 */
-    scroll-snap-type: x mandatory; /* X轴强制对齐 */
-    display: flex;
-    gap: 20px; /* 商品间距 */
-    padding: 20px 0;
+/* 横向商品轮播图 */
+.carousel {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+}
+/* 商品卡片 */
+.carousel .product-card {
+  min-width: 30%; /* 手机端占屏幕80%宽度 */
+  padding: 20px;
+  border-radius: 10px;
 
-    /* 隐藏滚动条（保持功能） */
-    scrollbar-width: none; /* Firefox */
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* 商品卡片 */
-    .product-card {
-      scroll-snap-align: start; /* 对齐起始边缘 */
-      min-width: 100%; /* 手机端占屏幕80%宽度 */
-      padding: 20px;
-      border-radius: 10px;
-
-      @for $i from 0 to 3 {
-        &:nth-child(#{length($colors)}n + #{$i + 1}) {
-          background: nth($colors, ($i % length($colors)) + 1);
-        }
-      }
+  @for $i from 0 to 3 {
+    &:nth-child(#{length($colors)}n + #{$i + 1}) {
+      background: nth($colors, ($i % length($colors)) + 1);
     }
   }
+}
 
-  /* 垂直分页效果 */
-  .page-container {
-    height: 50vh; /* 全屏高度 */
-    overflow-y: auto;
-    scroll-snap-type: y proximity; /* Y轴接近对齐 */
+/* 垂直分页效果 */
+.page-container {
+  height: 50vh; /* 全屏高度 */
+}
 
-    .page {
-      scroll-snap-align: start; /* 对齐顶部 */
-      height: 100%;
-      padding: 20px;
+.page-container .page {
+  scroll-snap-align: start; /* 对齐顶部 */
+  height: 100%;
+  padding: 20px;
 
-      @for $i from 0 to 3 {
-        &:nth-child(#{length($colors)}n + #{$i + 1}) {
-          background: nth($colors, ($i % length($colors)) + 1);
-        }
-      }
+  @for $i from 0 to 3 {
+    &:nth-child(#{length($colors)}n + #{$i + 1}) {
+      background: nth($colors, ($i % length($colors)) + 1);
     }
   }
 }
