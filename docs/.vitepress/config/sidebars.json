@@ -10,7 +10,7 @@
       "text": "CSS",
       "base": "/base/css/",
       "collapsed": false,
-      "items": ["核心机制", "布局系统", "视觉表现", "工程实践", "性能优化"]
+      "items": ["选择器", "布局系统", "视觉表现", "工程实践", "性能优化"]
     },
     {
       "text": "JavaScript",
