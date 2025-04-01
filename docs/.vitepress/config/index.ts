@@ -16,10 +16,14 @@ export default defineConfig({
       label: '页面导航',
       level: 'deep', // 如果需要显示多级标题
     },
+    docFooter: {
+      prev: '上一篇',
+      next: '下一篇',
+    },
     nav,
     sidebar: sidebars,
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/your-username/your-repo' },
+      { icon: 'github', link: 'https://github.com/ShineByPupil/document' },
     ],
     search: {
       provider: 'local',
