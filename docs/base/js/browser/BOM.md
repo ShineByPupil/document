@@ -2,7 +2,7 @@
 
 > 浏览器对象模型。提供与浏览器窗口、导航、历史记录等交互的 API。不属 W3C 标准，但各浏览器实现基本一致，是 Web 应用与浏览器交互的桥梁。
 
-## 一、`location`
+## 一、**`location`**
 
 ### 作用
 
@@ -20,7 +20,7 @@
 - `reload()`：重新加载页面
 - `replace(url)`：替换当前页面（无历史记录）
 
-## 二、`navigator`
+## 二、**`navigator`**
 
 ### 作用
 
@@ -37,7 +37,7 @@
 - `geolocation.getCurrentPosition(success, error, options)`：获取地理位置
 - `clipboard.readText()`：读取剪贴板内容（需权限）
 
-## 三、`history`
+## 三、**`history`**
 
 ### 作用
 
@@ -50,7 +50,7 @@
 - `pushState(state, title, url)`：添加历史记录（用于前端路由）
 - `replaceState()`：替换当前历史记录
 
-## 四、`screen`
+## 四、**`screen`**
 
 ### 作用
 
@@ -63,7 +63,7 @@
 
 ### 方法
 
-## 五、`performance`
+## 五、**`performance`**
 
 ### 作用
 
