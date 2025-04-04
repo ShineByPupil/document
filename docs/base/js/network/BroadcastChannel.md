@@ -18,84 +18,14 @@
 4. 实时仪表盘同步。多窗口展示的监控数据统一刷新
 5. 页面集群控制。主控页面批量关闭/刷新子页面
 
-## 基本用法
+## 代码示例
 
-### 基础通信实现
-
-```js
-// 页面A：创建频道并发送消息
-const channelA = new BroadcastChannel('app_channel')
-channelA.postMessage({
-  type: 'USER_UPDATE',
-  data: { id: 123, name: 'Alice' },
-})
-
-// 页面B：订阅相同频道
-const channelB = new BroadcastChannel('app_channel')
-channelB.onmessage = (event) => {
-  if (event.data.type === 'USER_UPDATE') {
-    updateUserProfile(event.data.data)
-  }
-}
-
-// 页面C：使用事件监听器
-const channelC = new BroadcastChannel('app_channel')
-channelC.addEventListener('message', (event) => {
-  console.log('收到广播消息:', event.data)
-})
-```
-
-### 消息类型过滤
-
-```js
-// 发送带类型标识的消息
-broadcastChannel.postMessage({
-  __type: 'SYSTEM_ALERT',
-  content: '服务器即将维护',
-  level: 'warning',
-})
-
-// 接收端过滤处理
-broadcastChannel.onmessage = (event) => {
-  const msg = event.data
-  switch (msg.__type) {
-    case 'SYSTEM_ALERT':
-      showAlert(msg.content, msg.level)
-      break
-    case 'DATA_REFRESH':
-      fetchNewData()
-      break
-  }
-}
-```
-
-### 频道管理
-
-```js
-// 动态切换频道
-let currentChannel = null
-
-function connectChannel(channelName) {
-  if (currentChannel) currentChannel.close()
-  currentChannel = new BroadcastChannel(channelName)
-  currentChannel.onmessage = handleMessage
-}
-
-// 发送二进制数据
-const fileInput = document.querySelector('input[type="file"]')
-fileInput.addEventListener('change', (e) => {
-  const file = e.target.files[0]
-  currentChannel.postMessage({
-    type: 'FILE_UPLOAD',
-    data: file,
-  })
-})
-
-// 显式关闭连接
-window.addEventListener('beforeunload', () => {
-  if (currentChannel) currentChannel.close()
-})
-```
+:::code-group
+<<< @/examples/base/js/network/BroadcastChannel/index.js [基础语法]
+<<< @/examples/base/js/network/BroadcastChannel/msgType.js [消息类型]
+<<< @/examples/base/js/network/BroadcastChannel/toggleChannel.js [动态切换频道]
+<<< @/examples/base/js/network/BroadcastChannel/beforeunload.js [安全关闭]
+:::
 
 ## 浏览器兼容性提示
 

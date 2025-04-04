@@ -1,0 +1,29 @@
+<!-- 父页面 parent.html -->
+<iframe src="child.html" id="childFrame"></iframe>
+<script>
+  const iframe = document.getElementById('childFrame')
+  // 发送消息到子窗口
+  iframe.contentWindow.postMessage(
+    { type: 'AUTH_TOKEN', value: 'xyz123' },
+    'https://child-domain.com', // 指定目标origin
+  )
+
+  // 接收子窗口消息
+  window.addEventListener('message', (event) => {
+    if (event.origin !== 'https://child-domain.com') return
+    console.log('收到子窗口数据:', event.data)
+  })
+</script>
+
+<!-- 子页面 child.html -->
+<script>
+  // 接收父窗口消息
+  window.addEventListener('message', (event) => {
+    if (event.origin !== 'https://parent-domain.com') return
+    if (event.data.type === 'AUTH_TOKEN') {
+      localStorage.setItem('token', event.data.value)
+    }
+    // 响应消息
+    event.source.postMessage('TOKEN_SAVED', event.origin)
+  })
+</script>

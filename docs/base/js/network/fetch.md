@@ -18,113 +18,17 @@
 4. SSR 数据预取。服务端渲染时预先获取首屏数据
 5. 流式内容处理。逐块处理大型 JSON/文本/媒体文件
 
+## 代码示例
+
+:::code-group
+<<< @/examples/base/js/network/fetch/GET.js [GET 请求]
+<<< @/examples/base/js/network/fetch/POST.js [POST 请求]
+<<< @/examples/base/js/network/fetch/upload.js [文件上传]
+<<< @/examples/base/js/network/fetch/abort.js [中断请求]
+<<< @/examples/base/js/network/fetch/ReadableStream.js [流式读取响应]
+:::
+
 ## 基本用法
-
-### 基础 GET 请求
-
-```js
-fetch('https://api.example.com/data')
-  .then((response) => response.json())
-  .then((data) => console.log(data))
-  .catch((error) => console.error('请求失败:', error))
-```
-
-### POST 请求（JSON 数据）
-
-```js
-const postData = { title: 'foo', body: 'bar' }
-fetch('https://api.example.com/posts', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(postData),
-})
-```
-
-### 文件上传（FormData）
-
-```js
-const formData = new FormData()
-formData.append('file', fileInput.files[0])
-fetch('/upload', {
-  method: 'POST',
-  body: formData, // 自动设置 multipart/form-data
-})
-```
-
-### 自定义请求配置
-
-```js
-const controller = new AbortController()
-setTimeout(() => controller.abort(), 5000) // 5秒超时
-
-fetch('/data', {
-  signal: controller.signal,
-  headers: new Headers({
-    Authorization: 'Bearer token123',
-  }),
-  cache: 'no-cache',
-  redirect: 'follow',
-})
-```
-
-### 流式读取响应
-
-> fetch API 的流式数据处理能力源于其底层的 `ReadableStream` 支持，允许开发者按需分块处理数据
-
-协议层要求:
-
-```http
-Transfer-Encoding: chunked
-connection: keep-alive
-```
-
-```ts
-fetch('/large-file.txt').then((response) => {
-  const reader = response.body.getReader()
-  return new ReadableStream({
-    start(controller) {
-      function push() {
-        reader.read().then(({ done, value }) => {
-          if (done) {
-            controller.close()
-            return
-          }
-          controller.enqueue(value)
-          push()
-        })
-      }
-
-      push()
-    },
-  })
-})
-```
-
-### 中断请求
-
-```js
-// 创建 AbortController 实例
-const abortController = new AbortController()
-
-// 发起 fetch 请求，并传递 signal 参数
-fetch('https://api.example.com/data', {
-  signal: abortController.signal, // 绑定中断信号
-})
-  .then((response) => response.json())
-  .then((data) => console.log(data))
-  .catch((error) => {
-    if (error.name === 'AbortError') {
-      console.log('请求已被手动取消')
-    } else {
-      console.error('请求失败:', error)
-    }
-  })
-
-// 通过调用 abort() 方法中断请求
-abortController.abort()
-```
 
 ## 浏览器兼容性提示
 

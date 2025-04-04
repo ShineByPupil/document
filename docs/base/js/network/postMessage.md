@@ -19,95 +19,13 @@
 4. 第三方插件通信。与沙盒化 `iframe` 组件进行安全数据交互
 5. PWA 离线通信。`ServiceWorker` 与页面间的缓存状态同步
 
-## 基本用法
+## 代码示例
 
-### 窗口间通信示例
-
-```html
-<!-- 父页面 parent.html -->
-<iframe src="child.html" id="childFrame"></iframe>
-<script>
-  const iframe = document.getElementById('childFrame')
-  // 发送消息到子窗口
-  iframe.contentWindow.postMessage(
-    { type: 'AUTH_TOKEN', value: 'xyz123' },
-    'https://child-domain.com', // 指定目标origin
-  )
-
-  // 接收子窗口消息
-  window.addEventListener('message', (event) => {
-    if (event.origin !== 'https://child-domain.com') return
-    console.log('收到子窗口数据:', event.data)
-  })
-</script>
-
-<!-- 子页面 child.html -->
-<script>
-  // 接收父窗口消息
-  window.addEventListener('message', (event) => {
-    if (event.origin !== 'https://parent-domain.com') return
-    if (event.data.type === 'AUTH_TOKEN') {
-      localStorage.setItem('token', event.data.value)
-    }
-    // 响应消息
-    event.source.postMessage('TOKEN_SAVED', event.origin)
-  })
-</script>
-```
-
-### WebWorker 通信示例
-
-```js
-// 主线程 main.js
-const worker = new Worker('worker.js')
-
-// 发送复杂对象
-worker.postMessage({
-  action: 'CALCULATE',
-  data: new Float32Array([1.2, 3.4, 5.6]),
-})
-
-// 接收处理结果
-worker.onmessage = (e) => {
-  console.log('计算结果:', e.data)
-}
-
-// worker.js
-self.onmessage = function (e) {
-  const input = e.data
-  if (input.action === 'CALCULATE') {
-    const result = input.data.reduce((a, b) => a + b)
-    self.postMessage(result)
-  }
-}
-```
-
-### ServiceWorker 通信示例
-
-```js
-// 页面端 page.js
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.controller.postMessage({
-    type: 'UPDATE_CACHE',
-    urls: ['/data.json'],
-  })
-
-  navigator.serviceWorker.addEventListener('message', (event) => {
-    console.log('ServiceWorker 响应:', event.data)
-  })
-}
-
-// ServiceWorker sw.js
-self.addEventListener('message', (event) => {
-  if (event.data.type === 'UPDATE_CACHE') {
-    caches.open('v1').then((cache) => {
-      cache.addAll(event.data.urls).then(() => {
-        event.source.postMessage('CACHE_UPDATED')
-      })
-    })
-  }
-})
-```
+:::code-group
+<<< @/examples/base/js/network/postMessage/index.html [窗口通信]
+<<< @/examples/base/js/network/postMessage/WebWorker.js [WebWorker]
+<<< @/examples/base/js/network/postMessage/ServiceWorker.js [ServiceWorker]
+:::
 
 ## 浏览器兼容性提示
 

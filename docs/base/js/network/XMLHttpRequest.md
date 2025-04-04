@@ -19,95 +19,16 @@
 4. 兼容性优先项目。需支持老旧移动浏览器的特殊场景
 5. 二进制流处理。通过 `xhr.responseType='arraybuffer'` 处理音视频流
 
+## 代码示例
+
+:::code-group
+<<< @/examples/base/js/network/XMLHttpRequest/GET.js [基础语法]
+<<< @/examples/base/js/network/XMLHttpRequest/timeout.js [设置超时]
+<<< @/examples/base/js/network/XMLHttpRequest/abort.js [中断请求]
+<<< @/examples/base/js/network/XMLHttpRequest/progress.js [监控上传]
+:::
+
 ## 基本用法
-
-### 创建实例
-
-```js
-// 1. 创建实例
-const xhr = new XMLHttpRequest()
-
-// 2. 配置请求（异步 GET）
-xhr.open('GET', '/api/data', true)
-
-// 3. 设置响应类型
-xhr.responseType = 'json'
-
-// 4. 监听状态变化
-xhr.onreadystatechange = function () {
-  if (xhr.readyState === 4) {
-    if (xhr.status === 200) {
-      console.log('响应数据:', xhr.response)
-    } else {
-      console.error('请求失败:', xhr.statusText)
-    }
-  }
-}
-
-// 5. 发送请求
-xhr.send()
-
-// 同步请求示例（慎用！会阻塞主线程）
-const syncXhr = new XMLHttpRequest()
-syncXhr.open('GET', '/api/data', false)
-syncXhr.send()
-console.log(syncXhr.responseText)
-
-// POST 表单数据
-const formData = new FormData()
-formData.append('username', 'john')
-const postXhr = new XMLHttpRequest()
-postXhr.open('POST', '/submit')
-postXhr.send(formData)
-```
-
-### 设置超时
-
-```js
-xhr.timeout = 5000 // 5秒超时
-
-xhr.ontimeout = function () {
-  console.error('Request timed out')
-}
-```
-
-### 中断请求
-
-```js
-// 监听中断事件
-xhr.onabort = function () {
-  console.log('请求被中止')
-}
-
-// 中止请求
-setTimeout(() => {
-  xhr.abort()
-}, 1000) // 1秒后中止请求
-```
-
-## 监控上传进度
-
-```js
-xhr.upload.onprogress = function (event) {
-  if (event.lengthComputable) {
-    const percent = (event.loaded / event.total) * 100
-    console.log(`上传进度: ${percent.toFixed(2)}%`)
-  }
-}
-
-xhr.onload = function () {
-  if (xhr.status === 200) {
-    console.log('上传完成')
-  } else {
-    console.error('上传失败状态:', xhr.status)
-  }
-}
-
-// 发送 FormData
-let formData = new FormData()
-formData.append('file', fileInput.files[0])
-xhr.send(formData)
-```
 
 ## 浏览器兼容性提示
 
