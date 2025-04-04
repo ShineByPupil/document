@@ -12,6 +12,14 @@
 2. **领域特定组件**：如电商网站的“商品卡片”、音乐播放器的“进度条”
 3. **第三方插件集成**：封装地图、图表等第三方功能为自定义标签
 
+### 代码示例
+
+### 在线演示
+
+:::demo
+base/js/WebComponents/CustomElements
+:::
+
 ### API
 
 | 生命周期方法                                         | 说明                                                                      |
@@ -21,12 +29,6 @@
 | `disconnectedCallback()`                             | 元素从 DOM 移除时触发，用于清理资源                                       |
 | `attributeChangedCallback(attrName, oldVal, newVal)` | 元素的被观察属性变化时触发，需配合 `observedAttributes` 静态属性使用      |
 | `static observedAttributes`                          | 返回需要监听的属性名数组（如 `return ['name', 'age']`）                   |
-
-### 代码示例
-
-:::demo
-base/html/WebComponents/CustomElements
-:::
 
 ## 二、Shadow DOM
 
@@ -38,6 +40,14 @@ base/html/WebComponents/CustomElements
 2. **动态主题切换**：在 Shadow DOM 内隔离主题样式，实现动态更换
 3. **封装复杂组件**：如视频播放器，隐藏内部实现细节
 
+### 代码示例
+
+### 在线演示
+
+:::demo
+base/js/WebComponents/ShadowDOM
+:::
+
 ### API
 
 | 属性                             | 说明                                                              |
@@ -46,12 +56,6 @@ base/html/WebComponents/CustomElements
 | `ShadowRoot.innerHTML`           | 设置 Shadow DOM 内部结构                                          |
 | `::slotted(selector)`            | CSS 伪类，用于样式化被 `<slot>` 投影的内容                        |
 | `<slot name="...">`              | 内容投影插槽，可通过 `name` 属性实现具名插槽                      |
-
-### 代码示例
-
-:::demo
-base/html/WebComponents/ShadowDOM
-:::
 
 ## 三、HTML Templates
 
@@ -63,6 +67,14 @@ base/html/WebComponents/ShadowDOM
 2. **重复结构复用**：如表格行、模态框的通用结构
 3. **条件渲染**：按需显示/隐藏预定义的模板内容
 
+### 代码示例
+
+### 在线演示
+
+:::demo
+base/js/WebComponents/HTMLTemplates
+:::
+
 ### API
 
 | 属性               | 说明                                                                        |
@@ -70,9 +82,3 @@ base/html/WebComponents/ShadowDOM
 | `<template>`       | 定义可复用的 HTML 模板，内容不会被渲染，直到被 JavaScript 激活              |
 | `template.content` | 获取模板的文档片段（`DocumentFragment`），可通过 `cloneNode(true)` 克隆使用 |
 | `<slot>` 在模板中  | 结合 Custom Elements 使用时，实现内容投影（需在 Shadow DOM 中）             |
-
-### 代码示例
-
-:::demo
-base/html/WebComponents/HTMLTemplates
-:::
