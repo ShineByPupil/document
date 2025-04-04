@@ -28,8 +28,6 @@
 <<< @/examples/base/js/network/XMLHttpRequest/progress.js [监控上传]
 :::
 
-## 基本用法
-
 ## 浏览器兼容性提示
 
 ```js
