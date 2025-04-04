@@ -78,6 +78,7 @@
               "items": ["WebWorker", "SharedWorker", "ServiceWorker"]
             },
             "WebComponents",
+            "观察者",
             "安全策略",
             "性能优化"
           ]
