@@ -25,7 +25,6 @@ const logFormat = computed(() =>
         (n) => !['onRenderTriggered', 'onRenderTracked'].includes(n.hook),
       ),
 )
-window.logFormat = logFormat
 </script>
 
 <template>

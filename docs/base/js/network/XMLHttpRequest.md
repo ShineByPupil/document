@@ -22,7 +22,7 @@
 ## 代码示例
 
 :::code-group
-<<< @/examples/base/js/network/XMLHttpRequest/GET.js [基础语法]
+<<< @/examples/base/js/network/XMLHttpRequest/index.js [基础语法]
 <<< @/examples/base/js/network/XMLHttpRequest/timeout.js [设置超时]
 <<< @/examples/base/js/network/XMLHttpRequest/abort.js [中断请求]
 <<< @/examples/base/js/network/XMLHttpRequest/progress.js [监控上传]

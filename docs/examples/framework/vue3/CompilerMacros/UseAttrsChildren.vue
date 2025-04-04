@@ -2,8 +2,6 @@
 import { useAttrs } from 'vue'
 
 const attrs = useAttrs()
-
-window.attrs = attrs
 </script>
 
 <template>
