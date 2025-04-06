@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import './finally'
+import { onMounted } from 'vue'
+
+onMounted(async () => {
+  // 动态导入包含浏览器API的模块
+  const { UserCard } = await import('./finally')
+
+  customElements.define('ce-user-card', UserCard)
+})
 </script>
 
 <template>

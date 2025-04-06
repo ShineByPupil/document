@@ -24,7 +24,7 @@ template.innerHTML = `
 `
 
 // 【Custom Elements】
-class UserCard extends HTMLElement {
+export class UserCard extends HTMLElement {
   static observedAttributes = ['name', 'age']
 
   constructor() {
@@ -50,5 +50,3 @@ class UserCard extends HTMLElement {
     }
   }
 }
-
-customElements.define('ce-user-card', UserCard)
