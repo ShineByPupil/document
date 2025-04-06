@@ -38,7 +38,17 @@ export default defineConfig({
     },
   },
   vite,
+  vue: {
+    template: {
+      compilerOptions: {
+        isCustomElement: (tag) => tag.startsWith('ce-'),
+      },
+    },
+  },
   markdown: {
-    config: (md) => mdPlugin(md),
+    lineNumbers: true,
+    config: (md) => {
+      mdPlugin(md)
+    },
   },
 })
