@@ -2,39 +2,12 @@
 
 > 文档对象模型。将 HTML/XML 文档抽象为节点树。提供跨平台的文档访问与操作方式，支持动态修改内容、结构和样式，是前端交互的核心基础。
 
-## DOM 树遍历
+## 一、插入节点
 
-```js
-// 深度优先遍历
-function traverse(node) {
-  console.log(node.nodeName)
-  for (const child of node.childNodes) {
-    traverse(child)
-  }
-}
+### 末尾插入
 
-// 使用 TreeWalker 高效遍历
-const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT)
-while (walker.nextNode()) {
-  console.log(walker.currentNode.tagName)
-}
-```
-
-## 节点（Node）
-
-### 插入节点
-
-- `parent.insertBefore(newNode, referenceNode)` 将一个节点插入到指定节点之前
-
-```html
-<div id="parent">
-  <!--  插入位置 -->
-  <span id="referenceNode">子节点1</span>
-  <p>子节点2</p>
-</div>
-```
-
-- `parent.appendChild(newNode)` 将一个节点附加到指定父节点的末尾
+- `node.appendChild(newNode)`
+- `element.append(...nodesOrStrings)`
 
 ```html
 <div id="parent">
@@ -44,7 +17,43 @@ while (walker.nextNode()) {
 </div>
 ```
 
-- `parent.replaceChild(newNode, oldNode)` 将一个节点替换另一个节点
+### 开头插入
+
+- `element.prepend(...nodesOrStrings)`
+
+```html
+<div id="parent">
+  <!-- 插入位置 -->
+  <span>子节点1</span>
+  <p>子节点2</p>
+</div>
+```
+
+### 相邻插入
+
+- `element.before(...nodesOrStrings)`
+
+```html
+<div>
+  <span>子节点1</span>
+  <!-- 插入位置 -->
+  <p id="child">子节点2</p>
+</div>
+```
+
+- `element.after(...nodesOrStrings)`
+
+```html
+<div>
+  <span>子节点1</span>
+  <p id="child">子节点2</p>
+  <!-- 插入位置 -->
+</div>
+```
+
+### 替换插入
+
+- `node.replaceChild(newNode, oldNode)`
 
 ```html
 <div id="parent">
@@ -55,85 +64,7 @@ while (walker.nextNode()) {
 </div>
 ```
 
-- 批量插入
-
-```js
-// 创建元素的最佳实践
-const fragment = document.createDocumentFragment() // 减少重排
-
-// 批量插入
-for (let i = 0; i < 100; i++) {
-  const p = document.createElement('p')
-  p.textContent = `Item ${i}`
-  fragment.appendChild(p)
-}
-document.body.appendChild(fragment)
-```
-
-### 克隆节点
-
-```js
-// 深度克隆（包括子节点，dom0事件被克隆，dom2事件不被克隆）
-const clonedNode = node.cloneNode(true)
-```
-
-### 删除节点
-
-```js
-node.parentNode && node.parentNode.removeChild(node)
-```
-
-## 元素（Element）
-
-> `Element` 是 `Node` 的子类
-
-```js
-Element.prototype instanceof Node // true
-```
-
-### 插入元素
-
-- `parent.append(newNode)` 在当前 Element 的最后一个子节点之后插入一组 Node 对象或字符串对象
-
-```html
-<div id="parent">
-  <span>子节点1</span>
-  <p>子节点2</p>
-  <!-- 插入位置 -->
-</div>
-```
-
-- `parent.prepend(newNode)` 在当前元素的第一个子节点之前插入一组 Node 对象或字符串对象
-
-```html
-<div id="parent">
-  <!-- 插入位置 -->
-  <span>子节点1</span>
-  <p>子节点2</p>
-</div>
-```
-
-- `child.before(newNode)` 在当前元素之前插入一组 Node 对象或字符串对象
-
-```html
-<div>
-  <span>子节点1</span>
-  <!-- 插入位置 -->
-  <p id="child">子节点2</p>
-</div>
-```
-
-- `child.after(newNode)` 在当前元素之后插入一组 Node 对象或字符串对象
-
-```html
-<div>
-  <span>子节点1</span>
-  <p id="child">子节点2</p>
-  <!-- 插入位置 -->
-</div>
-```
-
-- `child.replaceWith(newNode)` 替换一组 Node 对象或字符串对象到当前元素
+- `element.replaceWith(...nodesOrStrings)`
 
 ```html
 <div>
@@ -143,67 +74,90 @@ Element.prototype instanceof Node // true
 </div>
 ```
 
-### 移除元素
+### 精确插入
 
-```js
-node.remove() // 直接移除自身
+- `node.insertBefore(newNode, refNode)`
+
+```html
+<div id="parent">
+  <!--  插入位置 -->
+  <span id="refNode">子节点1</span>
+  <p>子节点2</p>
+</div>
 ```
 
-### 选择器
-
-```js
-// 静态选择（返回非实时集合）
-const list = document.querySelectorAll('.item')
-
-// 动态选择（返回实时 HTMLCollection）
-const liveList = document.getElementsByClassName('active')
-
-// 链式查询
-const input = document
-  .getElementById('form')
-  .querySelector('input[name="email"]')
-```
-
-### 属性操作
-
-```js
-element.setAttribute('data-uid', '123') // 动态设置属性
-const value = element.getAttribute('aria-label') // 获取属性值
-element.toggleAttribute('disabled', true) // 动态切换属性
-```
-
-- dataset API
-
-```js
-// 示例1
-element.dataset.userRole = 'admin'
-element.dataset.userRole // 'admin'
-
-// 示例2
-element.setAttribute('data-user-role', 'admin')
-element.getAttribute('data-user-role') // 'admin'
-```
-
-### 内容操作
-
-```js
-// 指定位置插入
-div.insertAdjacentText('beforeend', 'New content')
-div.insertAdjacentHTML('beforeend', '<p>New content</p>')
-
-// 整体替换
-div.textContent = '<script>alert(1)</script>'
-div.innerHTML = '<p>New content</p>'
-```
-
-- 插入位置
+- `element.insertAdjacentHTML(position, html)`
+- `element.insertAdjacentText(position, text)`
 
 ```html
 <!-- beforebegin -->
 <div>
   <!-- afterbegin -->
-  foo
+  内容
   <!-- beforeend -->
 </div>
 <!-- afterend -->
 ```
+
+## 二、删除节点
+
+- `node.removeChild(childNode)`
+- `element.remove()`
+
+## 三、克隆节点
+
+> 深度克隆（包括子节点，dom0事件被克隆，dom2事件不被克隆）
+
+- `node.cloneNode(deep)`
+
+## 四、节点遍历
+
+- `node.childNodes` 返回包含所有类型子节点
+- `node.firstChild` / `node.lastChild` 返回第一个/最后一个子节点
+- `node.parentNode` 直接父节点
+- `node.nextSibling` / `node.previousSibling` 返回相邻的下一个/上一个兄弟节点
+- `element.children` 仅包含元素子节点（忽略文本、注释等）
+- `element.firstElementChild` / `element.lastElementChild` 首尾元素子节点
+- `element.parentElement` 父元素节点（仅当父节点是元素时有效）
+- `element.nextElementSibling` / `element.previousElementSibling` 相邻元素兄弟节点
+
+## 五、节点比较
+
+- `node.contains(otherNode)` 是否包含某个节点
+- `node.isEqualNode(otherNode)` 是否结构内容一致
+- `node.isSameNode(otherNode)` 是否同一对象（===）
+- `node.compareDocumentPosition(otherNode)` 精确判断节点之间的关系
+
+| 常量名称                              | 值   | 说明                     |
+| ------------------------------------- | ---- | ------------------------ |
+| `Node.DOCUMENT_POSITION_DISCONNECTED` | `1`  | 两个节点不在同一文档树中 |
+| `Node.DOCUMENT_POSITION_PRECEDING`    | `2`  | 目标节点在当前节点之前   |
+| `Node.DOCUMENT_POSITION_FOLLOWING`    | `4`  | 目标节点在当前节点之后   |
+| `Node.DOCUMENT_POSITION_CONTAINS`     | `8`  | 当前节点包含目标节点     |
+| `Node.DOCUMENT_POSITION_CONTAINED_BY` | `16` | 当前节点被目标节点包含   |
+
+## 六、查找接口
+
+- **传统方法**
+  - `document.getElementById(id)` 根据 ID 查找元素
+  - `document.getElementsByClassName(className)` 返回具有指定类名的元素集合
+  - `document.getElementsByTagName(tagName)` 返回具有指定标签名的元素集合
+- **现代标准方法**
+  - `element.querySelector(selector)` 返回匹配指定选择器的第一个元素
+  - `element.querySelectorAll(selector)` 返回匹配选择器的所有元素
+  - `element.closest(selector)` 从当前元素开始向上查找，返回最近的匹配元素
+
+## 七、只读属性
+
+- `node.nodeName` 节点名称
+- `node.nodeType` 节点类型
+- `node.nodeValue` 文本/注释的值
+- `node.textContent` 节点所有纯文本内容
+
+## 八、属性操作
+
+- `element.setAttribute(name, value)` 设置指定元素上的属性值
+- `element.getAttribute(name)` 返回元素的属性值
+- `element.toggleAttribute(name, force?)` 切换元素的某个布尔属性的状态
+- `element.hasAttribute(name)` 返回布尔值，元素的指定属性是否存在
+- `element.removeAttribute(name)` 移除当前元素上的属性
