@@ -1,4 +1,4 @@
-# MessageChannel
+# MessageChannel <Sound word="MessageChannel"/>
 
 > 浏览器提供的双向通信管道创建工具，可生成一对互联的 MessagePort 对象。主要用于不同 JavaScript 执行上下文（如
 > iframe/Worker/不同脚本）间的直接通信，为模块化架构提供安全可控的数据通道。

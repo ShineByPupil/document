@@ -1,4 +1,4 @@
-# postMessage
+# postMessage <Sound word="postMessage"/>
 
 > 是浏览器提供的跨文档通信 API，实现不同源窗口/Worker之间的安全数据交互。通过结构化克隆算法传递数据，突破同源策略限制，成为现代
 > Web 应用跨域通信的基石技术。

@@ -1,4 +1,4 @@
-# BroadcastChannel
+# BroadcastChannel <Sound word="BroadcastChannel"/>
 
 > HTML5 提供的跨页面通信接口，允许同源环境下不同浏览器上下文（标签页/窗口/iframe）直接通信。通过命名管道实现发布-订阅模式，是轻量级页面协同的标准化解决方案。
 

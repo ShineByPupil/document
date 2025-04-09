@@ -1,4 +1,4 @@
-# EventSource
+# EventSource <Sound word="EventSource"/>
 
 > 实现服务器推送事件（Server-Sent Events，SSE）的浏览器 API，基于 HTTP 长连接实现单向实时通信（服务端 →
 > 客户端）。采用纯文本协议，支持自动重连，是构建实时应用的轻量化解决方案。

@@ -1,4 +1,4 @@
-# XMLHttpRequest
+# XMLHttpRequest <Sound word="XMLHttpRequest"/>
 
 > 浏览器最早实现的异步通信 API，为 AJAX 技术的核心基础。尽管已被现代 Fetch API
 > 取代，但在旧项目维护、文件上传进度监控等场景仍具实用价值，保有最广泛的浏览器兼容性支持。

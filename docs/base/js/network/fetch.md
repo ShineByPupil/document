@@ -1,4 +1,4 @@
-# fetch
+# fetch <Sound word="fetch"/>
 
 > 浏览器提供的现代网络请求接口，替代传统 XMLHttpRequest（XHR）。基于 Promise 设计，支持异步请求、流式数据处理和跨域资源请求（CORS），成为前端数据交互的核心工具
 
