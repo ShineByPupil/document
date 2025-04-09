@@ -4,15 +4,13 @@ import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
 import './custom.scss'
-import ElementPlus, {
-  ID_INJECTION_KEY,
-  ZINDEX_INJECTION_KEY,
-} from 'element-plus'
+import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import '../demo/styles/css-vars.scss'
 import '../demo/styles/dark/css-vars.scss'
 import Demo from '../demo/components/vp-demo.vue'
 import 'uno.css'
+import Pronounce from '../components/Pronounce.vue'
 
 export default {
   extends: DefaultTheme,
@@ -24,5 +22,6 @@ export default {
   enhanceApp({ app, router, siteData }) {
     app.use(ElementPlus)
     app.component('Demo', Demo)
+    app.component('Pronounce', Pronounce)
   },
 } satisfies Theme
