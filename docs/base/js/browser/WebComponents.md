@@ -2,7 +2,7 @@
 
 > W3C 标准化的原生组件化方案，其以浏览器原生支持取代框架依赖
 
-## 一、Custom Elements
+## 一、Custom Elements <Sound word="Custom Elements"/>
 
 > 允许开发者通过 JavaScript 扩展或自定义全新的 HTML 元素
 
@@ -47,7 +47,7 @@ base/js/WebComponents/CustomElements/index
 - **`disconnectedCallback()`**
   - 元素从 DOM 移除时触发，用于清理资源
 
-## 二、Shadow DOM
+## 二、Shadow DOM <Sound word="Shadow DOM"/>
 
 > Web Components 的封装层技术，通过创建隔离的 DOM 子树（Shadow Tree）与样式作用域，将组件内部结构、样式与外部环境解耦。
 
@@ -106,7 +106,7 @@ base/js/WebComponents/ShadowDOM/slot
 - `::slotted(selector)` 样式穿透伪元素。用于样式化被 `<slot>` 投影的内容
 - `<slot name="...">` 插槽。可通过 `name` 属性实现具名插槽
 
-## 三、HTML Templates
+## 三、HTML Templates <Sound word="HTML Templates"/>
 
 > Web Components 的静态内容模板技术，允许开发者定义可复用的 HTML 结构，方便组件化开发。
 

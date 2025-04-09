@@ -191,7 +191,7 @@ function toggleVideo() {
 base/js/WebRTC/getUserMedia
 :::
 
-## 二、RTCPeerConnection
+## 二、RTCPeerConnection <Sound word="RTCPeerConnection"/>
 
 > P2P连接管理：处理信令、网络协商和数据传输。建立和维护端到端连接的核心API
 
@@ -567,7 +567,7 @@ server.listen(PORT, () => {
 base/js/WebRTC/RTCPeerConnection
 :::
 
-## 三、RTCDataChannel
+## 三、RTCDataChannel <Sound word="RTCDataChannel"/>
 
 > 数据通道：不参与媒体传输，独立传输任意二进制数据（SCTP over DTLS 协议）
 

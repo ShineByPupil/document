@@ -21,7 +21,7 @@ const playAudio = () => {
 </script>
 
 <template>
-  <div class="pronounce-wrapper">
+  <div class="sound-wrapper">
     <button @click="playAudio" class="play-button">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -35,12 +35,12 @@ const playAudio = () => {
       </svg>
     </button>
 
-    <audio ref="audioRef" :src="`../../../pronounce/${props.word}.mp3`"></audio>
+    <audio ref="audioRef" :src="`../../../sound/${props.word}.mp3`"></audio>
   </div>
 </template>
 
 <style scoped lang="scss">
-.pronounce-wrapper {
+.sound-wrapper {
   display: inline-block;
   vertical-align: middle;
 }
