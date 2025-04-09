@@ -1,6 +1,6 @@
 # WebRTC
 
-> WebRTC（Web Real-Time Communication）是一项支持浏览器和移动应用进行实时音视频通信的技术
+> WebRTC（Web Real-Time Communication<Sound word="Web Real-Time Communication"/>）是一项支持浏览器和移动应用进行实时音视频通信的技术
 
 ## 核心概念
 
@@ -14,7 +14,7 @@
     - STUN（Session Traversal Utilities for NAT）：获取客户端的公网 IP:Port 映射
     - TURN（Traversal Using Relays around NAT）：当直连失败时通过中继服务器转发数据
 
-## 一、getUserMedia
+## 一、getUserMedia <Sound word="getUserMedia"/>
 
 > 媒体设备访问：获取用户的摄像头、麦克风等媒体设备权限，捕获音视频流
 
