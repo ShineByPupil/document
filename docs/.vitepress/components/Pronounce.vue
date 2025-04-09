@@ -35,7 +35,7 @@ const playAudio = () => {
       </svg>
     </button>
 
-    <audio ref="audioRef" :src="`/pronounce/${props.word}.mp3`" hidden></audio>
+    <audio ref="audioRef" :src="`../../../pronounce/${props.word}.mp3`"></audio>
   </div>
 </template>
 
