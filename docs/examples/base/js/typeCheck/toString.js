@@ -1,0 +1,10 @@
+Object.prototype.toString.call('str') // "[object String]"
+Object.prototype.toString.call(42) // "[object Number]"
+Object.prototype.toString.call(true) // "[object Boolean]"
+Object.prototype.toString.call(undefined) // "[object Undefined]"
+Object.prototype.toString.call(Symbol()) // "[object Symbol]"
+Object.prototype.toString.call(123n) // "[object BigInt]"
+
+Object.prototype.toString.call({}) // "[object Object]"
+Object.prototype.toString.call([]) // "[object Array]"
+Object.prototype.toString.call(null) // "[object Null]"
