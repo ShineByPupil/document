@@ -6,7 +6,7 @@ import { vite } from './vite'
 import { mdPlugin } from './plugins'
 
 export default defineConfig({
-  base: '/document/',
+  base: process.env.NODE_ENV === 'production' ? '/document/' : '/',
   title: '前端知识体系',
   description: '系统性整理前端开发核心知识',
   lang: 'zh-CN',

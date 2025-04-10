@@ -7,7 +7,7 @@ const props = defineProps({
     required: true,
   },
 })
-
+const baseURL = import.meta.env.BASE_URL
 const audioRef = ref<HTMLAudioElement | null>(null)
 
 const playAudio = () => {
@@ -35,7 +35,7 @@ const playAudio = () => {
       </svg>
     </button>
 
-    <audio ref="audioRef" :src="`./../../../sound/${props.word}.mp3`"></audio>
+    <audio ref="audioRef" :src="`${baseURL}sound/${props.word}.mp3`"></audio>
   </div>
 </template>
 
