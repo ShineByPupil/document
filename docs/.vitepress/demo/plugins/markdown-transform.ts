@@ -1,6 +1,8 @@
 import type { Plugin } from 'vite'
 import { camelize } from 'vue'
 import path from 'path'
+import fs from 'fs/promises'
+import { createMarkdownRenderer } from 'vitepress'
 
 export function MarkdownTransform(): Plugin {
   return {
@@ -10,9 +12,58 @@ export function MarkdownTransform(): Plugin {
     async transform(code, id) {
       if (!id.endsWith('.md')) return
 
-      return code + combineScriptSetup(code, id)
+      try {
+        const addDep = (file: string) => this.addWatchFile(file) // 添加文件依赖
+        return await processImports(code, id, addDep)
+      } catch (e) {
+        console.error(`Error processing ${id}:`, e)
+        return code
+      }
     },
   }
+}
+
+let md = null
+
+async function initRenderer() {
+  md ??= await createMarkdownRenderer(process.cwd(), {}, '/')
+
+  return md
+}
+
+async function processImports(
+  markdown: string,
+  filePath: string,
+  addDep: (file: string) => void,
+): Promise<string> {
+  // 匹配 @import 语句
+  const importRE = /@import\s+['"](.+?)['"]/g
+  let match: RegExpExecArray | null
+  let transformed = markdown
+
+  while ((match = importRE.exec(markdown)) !== null) {
+    const [fullMatch, importPath] = match
+    // 解析绝对路径
+    const targetPath = path.resolve(
+      path.dirname(filePath),
+      importPath.trim().replace(/^@/, path.join(process.cwd(), 'src')),
+    )
+    // 添加文件依赖
+    addDep(targetPath)
+
+    // 读取目标文件内容
+    let content = await fs.readFile(targetPath, 'utf-8')
+
+    let md = await initRenderer()
+
+    // 替换原始语句
+    transformed = transformed.replace(
+      fullMatch,
+      md.render(content, { path: targetPath }),
+    )
+  }
+
+  return transformed + combineScriptSetup(transformed, filePath)
 }
 
 function combineScriptSetup(markdown: string, id: string): string {

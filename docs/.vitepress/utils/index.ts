@@ -43,7 +43,5 @@ export function generateExclude(): string[] {
   const exclude = Array.from(allFiles).filter(
     (file) => !referencedFiles.has(file),
   )
-  console.log('未使用的md文件：', exclude)
-
   return exclude.map((file) => `**/${file}`)
 }
