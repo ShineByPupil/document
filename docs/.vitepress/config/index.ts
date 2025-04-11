@@ -4,6 +4,7 @@ import { nav } from './nav'
 import { sidebars } from './sidebars'
 import { vite } from './vite'
 import { mdPlugin } from './plugins'
+import { generateExclude } from '../utils'
 
 export default defineConfig({
   base: process.env.NODE_ENV === 'production' ? '/document/' : '/',
@@ -51,4 +52,5 @@ export default defineConfig({
       mdPlugin(md)
     },
   },
+  srcExclude: [...generateExclude()],
 })

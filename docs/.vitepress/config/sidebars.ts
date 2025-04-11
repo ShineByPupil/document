@@ -1,28 +1,40 @@
+// sidebars.ts
 import sidebarsJson from './sidebars.json'
+import type {
+  SidebarItem,
+  Sidebars,
+  RawItem,
+  ParseFunction,
+  GetSidebar,
+} from './sidebars.type'
 
-const parse = (list) => {
-  return list.map((n) => {
-    if (n?.items) {
-      return { ...n, items: parse(n.items) }
-    } else if (typeof n === 'string') {
-      return { text: n, link: n }
+export const files: string[] = []
+
+const parse: ParseFunction = function (list, parentBase) {
+  return list.map((item) => {
+    if (typeof item === 'string') {
+      files.push(`${parentBase}${item}.md`)
+      return { text: item, link: item }
+    }
+    if (item?.items) {
+      item.items = parse(item.items, item.base ?? parentBase)
+      return item as SidebarItem
     } else {
-      if ('text' in n && !('link' in n)) {
-        n.link = n.text
+      files.push(`${item.base ?? parentBase}${item.link ?? item.text}.md`)
+      return {
+        text: item.text,
+        link: item.link ?? item.text, // 确保 link 必填
       }
-      return n
     }
   })
 }
 
-const getSidebar = (json) => {
-  const result = {}
-
+const getSidebar: GetSidebar = (json) => {
   return Object.fromEntries(
     Object.entries(json).map(([key, value]) => {
-      return [key, parse(value)]
+      return [key, parse(value, key)]
     }),
   )
 }
 
-export const sidebars = getSidebar(sidebarsJson)
+export const sidebars: Sidebars = getSidebar(sidebarsJson)
