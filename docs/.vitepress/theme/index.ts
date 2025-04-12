@@ -10,7 +10,7 @@ import '../demo/styles/css-vars.scss'
 import '../demo/styles/dark/css-vars.scss'
 import Demo from '../demo/components/vp-demo.vue'
 import 'uno.css'
-import Sound from '../components/Sound.vue'
+import Sound from './components/Sound.vue'
 
 export default {
   extends: DefaultTheme,
