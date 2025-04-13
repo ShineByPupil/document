@@ -2,7 +2,25 @@
 
 > 性能指标观察者，用于监测特定类型的性能条目。相较于手动轮询性能数据，提供更高效的性能指标收集方式
 
-## 配置项
+## 一、核心特性
+
+- **性能条目收集**
+  - 监听性能指标（如 `longtask`、`paint`、`resource` 等条目）
+- **按需订阅**
+  - 可动态注册关注的性能条目类型，减少内存开销
+- **高精度时间戳**
+  - 基于 `Performance Timeline` 提供纳秒级精度数据
+
+## 二、应用场景
+
+- **长任务监控**
+  - 检测主线程阻塞超过 50ms 的任务（`longtask`）
+- **首屏性能分析**
+  - 统计首次绘制（`first-paint`）和首次内容绘制（`first-contentful-paint`）
+- **资源加载优化**
+  - 记录 JS/CSS/图片等资源的加载耗时（`resource` 条目）
+
+## 三、配置项
 
 ### **`entryTypes`**
 
@@ -28,7 +46,7 @@
 | `layout-shift`             | 累积布局偏移分数（需 `buffered: true`） | CLS                  |
 | `longtask`                 | 主线程阻塞超过 50ms 的长任务            | 卡顿监测             |
 
-## 实例方法
+## 四、实例方法
 
 - **`observe(options)`** 开始观察
   - `entryTypes: string[]`（传统类型）
@@ -36,6 +54,6 @@
 - **`disconnect()`** 停止所有观察
 - **`takeRecords()`** 获取当前的性能条目并清空（同步操作，通常无需手动调用）
 
-## 代码示例
+## 五、代码示例
 
 <<< @/examples/base/js/observer/PerformanceObserver.js [基础语法]
