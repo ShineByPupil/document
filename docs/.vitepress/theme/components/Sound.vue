@@ -41,7 +41,7 @@ const playAudio = () => {
 
 <style scoped lang="scss">
 .sound-wrapper {
-  display: inline-block;
+  display: inline-flex;
   vertical-align: middle;
 }
 

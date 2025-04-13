@@ -56,7 +56,7 @@
               "collapsed": true,
               "base": "/base/js/network/",
               "items": [
-                { "text": "前言", "link": "通信体系" },
+                { "text": "概述", "link": "通信体系" },
                 {
                   "text": "传统请求",
                   "items": ["XMLHttpRequest", "fetch"]
@@ -67,21 +67,32 @@
                 },
                 {
                   "text": "跨上下文通信",
-                  "items": ["postMessage", "BroadcastChannel", "MessageChannel"]
+                  "items": ["postMessage", "MessageChannel", "BroadcastChannel"]
                 },
                 {
-                  "text": "数据上报与推送",
-                  "items": ["EventSource", "Beacon"]
+                  "text": "单向传输",
+                  "items": ["Beacon", "Web Push", "EventSource"]
                 }
               ]
             },
             {
-              "text": "多线程与后台任务",
+              "text": "多线程后台任务",
+              "base": "/base/js/browser/worker/",
               "collapsed": true,
               "items": ["WebWorker", "SharedWorker", "ServiceWorker"]
             },
+            {
+              "text": "观察者",
+              "base": "/base/js/browser/observer/",
+              "collapsed": true,
+              "items": [
+                "MutationObserver",
+                "ResizeObserver",
+                "IntersectionObserver",
+                "PerformanceObserver"
+              ]
+            },
             "WebComponents",
-            "观察者",
             "安全策略",
             "性能优化"
           ]
@@ -159,6 +170,32 @@
       "text": "服务端",
       "base": "/service/",
       "items": ["nginx", "ssh"]
+    },
+    {
+      "text": "Node.js",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "基础环境",
+          "base": "/service/nodejs/coreEnvironment/",
+          "items": ["全局对象", "模块系统", "事件循环", "定时器"]
+        },
+        {
+          "text": "系统交互",
+          "base": "/service/nodejs/systemInteraction/",
+          "items": ["文件系统", "进程控制", "操作系统", "路径处理"]
+        },
+        {
+          "text": "网络协议",
+          "base": "/service/nodejs/networkProtocols/",
+          "items": ["HTTP", "TCP/UDP", "WebSocket", "DNS解析", "URL处理"]
+        },
+        {
+          "text": "数据处理",
+          "base": "/service/nodejs/dataProcessing/",
+          "items": ["Buffer二进制处理", "流机制", "数据加密", "压缩解压"]
+        }
+      ]
     }
   ]
 }
