@@ -2,7 +2,6 @@ import type { Plugin } from 'vite'
 import { camelize } from 'vue'
 import path from 'path'
 import fs from 'fs/promises'
-import { createMarkdownRenderer } from 'vitepress'
 
 export function MarkdownTransform(): Plugin {
   return {
@@ -21,14 +20,6 @@ export function MarkdownTransform(): Plugin {
       }
     },
   }
-}
-
-let md = null
-
-async function initRenderer() {
-  md ??= await createMarkdownRenderer(process.cwd(), {}, '/')
-
-  return md
 }
 
 async function processImports(
@@ -54,13 +45,8 @@ async function processImports(
     // 读取目标文件内容
     let content = await fs.readFile(targetPath, 'utf-8')
 
-    let md = await initRenderer()
-
     // 替换原始语句
-    transformed = transformed.replace(
-      fullMatch,
-      md.render(content, { path: targetPath }),
-    )
+    transformed = transformed.replace(fullMatch, content)
   }
 
   return transformed + combineScriptSetup(transformed, filePath)
