@@ -1,85 +1,38 @@
-# cookie - 会话级存储
+# cookie <Sound word="cookie"/>
 
 > 最早期的浏览器存储方案，主要用于维持客户端与服务器的会话状态。通过 HTTP 头部在服务端与浏览器间自动传递，具有严格的同源策略和安全限制。
 
-## 核心特性
+## 一、核心特性
 
-- **容量限制**：4KB/域名
-- **自动携带**：每次请求自动携带在 HTTP 头部，增加流量消耗
-- **生命周期**：
-  - **会话级**：默认生命周期为浏览器会话期间，关闭标签页或浏览器后失效
-  - **持久化**：
-    - `Max-Age` 以秒为单位设置存活时间（优先级高于 `Expires`）
-    - `Expires` 指定具体的 GMT 格式过期时间
-  - 删除机制：将过期时间设为过去的时间点或设置 `Max-Age=0`。
-- **作用域控制**：
-  - 域名作用域 `Domain`：默认为当前域名（不包含子域名）
-  - 路径作用域 `Path`：默认 `'/'`，限制 cookie 仅在指定路径及其子路径下生效
-- **安全性**：
-  - 传输安全 `Secure`：只允许 HTTPS 请求携带
-  - 访问限制 `HttpOnly`：禁止 JavaScript 通过 `document.cookie` 读取，防范 `XSS` 攻击
-  - 跨站策略 `SameSite`：控制跨站请求时是否发送 cookie，防范 `CSRF` 攻击
-    - `Strict`：完全禁止
-    - `Lax`：允许导航跳转携带
-    - `None`：无限制
+- **容量极小**
+  - 单域名限制约 **4KB**，总数量受浏览器策略限制
+- **HTTP 自动传输**
+  - 随请求头自动发送到服务器，可设置 `Domain` 和 `Path` 作用域
+- **过期控制**
+  - 支持 `Expires`(绝对时间)或 `Max-Age`(相对时间)定义生命周期
+- **安全标记**
+  - 可设置 `HttpOnly`(禁止 JS 访问)、`Secure`(仅 HTTPS 传输)、`SameSite`(跨站限制)
 
-## 应用场景
+## 二、应用场景
 
-- 用户身份认证（Session ID）
-- 个性化设置存储（主题/语言）
-- 跨页面状态保持（短期）
+- **会话管理**
+  - 存储用户登录凭证（如 Session ID）
+- **用户行为追踪**
+  - 记录用户偏好或广告标识（需合规）
+- **CSRF 防护**
+  - 通过 `SameSite=Strict` 限制跨域请求
+- **XSS 防护**
+  - 通过 `HttpOnly` 防范脚本注入
 
-## 基本用法
+## 三、代码示例
 
-- 读取 cookie
-  - 无法读取特殊属性
-  - 浏览器开发者工具能查看特殊属性
+- 属性不区分大小写，但遵守首字母大写规范格式
+- `Domain` / `Path` 不同，视为独立的 cookie
+- 重新设置相同 `Max-Age` 会延长生命周期，而 `Expires` 不会
 
-```js
-const cookies = document.cookie.split(';').reduce((acc, str) => {
-  const [k, v] = str.split('=')
-  acc[k.trim()] = v
-  return acc
-}, {})
-
-console.log(cookies)
-// {
-//   key1: "val1",
-//   key2: "val2"
-// }
-```
-
-- 新增 cookie
-  - 每次新增只能设置一条 cookie，不支持批量设置
-  - 属性不区分大小写，但按首字母大写规范格式
-
-```js
-document.cookie = `theme=dark; Max-Age=2592000; Path=/; Secure`
-```
-
-- 删除 cookie
-  - 将过期时间设为过去的时间点或设置 `Max-Age=0`（且 `Domain`/`Path` 一致）
-  - 如果不设置 `Max-Age`/`Expires` ，变为会话级，关闭标签页或浏览器后失效
-  - `httpOnly` 存在，删除 cookie
-
-```js
-document.cookie = `theme=dark; Max-Age=0;`
-```
-
-- 修改 cookie
-  - `Domain`/`Path` 不同，视为独立的 cookie
-  - `Domain`/`Path`/`Max-Age`/`Expires`/`Secure`/`SameSite` 可修改的属性不传，设置为默认值
-  - 重新设置相同 `Max-Age` 会延长生命周期，而 `Expires` 不会
-  - `httpOnly` 客户端无法修改，服务端有权修改
-  - `httpOnly` 存在，无法修改 cookie
-
-```js
-// theme由dark修改为dark1
-// Max-Age 重置过期时间，等同于延迟
-// Path=/ 为默认值，可以省略，无影响
-// Secure 修改为空
-document.cookie = `theme=dark1; Max-Age=2592000;`
-
-// ❌ 涉及属性httpOnly，会被浏览器忽略
-document.cookie = `theme=dark; HttpOnly;`
-```
+:::code-group
+<<< @/examples/base/js/storage/cookie/read.js [读取]
+<<< @/examples/base/js/storage/cookie/add.js [新增]
+<<< @/examples/base/js/storage/cookie/delete.js [删除]
+<<< @/examples/base/js/storage/cookie/update.js [更新]
+:::

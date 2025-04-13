@@ -1,41 +1,52 @@
-# localStorage - 持久化存储
+# localStorage <Sound word="localStorage"/>
 
 > HTML5 的 Web Storage 方案，提供持久化键值存储。数据永久保存直至显式清除，作用域限定在协议+域名+端口层级。
 
-## 核心特性
+## 一、核心特性
 
-- **大容量**：5MB/域名（浏览器差异）
-- **生命周期**：永久存储，除非手动清除或浏览器清理
-- **作用域**：同源策略（协议+域名+端口）
-- **同步访问**：阻塞式读写操作
-- **事件通知**：`storage` 事件跨窗口同步
-- **与服务器交互**：仅在客户端存储，不参与 HTTP 请求
+- **持久化存储**
+  - 数据长期保留，除非手动清除或代码删除
+- **同源共享**
+  - 同一域名下的所有页面共享数据
+- **同步访问**
+  - 直接读写数据，可能阻塞主线程（不适用于高频操作）
+- **容量较大**
+  - 单域名通常支持 5MB
+- **事件通知**
+  - `storage` 事件跨窗口同步
 
-## 应用场景
+## 二、应用场景
 
-- 用户偏好设置（主题/布局）
-- 离线数据缓存（非敏感数据）
-- 表单草稿保存
-- 静态资源版本标记
-- 页面访问计数统计
+- **用户偏好存储**
+  - 主题、语言、字体大小等设置
+- **静态资源缓存**
+  - 缓存不常变化的 JSON 配置或基础数据
+- **离线数据备份**
+  - 在网络中断时暂存关键数据（如草稿）
 
-## 基本用法
+## 三、代码示例
 
-```js
-// 数据存储
-localStorage.setItem(
-  'userSettings',
-  JSON.stringify({
-    darkMode: true,
-    fontSize: 16,
-  }),
-)
+:::code-group
 
-// 数据读取
-const settings = JSON.parse(localStorage.getItem('userSettings'))
+```js [基本用法]
+// 新增
+localStorage.setItem('checkoutStep', 'payment')
 
-// 事件监听（跨标签页）
+// 删除
+localStorage.removeItem('checkoutStep')
+
+// 修改
+localStorage.setItem('checkoutStep', 'payment1')
+
+// 读取
+const step = localStorage.getItem('checkoutStep')
+```
+
+```js [storage 事件]
+// 跨标签页事件监听
 window.addEventListener('storage', (e) => {
   console.log(`${e.key} 值变更:`, e.oldValue, '→', e.newValue)
 })
 ```
+
+:::

@@ -1,22 +1,28 @@
-# Cache API - 资源存储
+# Cache API <Sound word="Cache"/>
 
-## 核心特性
+## 一、核心特性
 
-- **存储大小**：动态分配（通常受浏览器限制）
-- **生命周期**：手动控制缓存过期
-- **作用域**：同源策略（协议+域名+端口）
-- **异步操作**：基于 `Promise`
-- **数据内容**：缓存网络请求（`Request`/`Response` 对象）
-- 与 `ServiceWorker` 配合：实现离线优先策略
+- **网络资源缓存**
+  - 与 `ServiceWorker` 配合，拦截请求并返回缓存响应
+- **键值对存储**
+  - 以 `Request` 对象为键，`Response` 对象为值
+- **离线优先策略**
+  - 支持在断网时返回缓存内容（PWA 核心）
+- **生命周期可控**
+  - 需手动管理缓存的添加、删除和更新
 
-## 应用场景
+## 二、应用场景
 
-- PWA（渐进式网络应用）的静态资源缓存（CSS、JS、图片）
-- 离线访问关键资源（如文档、数据接口）
+- **离线应用支持**
+  - 缓存 HTML/CSS/JS 等静态资源
+- **加速重复访问**
+  - 缓存 API 响应或 CDN 资源（如字体、图标）
+- **版本化资源管理**
+  - 通过缓存版本号实现增量更新
 
-## API
+## 三、API
 
-### 缓存管理器
+### 1. 缓存管理器
 
 | 方法名                                | 返回值                           | 说明                                                        |
 | ------------------------------------- | -------------------------------- | ----------------------------------------------------------- |
@@ -26,7 +32,7 @@
 | **`caches.delete(cacheName)`**        | `Promise<boolean>`               | 删除指定名称的缓存对象                                      |
 | **`caches.keys()`**                   | `Promise<string[]>`              | 获取所有缓存对象的名称                                      |
 
-### 缓存对象
+### 2. 缓存对象
 
 | 方法名                                  | 返回值                           | 说明                                                               |
 | --------------------------------------- | -------------------------------- | ------------------------------------------------------------------ |
@@ -38,7 +44,7 @@
 | **`cache.matchAll(request, options?)`** | `Promise<Response[]>`            | 返回缓存中与 `request` 匹配的所有响应数组                          |
 | **`cache.put(request, response)`**      | `Promise<void>`                  | 将请求和对应响应存入缓存                                           |
 
-### options 可选配置
+### 3. options 可选配置
 
 | 属性名             | 默认值 | 说明                                      |
 | ------------------ | :----: | ----------------------------------------- |
@@ -54,23 +60,11 @@
 
 :::
 
-## 基本用法
+## 四、代码示例
 
-### ServiceWorker 注册
+:::code-group
 
-```js
-// 主线程中注册 ServiceWorker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker
-    .register('/sw.js')
-    .then((registration) => console.log('ServiceWorker已注册'))
-    .catch((err) => console.log('注册失败:', err))
-}
-```
-
-### 缓存资源（ServiceWorker 线程）
-
-```js {7-15}
+```js {7-15} [ServiceWorker 缓存资源]
 // sw.js
 const CACHE_NAME = 'v1-static-cache'
 
@@ -90,9 +84,7 @@ self.addEventListener('install', (event) => {
 })
 ```
 
-### 拦截请求返回缓存
-
-```js {4}
+```js {4} [拦截请求返回缓存]
 self.addEventListener('fetch', (event) => {
   // 阻止浏览器默认的 fetch 操作
   event.respondWith(
@@ -104,9 +96,7 @@ self.addEventListener('fetch', (event) => {
 })
 ```
 
-### 动态缓存管理
-
-```js {3-5,8}
+```js {3-5,8} [动态缓存管理]
 const CACHE_NAME = 'v1-static-cache'
 // 添加新条目
 caches.open('v1-dynamic').then((cache) => {
@@ -120,3 +110,5 @@ caches.keys().then((keys) => {
   })
 })
 ```
+
+:::

@@ -40,15 +40,11 @@
               "base": "/base/js/browser/storage/",
               "collapsed": true,
               "items": [
-                {
-                  "text": "会话级存储",
-                  "items": ["cookie", "sessionStorage"]
-                },
-                {
-                  "text": "持久化存储",
-                  "items": ["localStorage", "IndexedDB"]
-                },
-                { "text": "资源存储", "items": ["CacheAPI"] }
+                "cookie",
+                "sessionStorage",
+                "localStorage",
+                "IndexedDB",
+                "CacheAPI"
               ]
             },
             {
