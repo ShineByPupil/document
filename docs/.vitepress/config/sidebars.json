@@ -139,11 +139,14 @@
   "/engineering/": [
     {
       "text": "工程化体系",
-      "base": "/engineering/",
+      "base": "/engineering/vite/",
       "items": [
-        { "text": "Webpack 原理", "link": "webpack" },
-        { "text": "Vite 实践", "link": "vite" },
-        { "text": "CI/CD 流水线", "link": "cicd" }
+        {
+          "text": "Vite",
+          "items": ["初始化与配置"]
+        },
+        { "text": "Webpack", "link": "webpack" },
+        { "text": "CI/CD", "link": "cicd" }
       ]
     }
   ],

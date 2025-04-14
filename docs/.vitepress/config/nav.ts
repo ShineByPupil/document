@@ -7,7 +7,7 @@ export const nav = [
   },
   {
     text: '工程化',
-    link: '/engineering/webpack',
+    link: '/engineering/vite/初始化与配置',
     activeMatch: '/engineering/',
   },
   { text: '设计范式', link: '/dp/位操作艺术', activeMatch: '/dp/' },
