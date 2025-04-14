@@ -154,6 +154,7 @@ const reset = () => {
 </template>
 
 <style lang="scss" scoped>
+@use 'sass:list';
 $colors: #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeead, #d4a5a5;
 
 .flex-playground {
@@ -186,8 +187,8 @@ $colors: #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeead, #d4a5a5;
 
       @for $i from 0 to 24 {
         // 支持最多24个项目循环
-        &:nth-child(#{length($colors)}n + #{$i + 1}) {
-          background: nth($colors, ($i % length($colors)) + 1);
+        &:nth-child(#{list.length($colors)}n + #{$i + 1}) {
+          background: list.nth($colors, ($i % list.length($colors)) + 1);
         }
       }
     }

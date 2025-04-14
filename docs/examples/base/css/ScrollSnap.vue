@@ -33,6 +33,7 @@
 </template>
 
 <style scoped lang="scss">
+@use 'sass:list';
 $colors: #ff6b6b, #4ecdc4, #45b7d1;
 
 .scroll-snap {
@@ -54,8 +55,8 @@ $colors: #ff6b6b, #4ecdc4, #45b7d1;
   border-radius: 10px;
 
   @for $i from 0 to 3 {
-    &:nth-child(#{length($colors)}n + #{$i + 1}) {
-      background: nth($colors, ($i % length($colors)) + 1);
+    &:nth-child(#{list.length($colors)}n + #{$i + 1}) {
+      background: list.nth($colors, ($i % list.length($colors)) + 1);
     }
   }
 }
@@ -71,8 +72,8 @@ $colors: #ff6b6b, #4ecdc4, #45b7d1;
   padding: 20px;
 
   @for $i from 0 to 3 {
-    &:nth-child(#{length($colors)}n + #{$i + 1}) {
-      background: nth($colors, ($i % length($colors)) + 1);
+    &:nth-child(#{list.length($colors)}n + #{$i + 1}) {
+      background: list.nth($colors, ($i % list.length($colors)) + 1);
     }
   }
 }
