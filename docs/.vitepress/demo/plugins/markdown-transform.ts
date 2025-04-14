@@ -40,6 +40,9 @@ async function processImports(
       path.dirname(filePath),
       importPath.trim().replace(/^@/, path.join(process.cwd(), 'src')),
     )
+    console.log(
+      `[Import] Replacing @import from ${importPath} => ${targetPath}`,
+    )
     // 添加文件依赖
     addDep(targetPath)
 
