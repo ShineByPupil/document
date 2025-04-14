@@ -13,7 +13,8 @@ export function MarkdownTransform(): Plugin {
 
       try {
         const addDep = (file: string) => this.addWatchFile(file) // 添加文件依赖
-        return await processImports(code, id, addDep)
+        const formatCode = await processImports(code, id, addDep)
+        return formatCode
       } catch (e) {
         console.error(`Error processing ${id}:`, e)
         return code
@@ -46,7 +47,7 @@ async function processImports(
     let content = await fs.readFile(targetPath, 'utf-8')
 
     // 替换原始语句
-    transformed = transformed.replace(fullMatch, content)
+    transformed = transformed.replace(fullMatch, content.replace(/\$/g, '$$$$'))
   }
 
   return transformed + combineScriptSetup(transformed, filePath)
