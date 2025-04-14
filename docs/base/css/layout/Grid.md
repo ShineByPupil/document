@@ -91,18 +91,19 @@ base/css/GridContainer/GridDemo
 - **`place-self`** <Sound word="place-self"/>
   - 简写属性
   - 可选值：`[align-self] [justify-self]`
-- **`grid`** <Sound word="grid"/>
 
-  | 语法形式                            | 等效展开                                                                      | 说明                             |
-  | ----------------------------------- | ----------------------------------------------------------------------------- | -------------------------------- |
-  | `grid: none`                        | `grid-template: none`                                                         | 重置所有显式网格定义             |
-  | `grid: subgrid`                     | `grid-template: subgrid`                                                      | 继承父网格轨道（需父元素为网格） |
-  | `grid: masonry`                     | `grid-template: masonry`                                                      | 瀑布流布局（仅 Firefox 支持）    |
-  | `grid: auto-flow`                   | `grid-auto-flow: row`                                                         | 自动行排列（隐式轨道）           |
-  | `grid: <track-list>`                | `grid-template: <track-list>`                                                 | 定义显式网格轨道                 |
-  | `grid: 100px 1fr / auto-flow`       | `grid-template-rows: 100px 1fr;`<br>`grid-auto-flow: column;`                 | 显式行 + 自动列流                |
-  | `grid: auto-flow dense / 200px`     | `grid-auto-flow: row dense;`<br>`grid-auto-rows: 200px;`                      | 自动行密集排列 + 隐式行尺寸      |
-  | `grid: [a] 1fr [b] / [x] 100px [y]` | `grid-template-rows: [a] 1fr [b];`<br>`grid-template-columns: [x] 100px [y];` | 命名网格线定义                   |
+### **`grid`** <Sound word="grid"/>
+
+| 语法形式                            | 等效展开                                                                      | 说明                             |
+| ----------------------------------- | ----------------------------------------------------------------------------- | -------------------------------- |
+| `grid: none`                        | `grid-template: none`                                                         | 重置所有显式网格定义             |
+| `grid: subgrid`                     | `grid-template: subgrid`                                                      | 继承父网格轨道（需父元素为网格） |
+| `grid: masonry`                     | `grid-template: masonry`                                                      | 瀑布流布局（仅 Firefox 支持）    |
+| `grid: auto-flow`                   | `grid-auto-flow: row`                                                         | 自动行排列（隐式轨道）           |
+| `grid: <track-list>`                | `grid-template: <track-list>`                                                 | 定义显式网格轨道                 |
+| `grid: 100px 1fr / auto-flow`       | `grid-template-rows: 100px 1fr;`<br>`grid-auto-flow: column;`                 | 显式行 + 自动列流                |
+| `grid: auto-flow dense / 200px`     | `grid-auto-flow: row dense;`<br>`grid-auto-rows: 200px;`                      | 自动行密集排列 + 隐式行尺寸      |
+| `grid: [a] 1fr [b] / [x] 100px [y]` | `grid-template-rows: [a] 1fr [b];`<br>`grid-template-columns: [x] 100px [y];` | 命名网格线定义                   |
 
 ### 轨道尺寸
 

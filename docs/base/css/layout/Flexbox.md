@@ -53,16 +53,17 @@ base/css/FlexItemController/index
 - **`align-self`** <Sound word="align-self"/>
   - 交叉轴对齐方式
   - 可选值：`auto` / `stretch` / `flex-start` / `flex-end` / `center` / `baseline`
-- **`flex`** <Sound word="flex"/>
 
-  | 简写格式               | 等效展开                        |
-  | ---------------------- | ------------------------------- |
-  | **单值语法**           |                                 |
-  | `flex: <number>`       | `flex: <number> 1 0%`           |
-  | `flex: <length>`       | `flex: 1 1 <length>`            |
-  | `flex: none`           | `flex: 0 0 auto`                |
-  | **双值语法**           |                                 |
-  | `flex: <num> <num>`    | `flex: <num1> <num2> 0%`        |
-  | `flex: <num> <length>` | `flex: <num> 1 <length>`        |
-  | **三值语法**           |                                 |
-  | `flex: <g> <s> <b>`    | `flex: [grow] [shrink] [basis]` |
+### **`flex`** <Sound word="flex"/>
+
+| 简写格式               | 等效展开                        |
+| ---------------------- | ------------------------------- |
+| **单值语法**           |                                 |
+| `flex: <number>`       | `flex: <number> 1 0%`           |
+| `flex: <length>`       | `flex: 1 1 <length>`            |
+| `flex: none`           | `flex: 0 0 auto`                |
+| **双值语法**           |                                 |
+| `flex: <num> <num>`    | `flex: <num1> <num2> 0%`        |
+| `flex: <num> <length>` | `flex: <num> 1 <length>`        |
+| **三值语法**           |                                 |
+| `flex: <g> <s> <b>`    | `flex: [grow] [shrink] [basis]` |
