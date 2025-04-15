@@ -13,8 +13,7 @@ export function MarkdownTransform(): Plugin {
 
       try {
         const addDep = (file: string) => this.addWatchFile(file) // 添加文件依赖
-        const formatCode = await processImports(code, id, addDep)
-        return formatCode
+        return await processImports(code, id, addDep)
       } catch (e) {
         console.error(`Error processing ${id}:`, e)
         return code
@@ -35,22 +34,31 @@ async function processImports(
 
   while ((match = importRE.exec(markdown)) !== null) {
     const [fullMatch, importPath] = match
+
+    if (!importPath.endsWith('.md')) {
+      continue
+    }
+
     // 解析绝对路径
     const targetPath = path.resolve(
       path.dirname(filePath),
       importPath.trim().replace(/^@/, path.join(process.cwd(), 'src')),
     )
-    console.log(
-      `[Import] Replacing @import from ${importPath} => ${targetPath}`,
-    )
-    // 添加文件依赖
-    addDep(targetPath)
+    try {
+      await fs.access(targetPath)
+      // 读取目标文件内容
+      let content = await fs.readFile(targetPath, 'utf-8')
 
-    // 读取目标文件内容
-    let content = await fs.readFile(targetPath, 'utf-8')
-
-    // 替换原始语句
-    transformed = transformed.replace(fullMatch, content.replace(/\$/g, '$$$$'))
+      // 替换原始语句
+      transformed = transformed.replace(
+        fullMatch,
+        content.replace(/\$/g, '$$$$'),
+      )
+      // 添加文件依赖
+      addDep(targetPath)
+    } catch (e) {
+      console.error(`${targetPath} 文件不存在`)
+    }
   }
 
   return transformed + combineScriptSetup(transformed, filePath)
