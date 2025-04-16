@@ -143,7 +143,7 @@
       "items": [
         {
           "text": "Vite",
-          "items": ["初始化与配置", "常用开发需求"]
+          "items": ["初始化与配置", "常用开发需求", "自定义插件"]
         },
         { "text": "Webpack", "link": "webpack" },
         { "text": "CI/CD", "link": "cicd" }
