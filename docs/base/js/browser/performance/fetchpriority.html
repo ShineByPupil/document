@@ -1,0 +1,11 @@
+<!-- 关键脚本：优先加载 -->
+<script src="main.js" fetchpriority="high"></script>
+
+<!-- 首屏图片：提升优先级 -->
+<img src="hero-banner.jpg" fetchpriority="high" alt="首屏大图">
+
+<!-- 非关键图片：降低优先级 -->
+<img src="decoration.png" fetchpriority="low" alt="装饰性图片" loading="lazy">
+
+<!-- 异步脚本：默认优先级 -->
+<script src="analytics.js" async fetchpriority="auto"></script>
