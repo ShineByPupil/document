@@ -161,7 +161,7 @@
     {
       "text": "服务端",
       "base": "/service/",
-      "items": ["nginx", "ssh"]
+      "items": ["nginx", "SSH"]
     },
     {
       "text": "Node.js",
