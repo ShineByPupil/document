@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "start": "node ./bin/www" // [!code --]
+    "start": "node --import ./register-tsnode.js ./bin/www.ts" // [!code ++]
+  },
+  "devDependencies": { // [!code ++]
+    "@types/cookie-parser": "^1.4.8", // [!code ++]
+    "@types/debug": "^4.1.12", // [!code ++]
+    "@types/express": "^5.0.1", // [!code ++]
+    "@types/morgan": "^1.9.9", // [!code ++]
+    "@types/node": "^22.15.2", // [!code ++]
+    "prettier": "^3.5.3", // [!code ++]
+    "ts-node": "^10.9.2", // [!code ++]
+    "typescript": "^5.8.3" // [!code ++]
+  } // [!code ++]
+}

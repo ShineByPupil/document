@@ -1,0 +1,6 @@
+var app = require('../app') // [!code --]
+var debug = require('debug')('document-server:server') // [!code --]
+var http = require('http') // [!code --]
+import app from '../app.js' // [!code ++]
+import debug from 'debug' // [!code ++]
+import http from 'http' // [!code ++]
