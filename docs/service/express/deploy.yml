@@ -1,0 +1,52 @@
+name: 构建并部署
+
+on:
+  push:
+    branches: ['master'] # master 分支推送触发
+
+permissions:
+  contents: read # 最小权限原则，仅需读取权限
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # 使用最新版Ubuntu运行器
+    environment: production # 关联生产环境
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 清空服务器目录
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            mkdir -p /app/server/document-server
+            rm -rf /app/server/document-server/*
+
+      - name: 安装依赖并构建
+        run: |
+          npm ci
+          npm run build
+
+      - name: 同步文件到服务器
+        uses: easingthemes/ssh-deploy@v2.1.5
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SOURCE: "dist/"
+          REMOTE_HOST: ${{ secrets.SERVER_IP }}
+          REMOTE_USER: ${{ secrets.SERVER_USERNAME }}
+          TARGET: /app/server/document-server
+
+      - name: 安全部署到服务器
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /app/server/document-server
+            npm install --production
+            pm2 start ./bin/www.js --name document-server --watch --restart-delay 3000 || pm2 reload document-server
