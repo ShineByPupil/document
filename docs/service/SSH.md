@@ -30,8 +30,14 @@ SSH（Secure Shell）是一种加密网络协议，旨在为不安全的网络�
 
 :::code-group
 
-```powershell [生成密钥]
-ssh-keygen -t ed25519 -f "$env:USERPROFILE\.ssh\test_key" -C "test_key_comment"
+```bash [生成密钥]
+# Windows
+ssh-keygen -t ed25519 -f "$env:USERPROFILE\.ssh\aliyun_prod" -C "root@aliyun_prod"
+
+# Linux
+ssh-keygen -t ed25519 -f ~/.ssh/github_key -C "522705046@github_key"
+eval "$(ssh-agent -s)"    # 启动一个新的 agent 进程
+ssh-add ~/.ssh/github_key     # 把私钥加载到这个 agent 里
 ```
 
 ```powershell [前置准备]
@@ -106,7 +112,9 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKVSHDqUpC3enwIgc7mhOdNN9RmC8+U+WJkQ4VzIQSLk
 
 :::
 
-## 六、公钥部署 ⭐
+## 六、部署公钥 ⭐
+
+### 服务器
 
 ```powershell
 # 公钥部署
@@ -126,6 +134,10 @@ exit
 - `user` 和 `server_ip` 分别替换为服务器 用户名和 IP
 - 测试指定密钥登录需要输入密码，说明公钥部署失败
 - 多个公钥需要另起一行，否则会失效
+
+### GitHub
+
+Settings -> SSH and GPG Keys -> New SSH Key
 
 ## 附录
 
