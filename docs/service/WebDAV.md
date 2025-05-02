@@ -46,77 +46,10 @@
 :::
 
 :::code-group
-
-```bash [安装]
-# 安装 nginx
-sudo yum install nginx -y
-
-sudo yum install nginx-extras
-
-# 安装 htpasswd（用于创建 WebDAV 访问用户）
-sudo yum install httpd-tools -y
-```
-
-```bash [创建数据存储目录]
-# 将 WebDAV 目录放在 /var/www/webdav
-sudo mkdir -p /var/www/webdav
-
-# 确保 Nginx 有读写权限
-sudo chown -R nginx:nginx /var/www/webdav
-sudo chmod -R 770 /var/www/webdav
-```
-
-```bash [创建访问账号]
-# 在 /etc/nginx 下创建密码文件，并新增一个用户名（例如 davuser）
-sudo htpasswd -c /etc/nginx/.htpasswd davuser
-# 系统会提示你输入并确认密码
-```
-
-```nginx [Nginx 配置文件]
-# /etc/nginx/nginx.conf
-
-http {
-  server {
-    listen 80;
-    server_name _;   # 或者填写你的域名 / IP
-
-    # WebDAV 根路径
-    location /dav/ {
-      # 物理路径
-      alias /var/www/webdav/;
-
-      # 开启基本 WebDAV 方法
-      dav_methods PUT DELETE MKCOL COPY MOVE;  # 合并到 dav_methods
-      create_full_put_path on; # 关闭客户端 body 限制（上传不限大小）
-      client_max_body_size 0;
-      auth_basic "WebDAV Protected"; # 简单 Basic Auth 认证
-      auth_basic_user_file /etc/nginx/.htpasswd;
-      add_header Cache-Control no-cache; # 防止缓存等
-    }
-  }
-}
-```
-
-```bash [重启nginx]
-# 测试配置是否有语法错误
-sudo nginx -t
-#
-tail -f /var/log/nginx/error.log
-
-# 重启
-sudo systemctl reload nginx
-```
-
-```bash [验证和测试]
-# 查看已安装模块（默认包含http_dav_module，不含 dav-ext）
-nginx -V 2>&1 | grep -E 'dav_module|dav_ext'
-nginx -V 2>&1 | grep --color=auto http_dav_module
-nginx -V 2>&1 | grep --color=auto dav_ext
-
-# 测试查询列表（不支持）
-curl -u davuser:123456 -X PROPFIND http://101.37.82.81/dav/
-# 测试上传（支持基础方法）
-curl -u davuser:123456 -T test.txt http://101.37.82.81/dav/
-```
-
+<<< ./WebDAV/Nginx WebDAV/install.bash [安装]
+<<< ./WebDAV/Nginx WebDAV/mkdir.bash [创建数据存储目录]
+<<< ./WebDAV/Nginx WebDAV/htpasswd.bash [创建访问账号]
+<<< ./WebDAV/Nginx WebDAV/nginx.conf
+<<< ./WebDAV/Nginx WebDAV/reload.bash [重启nginx]
+<<< ./WebDAV/Nginx WebDAV/curl.bash [验证和测试]
 :::
