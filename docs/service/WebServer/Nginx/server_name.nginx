@@ -1,0 +1,17 @@
+# 仅匹配 example.com
+server_name example.com;
+
+# 同时匹配 example.com 和 www.example.com
+server_name example.com www.example.com;
+
+# 匹配 a.example.com, b.example.com 等任意子域名
+server_name *.example.com
+
+# 以 ~ 开头定义正则表达式
+server_name ~^www\.example\.com$;
+
+# 通配无效域名（也可直接省略 server_name）
+server_name _;
+
+# 处理未携带 Host 头的请求
+server_name "";

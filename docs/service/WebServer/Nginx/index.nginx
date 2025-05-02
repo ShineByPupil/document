@@ -1,0 +1,2 @@
+# 按顺序尝试加载文件
+index index.html index.php;

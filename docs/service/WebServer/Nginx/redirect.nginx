@@ -1,0 +1,5 @@
+server {
+    listen 80;
+    server_name old-domain.com;
+    return 301 https://new-domain.com$request_uri;
+}

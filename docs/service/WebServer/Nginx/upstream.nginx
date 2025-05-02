@@ -1,0 +1,5 @@
+upstream backend_server {
+  server 10.0.0.1:8080 weight=3;
+  server 10.0.0.2:8080;
+  keepalive 32;  # 保持长连接
+}

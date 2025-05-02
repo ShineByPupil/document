@@ -1,0 +1,2 @@
+# 日志级别：debug/info/warn/error
+error_log /var/log/nginx/error.log warn;

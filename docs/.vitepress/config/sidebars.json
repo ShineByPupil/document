@@ -161,7 +161,7 @@
     {
       "text": "服务端",
       "base": "/service/",
-      "items": ["nginx", "SSH", "OpenSSL", "WebDAV"]
+      "items": ["WebServer", "SSH", "OpenSSL", "WebDAV"]
     },
     {
       "text": "Linux",
