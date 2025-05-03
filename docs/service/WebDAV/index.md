@@ -46,10 +46,86 @@
 :::
 
 :::code-group
-<<< ./WebDAV/Nginx WebDAV/install.bash [安装]
-<<< ./WebDAV/Nginx WebDAV/mkdir.bash [创建数据存储目录]
-<<< ./WebDAV/Nginx WebDAV/htpasswd.bash [创建访问账号]
-<<< ./WebDAV/Nginx WebDAV/nginx.conf
-<<< ./WebDAV/Nginx WebDAV/reload.bash [重启nginx]
-<<< ./WebDAV/Nginx WebDAV/curl.bash [验证和测试]
+<<< ./Nginx WebDAV/install.bash [安装]
+<<< ./Nginx WebDAV/mkdir.bash [创建数据存储目录]
+<<< ./Nginx WebDAV/htpasswd.bash [创建访问账号]
+<<< ./Nginx WebDAV/nginx.conf
+<<< ./Nginx WebDAV/reload.bash [重启nginx]
+<<< ./Nginx WebDAV/curl.bash [验证和测试]
+:::
+
+## 四、Apache WebDAV
+
+:::code-group
+
+```bash [安装]
+# 包含 WebDAV 所需模块
+sudo dnf install httpd mod_dav mod_dav_svn
+
+# 启动并设置开机自启
+sudo systemctl enable --now httpd
+```
+
+```bash [创建 WebDAV 目录]
+sudo mkdir -p /var/www/html/DavLock
+sudo chown -R apache:apache /var/www/html/DavLock
+
+sudo mkdir -p /var/www/html/webdav/Apps/Books/.Moon+ # 创建目录
+sudo mkdir -p /var/www/html/webdav/Apps/Books/.Moon+/Cache
+
+sudo chown -R apache:apache /var/www/html/webdav/Apps/Books
+
+sudo chown -R apache:apache /var/www/html/webdav/Apps/Books/.Moon+ # 权限
+sudo chown -R apache:apache /var/www/html/webdav/Apps/Books/.Moon+/Cache # 权限
+# 给 Apache 用户写权限
+sudo chown -R apache:apache /var/www/html/webdav
+# 或者设置更宽松的权限（注意安全风险）
+sudo chmod -R 777 /var/www/html/webdav
+
+
+
+# 设置目录权限等级
+sudo chmod -R 755 /var/www/html/webdav
+```
+
+<<< ./Apache WebDAV/webdav.conf{apache} [配置文件]
+
+```bash [访问账号管理]
+# 首次创建用户（-c 参数生成文件）
+sudo htpasswd -c /etc/httpd/conf/webdav.passwd username1
+
+# 后续添加用户（省略 -c）
+sudo htpasswd /etc/httpd/conf/webdav.passwd davuser
+
+# 列出所有用户
+cut -d: -f1 /etc/httpd/conf/webdav.passwd
+
+# 修改已有用户密码
+sudo htpasswd /etc/httpd/conf/webdav.passwd davuser
+
+# 删除用户
+sudo htpasswd -D /etc/httpd/conf/webdav.passwd username1
+```
+
+```bash [验证和测试]
+# Nginx
+sudo nginx -t # 检查配置
+sudo tail -f /var/log/nginx/error.log # 查看日志
+sudo systemctl reload nginx # 重启服务
+
+# Apache
+sudo apachectl configtest # 检查配置
+sudo sh -c '> /var/log/httpd/error_log' # 清空日志
+sudo tail -n 10 /var/log/httpd/error_log # 查看日志
+sudo apachectl graceful # 重启服务
+
+# 测试查询列表（不支持）
+curl -u davuser:123456 -X PROPFIND http://101.37.82.81/dav/
+# 测试上传（支持基础方法）
+curl -u davuser:123456 -T test.txt http://101.37.82.81/dav/
+
+curl -u davuser:123456 -T test.txt http://101.37.82.81/dav/Apps/Books/.Moon+/test.txt
+curl -X MKCOL -u davuser:123456 http://101.37.82.81/dav/path/to/directory
+```
+
 :::
