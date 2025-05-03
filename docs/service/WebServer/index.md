@@ -52,9 +52,9 @@
 ### 4. 应用场景
 
 ::: code-group
-<<< ./Nginx/config/base.nginx [nginx.conf]
-<<< ./Nginx/config/redirect.nginx [重定向]
-<<< ./Nginx/config/proxy.nginx [反向代理]
+<<< ./Nginx/config/base.conf{nginx} [nginx.conf]
+<<< ./Nginx/config/redirect.conf{nginx} [重定向]
+<<< ./Nginx/config/proxy.conf{nginx} [反向代理]
 :::
 
 ### 5. 配置项
@@ -69,10 +69,10 @@
 | `index`       | 定义默认索引文件                   |
 
 :::code-group
-<<< ./Nginx/config/listen.nginx [listen]
-<<< ./Nginx/config/server_name.nginx [server_name]
-<<< ./Nginx/config/root.nginx [root]
-<<< ./Nginx/config/index.nginx [index]
+<<< ./Nginx/config/listen.conf{nginx} [listen]
+<<< ./Nginx/config/server_name.conf{nginx} [server_name]
+<<< ./Nginx/config/root.conf{nginx} [root]
+<<< ./Nginx/config/index.conf{nginx} [index]
 :::
 
 - **日志配置**
@@ -83,8 +83,8 @@
 | `error_log`  | 错误日志路径与级别 |
 
 :::code-group
-<<< ./Nginx/config/access_log.nginx [access_log]
-<<< ./Nginx/config/error_log.nginx [error_log]
+<<< ./Nginx/config/access_log.conf{nginx} [access_log]
+<<< ./Nginx/config/error_log.conf{nginx} [error_log]
 :::
 
 - **反向代理与负载均衡**
@@ -95,7 +95,7 @@
 | `upstream`   | 定义后端服务器集群（负载均衡） |
 
 :::code-group
-<<< ./Nginx/config/upstream.nginx [upstream]
+<<< ./Nginx/config/upstream.conf{nginx} [upstream]
 :::
 
 - **安全与 HTTPS**
@@ -108,8 +108,8 @@
 | `deny`                | IP 访问控制       |
 
 :::code-group
-<<< ./Nginx/config/SSL.nginx [SSL]
-<<< ./Nginx/config/allow.nginx [IP 访问控制]
+<<< ./Nginx/config/SSL.conf{nginx} [SSL]
+<<< ./Nginx/config/allow.conf{nginx} [IP 访问控制]
 :::
 
 - **性能优化**
