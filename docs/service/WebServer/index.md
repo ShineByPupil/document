@@ -15,9 +15,9 @@
 | **学习成本**     | 配置语法较简洁              | 功能复杂需深度配置          |
 | **生态扩展**     | 第三方模块较少              | 模块市场丰富（超600个模块） |
 
-## 一、Nginx
+## 一、Nginx <Sound word="Nginx"/>
 
-> Nginx 是一款高性能的开源 Web 服务器和反向代理服务器，以其高效、稳定和低资源消耗著称
+> [Nginx](https://nginx.org/) 是一款高性能的开源 Web 服务器和反向代理服务器，以其高效、稳定和低资源消耗著称
 
 ### 1. 核心特性
 
@@ -43,17 +43,18 @@
 ### 3. 命令行 ⭐
 
 ::: code-group
-<<< ./WebServer/Nginx/install.bash [安装命令]
-<<< ./WebServer/Nginx/base.bash [常用命令]
-<<< ./WebServer/Nginx/remove.bash [卸载命令]
+<<< ./Nginx/command/install.bash [安装命令]
+<<< ./Nginx/command/state.bash [启停命令]
+<<< ./Nginx/command/debug.bash [调试命令]
+<<< ./Nginx/command/remove.bash [卸载命令]
 :::
 
-### 4.应用场景
+### 4. 应用场景
 
 ::: code-group
-<<< ./WebServer/Nginx/base.nginx [nginx.conf]
-<<< ./WebServer/Nginx/redirect.nginx [重定向]
-<<< ./WebServer/Nginx/proxy.nginx [反向代理]
+<<< ./Nginx/config/base.nginx [nginx.conf]
+<<< ./Nginx/config/redirect.nginx [重定向]
+<<< ./Nginx/config/proxy.nginx [反向代理]
 :::
 
 ### 5. 配置项
@@ -68,10 +69,10 @@
 | `index`       | 定义默认索引文件                   |
 
 :::code-group
-<<< ./WebServer/Nginx/listen.nginx [listen]
-<<< ./WebServer/Nginx/server_name.nginx [server_name]
-<<< ./WebServer/Nginx/root.nginx [root]
-<<< ./WebServer/Nginx/index.nginx [index]
+<<< ./Nginx/config/listen.nginx [listen]
+<<< ./Nginx/config/server_name.nginx [server_name]
+<<< ./Nginx/config/root.nginx [root]
+<<< ./Nginx/config/index.nginx [index]
 :::
 
 - **日志配置**
@@ -82,8 +83,8 @@
 | `error_log`  | 错误日志路径与级别 |
 
 :::code-group
-<<< ./WebServer/Nginx/access_log.nginx [access_log]
-<<< ./WebServer/Nginx/error_log.nginx [error_log]
+<<< ./Nginx/config/access_log.nginx [access_log]
+<<< ./Nginx/config/error_log.nginx [error_log]
 :::
 
 - **反向代理与负载均衡**
@@ -94,7 +95,7 @@
 | `upstream`   | 定义后端服务器集群（负载均衡） |
 
 :::code-group
-<<< ./WebServer/Nginx/upstream.nginx [upstream]
+<<< ./Nginx/config/upstream.nginx [upstream]
 :::
 
 - **安全与 HTTPS**
@@ -107,8 +108,8 @@
 | `deny`                | IP 访问控制       |
 
 :::code-group
-<<< ./WebServer/Nginx/SSL.nginx [SSL]
-<<< ./WebServer/Nginx/allow.nginx [IP 访问控制]
+<<< ./Nginx/config/SSL.nginx [SSL]
+<<< ./Nginx/config/allow.nginx [IP 访问控制]
 :::
 
 - **性能优化**
@@ -138,7 +139,9 @@ keepalive_timeout 65;
 
 :::
 
-## 二、Apache
+## 二、Apache <Sound word="Apache"/>
+
+> [Apache](https://httpd.apache.org/docs/) 是一款开源 Web 服务器，以模块化设计、跨平台兼容性及灵活的 .htaccess 配置著称。支持 PHP/MySQL 原生集成，长期主导传统网站架构
 
 ### 1. 核心特性
 
@@ -159,3 +162,12 @@ keepalive_timeout 65;
 - 需要.htaccess配置的场景
 - 企业内网复杂系统
 - 小型网站多虚拟主机托管
+
+### 3. 命令行 ⭐
+
+:::code-group
+<<< ./Apache/command/install.bash [安装命令]
+<<< ./Apache/command/state.bash [启停命令]
+<<< ./Apache/command/debug.bash [调试命令]
+<<< ./Apache/command/remove.bash [卸载命令]
+:::
