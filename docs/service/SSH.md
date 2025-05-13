@@ -26,7 +26,7 @@ SSH（Secure Shell）是一种加密网络协议，旨在为不安全的网络�
 - **内网穿透**
   - 通过 SSH 隧道访问内网服务（如 `ssh -L 8080:localhost:80 user@host`）
 
-## 四、创建命令 ⭐
+## 四、创建秘钥 ⭐
 
 :::code-group
 
@@ -138,6 +138,62 @@ exit
 ### GitHub
 
 Settings -> SSH and GPG Keys -> New SSH Key
+
+| 标题     | 内容                                                              |
+| -------- | ----------------------------------------------------------------- |
+| Title    | pc_to_github                                                      |
+| Key type | Authentication Key                                                |
+| Key      | `SHA256:ZruhKHSKLliIX0XOl4mvdn0MODYvn/g/AgwmTEIyVp0 pc_to_github` |
+
+## 七、命令帮助
+
+### 1. 连接到远程服务器
+
+| 命令                          | 描述                  |
+| ----------------------------- | --------------------- |
+| `ssh user@host`               | 连接远端(端口默认 22) |
+| `ssh user@host -p <端口>`     | 指定端口              |
+| `ssh user@host -i <密钥文件>` | 指定私钥文件          |
+
+### 2. 密钥管理
+
+| 命令                          | 描述               |
+| ----------------------------- | ------------------ |
+| `ssh-keygen -t ed25519`       | 创建秘钥           |
+| `ssh-keygen -F <ip/hostname>` | 从 known_host 搜索 |
+| `ssh-keygen -R <ip/hostname>` | 从 known_host 删除 |
+
+### 3. 文件传输
+
+| 命令                                 | 描述             |
+| ------------------------------------ | ---------------- |
+| `scp dest/file.ext user@server:/dir` | 从本地拷贝到远端 |
+| `scp user@host:/dir/file.ext dest/`  | 从远程拷贝到本地 |
+
+## 八、问题排查
+
+### 1. 主机的身份已更改
+
+> 服务器重装系统，其指纹（fingerprint）与客户端 ~/.ssh/known_hosts 中保存的不再一致。SSH 为防止中间人攻击，会拒绝连接并警告
+
+- 个人电脑
+
+```bash
+ssh-keygen root@ip
+#  WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!
+
+# 删除过去的记录
+ssh-keygen -R root@ip
+
+# 重现连接并手动信任（yes）
+ssh-keygen root@ip
+```
+
+- CI 自动化环境
+
+settings -> Secrets and variables -> Actions
+
+生成新的 ssh 秘钥并更新 github 仓库机密 `SERVER_SSH_KEY` 和服务端的 `authorized_keys` 文件
 
 ## 附录
 
