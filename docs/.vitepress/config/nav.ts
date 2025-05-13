@@ -11,5 +11,5 @@ export const nav = [
     activeMatch: '/engineering/',
   },
   { text: '设计范式', link: '/dp/位操作艺术', activeMatch: '/dp/' },
-  { text: '服务端', link: '/service/nginx', activeMatch: '/service/' },
+  { text: '服务端', link: '/service/WebServer', activeMatch: '/service/' },
 ]

@@ -46,20 +46,20 @@
 :::
 
 :::code-group
-<<< ./Nginx WebDAV/install.bash [安装]
-<<< ./Nginx WebDAV/mkdir.bash [创建数据存储目录]
-<<< ./Nginx WebDAV/htpasswd.bash [创建访问账号]
-<<< ./Nginx WebDAV/nginx.conf{nginx}
-<<< ./Nginx WebDAV/reload.bash [重启nginx]
-<<< ./Nginx WebDAV/curl.bash [验证和测试]
+<<< ./WebDAV/Nginx WebDAV/install.bash [安装]
+<<< ./WebDAV/Nginx WebDAV/mkdir.bash [创建数据存储目录]
+<<< ./WebDAV/Nginx WebDAV/htpasswd.bash [创建访问账号]
+<<< ./WebDAV/Nginx WebDAV/nginx.conf{nginx}
+<<< ./WebDAV/Nginx WebDAV/reload.bash [重启nginx]
+<<< ./WebDAV/Nginx WebDAV/curl.bash [验证和测试]
 :::
 
 ## 四、Apache WebDAV
 
 :::code-group
-<<< ./Apache WebDAV/install.bash [安装]
-<<< ./Apache WebDAV/mkdir.bash [创建 WebDAV 目录]
-<<< ./Apache WebDAV/webdav.conf{apache} [配置文件]
-<<< ./Apache WebDAV/htpasswd.bash [访问账号管理]
-<<< ./Apache WebDAV/curl.bash [验证和测试]
+<<< ./WebDAV/Apache WebDAV/install.bash [安装]
+<<< ./WebDAV/Apache WebDAV/mkdir.bash [创建 WebDAV 目录]
+<<< ./WebDAV/Apache WebDAV/webdav.conf{apache} [配置文件]
+<<< ./WebDAV/Apache WebDAV/htpasswd.bash [访问账号管理]
+<<< ./WebDAV/Apache WebDAV/curl.bash [验证和测试]
 :::

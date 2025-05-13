@@ -43,18 +43,18 @@
 ### 3. 命令行 ⭐
 
 ::: code-group
-<<< ./Nginx/command/install.bash [安装命令]
-<<< ./Nginx/command/state.bash [启停命令]
-<<< ./Nginx/command/debug.bash [调试命令]
-<<< ./Nginx/command/remove.bash [卸载命令]
+<<< ./WebServer/Nginx/command/install.bash [安装命令]
+<<< ./WebServer/Nginx/command/state.bash [启停命令]
+<<< ./WebServer/Nginx/command/debug.bash [调试命令]
+<<< ./WebServer/Nginx/command/remove.bash [卸载命令]
 :::
 
 ### 4. 应用场景
 
 ::: code-group
-<<< ./Nginx/config/base.conf{nginx} [nginx.conf]
-<<< ./Nginx/config/redirect.conf{nginx} [重定向]
-<<< ./Nginx/config/proxy.conf{nginx} [反向代理]
+<<< ./WebServer/Nginx/config/base.conf{nginx} [nginx.conf]
+<<< ./WebServer/Nginx/config/redirect.conf{nginx} [重定向]
+<<< ./WebServer/Nginx/config/proxy.conf{nginx} [反向代理]
 :::
 
 ### 5. 配置项
@@ -69,10 +69,10 @@
 | `index`       | 定义默认索引文件                   |
 
 :::code-group
-<<< ./Nginx/config/listen.conf{nginx} [listen]
-<<< ./Nginx/config/server_name.conf{nginx} [server_name]
-<<< ./Nginx/config/root.conf{nginx} [root]
-<<< ./Nginx/config/index.conf{nginx} [index]
+<<< ./WebServer/Nginx/config/listen.conf{nginx} [listen]
+<<< ./WebServer/Nginx/config/server_name.conf{nginx} [server_name]
+<<< ./WebServer/Nginx/config/root.conf{nginx} [root]
+<<< ./WebServer/Nginx/config/index.conf{nginx} [index]
 :::
 
 - **日志配置**
@@ -83,8 +83,8 @@
 | `error_log`  | 错误日志路径与级别 |
 
 :::code-group
-<<< ./Nginx/config/access_log.conf{nginx} [access_log]
-<<< ./Nginx/config/error_log.conf{nginx} [error_log]
+<<< ./WebServer/Nginx/config/access_log.conf{nginx} [access_log]
+<<< ./WebServer/Nginx/config/error_log.conf{nginx} [error_log]
 :::
 
 - **反向代理与负载均衡**
@@ -95,7 +95,7 @@
 | `upstream`   | 定义后端服务器集群（负载均衡） |
 
 :::code-group
-<<< ./Nginx/config/upstream.conf{nginx} [upstream]
+<<< ./WebServer/Nginx/config/upstream.conf{nginx} [upstream]
 :::
 
 - **安全与 HTTPS**
@@ -108,8 +108,8 @@
 | `deny`                | IP 访问控制       |
 
 :::code-group
-<<< ./Nginx/config/SSL.conf{nginx} [SSL]
-<<< ./Nginx/config/allow.conf{nginx} [IP 访问控制]
+<<< ./WebServer/Nginx/config/SSL.conf{nginx} [SSL]
+<<< ./WebServer/Nginx/config/allow.conf{nginx} [IP 访问控制]
 :::
 
 - **性能优化**
@@ -166,8 +166,8 @@ keepalive_timeout 65;
 ### 3. 命令行 ⭐
 
 :::code-group
-<<< ./Apache/command/install.bash [安装命令]
-<<< ./Apache/command/state.bash [启停命令]
-<<< ./Apache/command/debug.bash [调试命令]
-<<< ./Apache/command/remove.bash [卸载命令]
+<<< ./WebServer/Apache/command/install.bash [安装命令]
+<<< ./WebServer/Apache/command/state.bash [启停命令]
+<<< ./WebServer/Apache/command/debug.bash [调试命令]
+<<< ./WebServer/Apache/command/remove.bash [卸载命令]
 :::
