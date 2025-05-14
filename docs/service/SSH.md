@@ -145,7 +145,39 @@ Settings -> SSH and GPG Keys -> New SSH Key
 | Key type | Authentication Key                                                |
 | Key      | `SHA256:ZruhKHSKLliIX0XOl4mvdn0MODYvn/g/AgwmTEIyVp0 pc_to_github` |
 
-## 七、命令帮助
+## 七、秘钥命名规则
+
+- 当不指定 -i 参数时，SSH 客户端会按顺序尝试 默认密钥名称（如 id_rsa、id_ed25519 等）
+- 非标准命名的密钥不会被自动加载，除非明确配置
+
+```text
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/pc_to_github
+  IdentitiesOnly yes
+
+Host aly
+  HostName 101.0.0.1
+  User root
+  IdentityFile ~/.ssh/pc_to_aliyun
+  IdentitiesOnly yes
+```
+
+| 配置项                  | 功能说明                                       | 默认值             | 备注                                         |
+| ----------------------- | ---------------------------------------------- | ------------------ | -------------------------------------------- |
+| `Host`                  | 定义连接别名，可用于 `ssh <Host>` 调用         |                    | 支持通配符，如 `Host *.example.com`          |
+| `HostName`              | 真实主机名或 IP                                | 与 `Host` 一致     | 当别名与真实主机不同或简写时使用             |
+| `User`                  | 登录用户名                                     | 当前系统用户名     | 如果远程用户名与本地不同，须显式指定         |
+| `Port`                  | SSH 服务端口                                   | `22`               |                                              |
+| `IdentityFile`          | 私钥文件路径                                   | `~/.ssh/id_rsa` 等 | 可指定多条，客户端会依次尝试                 |
+| `IdentitiesOnly`        | 是否只使用 `IdentityFile` 中指定的密钥尝试连接 | `no`               | 设为 `yes` 可避免尝试其他默认或代理中的密钥  |
+| `ProxyJump`             | 跳板机（Bastion Host）配置                     |                    | 支持多级跳板，如 `user@bastion:22`           |
+| `StrictHostKeyChecking` | 主机密钥校验策略                               | `ask`              | 可选 `yes`/`no`/`ask`，`no` 可自动接受新主机 |
+| `ServerAliveInterval`   | 客户端发送心跳包间隔（秒）                     | `0`                | 建议设置为 `30` 以上，防止长连接断开         |
+| `ForwardAgent`          | 是否转发 SSH 代理（Agent）                     | `no`               | 跨多台跳板时常用，注意安全风险               |
+
+## 八、命令帮助
 
 ### 1. 连接到远程服务器
 
@@ -170,7 +202,7 @@ Settings -> SSH and GPG Keys -> New SSH Key
 | `scp dest/file.ext user@server:/dir` | 从本地拷贝到远端 |
 | `scp user@host:/dir/file.ext dest/`  | 从远程拷贝到本地 |
 
-## 八、问题排查
+## 九、问题排查
 
 ### 1. 主机的身份已更改
 
