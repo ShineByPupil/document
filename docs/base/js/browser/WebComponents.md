@@ -44,11 +44,18 @@ base/js/WebComponents/CustomElements/index
 ### 5. API
 
 - **`customElements.define()`** <Sound word="define"/>
+
   > 注册自定义元素
+
   - `name: string` 自定义元素名
+    - **命名规则:**
+      - 必须全小写
+      - 包含连接符 `-`
+      - 不支持下划线 `_`、空格和其他特殊字符
   - `constructor: { new(...params: any[]): HTMLElement }` 自定义元素构造器
   - `options?: { extends?: string }` 自定义元素配置对象
     - `extends` 继承的自定义元素名
+
 - **`static observedAttributes`** <Sound word="observedAttributes"/>
   > 监听的属性名
   - `static observedAttributes = ['name', 'age']`
