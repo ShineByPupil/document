@@ -105,7 +105,78 @@ base/js/WebComponents/CustomElements/index
 base/js/WebComponents/ShadowDOM/index
 :::
 
-### 5. **`<slot>`** 插槽
+### 5. 伪类与伪元素
+
+| 选择器                    | 说明                                             |
+| ------------------------- | ------------------------------------------------ |
+| **伪类**                  |                                                  |
+| `:host`                   | 匹配宿主元素本身                                 |
+| `:host(selector)`         | 匹配宿主元素本身，且宿主满足 selector 匹配       |
+| `:host-context(selector)` | 匹配宿主元素本身，且宿主或祖先满足 selector 匹配 |
+| **伪元素**                |                                                  |
+| `::slotted(selector)`     | 匹配 `<slot>` 里元素，且元素满足 selector 匹配   |
+| `::part(name)`            | 匹配内部标记为 `part="name"` 的元素              |
+
+:::code-group
+
+```css [:host]
+/* 不带参数，任意情况下都生效 */
+:host {
+  display: block;
+}
+
+/* 带参数，只有宿主自身匹配 selector 时才生效 */
+:host([disabled]) {
+  opacity: 0.5;
+}
+:host(.primary) {
+  border-color: blue;
+}
+```
+
+```css [:host-context(selector)]
+/* 当外层有 .dark 或 data-theme="dark" 时，组件内部会应用这段样式 */
+:host-context(html.dark),
+:host-context(html[data-theme='dark']) {
+  --bg: #222;
+  --fg: #eee;
+}
+```
+
+```css [::slotted(selector)]
+/* 选择插槽内容任意元素 */
+::slotted(*) {
+  font-weight: bold;
+}
+
+/* 选择插槽内的任意 <span> 元素 */
+::slotted(span) {
+  font-weight: bold;
+}
+
+/* 选择具名插槽元素 */
+::slotted([slot='content']) {
+  font-weight: bold;
+}
+```
+
+```css [::part(name)]
+::part(header) {
+  font-size: 20px;
+}
+
+::part(body) {
+  font-size: 12px;
+}
+
+::part(footer) {
+  font-size: 16px;
+}
+```
+
+:::
+
+### 6. **`<slot>`** 插槽
 
 #### 代码示例
 
@@ -136,7 +207,7 @@ base/js/WebComponents/ShadowDOM/slot
   - 其他
     - `background-color` / `background-image` / `border-radius` / `overflow` / `z-index`
 
-### 6. API
+### 7. API
 
 - **`Element.attachShadow({ mode })`** <Sound word="attachShadow"/>
   > 创建并附加 Shadow DOM 到宿主元素
