@@ -57,7 +57,7 @@ base/js/WebComponents/CustomElements/index
   > 监听的属性名
   - `static observedAttributes = ['name', 'age']`
   - `static get observedAttributes () { return ['name', 'age'] }`
-- **`attributeChangedCallback()`** <Sound word="attributeChangedCallback"/>
+- **`attributeChangedCallback(attrName, oldVal, newVal)`** <Sound word="attributeChangedCallback"/>
   > 元素的被观察属性变化时触发，需配合 `observedAttributes` 静态属性使用
   - `attrName: string` 变化的属性名
   - `oldVal: string | null` 变化前的属性值
