@@ -61,7 +61,7 @@ async function processImports(
     }
   }
 
-  return transformed + combineScriptSetup(transformed, filePath)
+  return combineScriptSetup(transformed, filePath)
 }
 
 function combineScriptSetup(markdown: string, id: string): string {
@@ -85,7 +85,20 @@ function combineScriptSetup(markdown: string, id: string): string {
     imports.push(`import ${name} from '${relativePath}'`)
   }
 
-  return imports.length
-    ? `\n<script setup>\n${imports.join('\n')}\n</script>\n`
-    : ''
+  if (!imports.length) return markdown
+
+  const scriptRE = /<script\s+setup.*?>([\s\S]*?)<\/script>/m
+  const importCode = imports.join('\n')
+
+  if (scriptRE.test(markdown)) {
+    // 插入到已有 <script setup> 内部的开头
+    return markdown.replace(
+      scriptRE,
+      (full, content) =>
+        `<script setup>\n${importCode}\n${content.trim()}\n</script>`,
+    )
+  } else {
+    // 创建 <script setup>，添加在结尾
+    return `${markdown.trim()}\n\n<script setup>\n${importCode}\n</script>\n`
+  }
 }
