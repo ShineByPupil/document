@@ -11,7 +11,14 @@
 - **过期控制**
   - 支持 `Expires`(绝对时间)或 `Max-Age`(相对时间)定义生命周期
 - **安全标记**
-  - 可设置 `HttpOnly`(禁止 JS 访问)、`Secure`(仅 HTTPS 传输)、`SameSite`(跨站限制)
+  - **`HttpOnly` 是否禁止 JS 访问**
+    - `true` | `false`（默认）
+  - **`Secure` 是否仅 HTTPS 中发送**
+    - `true` | `false`（默认）
+  - **`SameSite` 跨站请求时是否携带 Cookie**
+    - `Strict` 最严格，仅同站请求携带
+    - `Lax` 默认，GET 导航类请求携带（如链接跳转、表单）
+    - `None` 所有跨站请求都携带，但必须设置 Secure
 
 ## 二、应用场景
 
