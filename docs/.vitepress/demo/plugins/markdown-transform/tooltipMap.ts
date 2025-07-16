@@ -39,7 +39,7 @@ export default function (markdown: string): string {
     )
 
     result = result.replace(pattern, (matched) => {
-      return `<el-tooltip content="${desc}">${matched}</el-tooltip>`
+      return `<el-tooltip content="${desc}"><span>${matched}<sup style="user-select: none;">?</sup></span></el-tooltip>`
     })
   }
 
