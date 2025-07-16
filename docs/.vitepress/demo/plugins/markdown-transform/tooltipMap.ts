@@ -34,7 +34,7 @@ export default function (markdown: string): string {
   for (const term in tooltipMap) {
     const desc = escapeHtml(tooltipMap[term])
     const pattern = new RegExp(
-      `(?<![\\w-])(\`${escapeRegExp(term)}\`|${escapeRegExp(term)})(?![\\w-])`,
+      `(?<![\\w-])(\`${escapeRegExp(term)}\`|\\b${escapeRegExp(term)}\\b)(?![\\w-])`,
       'g',
     )
 
