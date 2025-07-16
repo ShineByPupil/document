@@ -30,22 +30,22 @@ SSH（Secure Shell）是一种加密网络协议，旨在为不安全的网络�
 
 :::code-group
 
-```bash [生成密钥]
-# Windows
-ssh-keygen -t ed25519 -f "$env:USERPROFILE\.ssh\aliyun_prod" -C "root@aliyun_prod"
-
-# Linux
-ssh-keygen -t ed25519 -f ~/.ssh/github_key -C "522705046@github_key"
-eval "$(ssh-agent -s)"    # 启动一个新的 agent 进程
-ssh-add ~/.ssh/github_key     # 把私钥加载到这个 agent 里
+```powershell [Windows]
+ssh-keygen -t ed25519 -f $HOME\.ssh\key_name -C key_name
 ```
 
-```powershell [前置准备]
-# 验证目录是否存在
-Test-Path $env:USERPROFILE\.ssh  # 应返回 True
+```bash [Linux]
+ssh-keygen -t ed25519 -f ~/.ssh/key_name -C key_name
+eval "$(ssh-agent -s)"    # 启动一个新的 agent 进程
+ssh-add ~/.ssh/key_name     # 把私钥加载到这个 agent 里
+```
+
+```powershell [验证]
+# 验证目录是否存在，存在返回 True
+Test-Path $HOME\.ssh
 
 # （若不存在）创建目录
-mkdir -Force $env:USERPROFILE\.ssh
+mkdir -Force $HOME\.ssh
 ```
 
 :::
@@ -63,13 +63,13 @@ mkdir -Force $env:USERPROFILE\.ssh
 
 ### 文件说明
 
-- 私钥：`C:\Users\<你的用户名>\.ssh\test_key`
-- 公钥：`C:\Users\<你的用户名>\.ssh\test_key.pub`
+- 私钥：`C:\Users\<你的用户名>\.ssh\key_name`
+- 公钥：`C:\Users\<你的用户名>\.ssh\key_name.pub`
 - 公钥指纹（fingerprint）
   - 公钥的哈希值（辅助信息无需保存）
   ```powershell
   # 查看公钥指纹（验证用途）
-  ssh-keygen -lf $env:USERPROFILE\.ssh\test_key.pub
+  ssh-keygen -lf $env:USERPROFILE\.ssh\key_name.pub
   ```
 - 随机指纹图案（randomart image）
   - 密钥指纹的可视化图形（辅助信息无需保存）
@@ -89,11 +89,11 @@ AAAEDQvLzJ8zL+of2E5aiKDumjq77cSKVaWALdCZg0ES32kKVSHDqUpC3enwIgc7mhOdNN
 ```
 
 ```text [公钥]
-SHA256:ZruhKHSKLliIX0XOl4mvdn0MODYvn/g/AgwmTEIyVp0 test_key_comment
+SHA256:ZruhKHSKLliIX0XOl4mvdn0MODYvn/g/AgwmTEIyVp0 key_name
 ```
 
 ```text [fingerprint]
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKVSHDqUpC3enwIgc7mhOdNN9RmC8+U+WJkQ4VzIQSLk test_key_comment
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKVSHDqUpC3enwIgc7mhOdNN9RmC8+U+WJkQ4VzIQSLk key_name
 ```
 
 ```text [randomart image]
@@ -118,11 +118,11 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKVSHDqUpC3enwIgc7mhOdNN9RmC8+U+WJkQ4VzIQSLk
 
 ```powershell
 # 公钥部署
-type "$env:USERPROFILE\.ssh\test_key.pub" | `
+type "$env:USERPROFILE\.ssh\key_name.pub" | `
   ssh user@server_ip "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
 
 # 测试指定密钥登录
-ssh -i "$env:USERPROFILE\.ssh\test_key" user@server_ip
+ssh -i "$env:USERPROFILE\.ssh\key_name" user@server_ip
 
 # 登录服务器（自动匹配私钥）
 ssh user@server_ip
