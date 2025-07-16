@@ -1,6 +1,7 @@
 import type { Plugin } from 'vite'
 import processImports from './processImports'
 import demo from './demo'
+import tooltipMap from './tooltipMap'
 
 export function MarkdownTransform(): Plugin {
   return {
@@ -19,6 +20,8 @@ export function MarkdownTransform(): Plugin {
         transformed = await processImports(code, id, addDep)
         // :::demo 容器
         transformed = demo(transformed, id)
+        // :::tooltip-map 容器
+        transformed = tooltipMap(transformed)
 
         return transformed
       } catch (e) {
