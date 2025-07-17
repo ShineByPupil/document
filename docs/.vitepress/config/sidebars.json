@@ -157,47 +157,45 @@
       "items": ["位操作艺术", "状态管理范式", "加密解密"]
     }
   ],
-  "/service/": [
+  "/service/nodejs": [
     {
-      "text": "服务端",
-      "base": "/service/",
-      "items": ["WebServer", "SSH", "OpenSSL", "WebDAV"]
+      "text": "基础环境",
+      "base": "/service/nodejs/coreEnvironment/",
+      "items": ["全局对象", "模块系统", "事件循环", "定时器"]
     },
     {
-      "text": "Linux",
+      "text": "系统交互",
+      "base": "/service/nodejs/systemInteraction/",
+      "items": ["文件系统", "进程控制", "操作系统", "路径处理"]
+    },
+    {
+      "text": "网络协议",
+      "base": "/service/nodejs/networkProtocols/",
+      "items": ["HTTP", "TCP/UDP", "WebSocket", "DNS解析", "URL处理"]
+    },
+    {
+      "text": "数据处理",
+      "base": "/service/nodejs/dataProcessing/",
+      "items": ["Buffer二进制处理", "流机制", "数据加密", "压缩解压"]
+    }
+  ],
+  "/service/express": [
+    {
+      "text": "基础",
+      "base": "/service/express/",
+      "items": ["开始", "部署"]
+    }
+  ],
+  "/service/Linux": [
+    {
+      "text": "系统基础",
       "base": "/service/Linux/",
       "items": ["发行版本", "命令体系"]
     },
     {
-      "text": "Express",
-      "base": "/service/express/",
-      "items": ["开始", "部署"]
-    },
-    {
-      "text": "Node.js",
-      "collapsed": false,
-      "items": [
-        {
-          "text": "基础环境",
-          "base": "/service/nodejs/coreEnvironment/",
-          "items": ["全局对象", "模块系统", "事件循环", "定时器"]
-        },
-        {
-          "text": "系统交互",
-          "base": "/service/nodejs/systemInteraction/",
-          "items": ["文件系统", "进程控制", "操作系统", "路径处理"]
-        },
-        {
-          "text": "网络协议",
-          "base": "/service/nodejs/networkProtocols/",
-          "items": ["HTTP", "TCP/UDP", "WebSocket", "DNS解析", "URL处理"]
-        },
-        {
-          "text": "数据处理",
-          "base": "/service/nodejs/dataProcessing/",
-          "items": ["Buffer二进制处理", "流机制", "数据加密", "压缩解压"]
-        }
-      ]
+      "text": "运维工具",
+      "base": "/service/Linux/tools/",
+      "items": ["SSH", "OpenSSL", "WebDAV", "WebServer"]
     }
   ]
 }

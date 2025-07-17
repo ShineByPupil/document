@@ -11,5 +11,25 @@ export const nav = [
     activeMatch: '/engineering/',
   },
   { text: '设计范式', link: '/dp/位操作艺术', activeMatch: '/dp/' },
-  { text: '服务端', link: '/service/WebServer', activeMatch: '/service/' },
+  {
+    text: '服务端开发',
+    activeMatch: '/service/',
+    items: [
+      {
+        text: 'Node.js',
+        link: '/service/nodejs/coreEnvironment/全局对象',
+        activeMatch: '/service/nodejs/',
+      },
+      {
+        text: 'express',
+        link: '/service/express/开始',
+        activeMatch: '/service/express/',
+      },
+      {
+        text: 'Linux 运维',
+        link: '/service/Linux/发行版本',
+        activeMatch: '/service/Linux/',
+      },
+    ],
+  },
 ]
