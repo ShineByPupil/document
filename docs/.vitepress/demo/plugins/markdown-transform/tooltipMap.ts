@@ -15,7 +15,29 @@ function escapeHtml(str: string) {
     .replace(/>/g, '&gt;')
 }
 
+const { protectedText, restore } = (() => {
+  const codeBlocks: string[] = []
+  let index = 0
+  const protectPattern = /```[\s\S]*?```|^#{1,6} .+$/gm
+
+  const protectedText = (rawText: string) =>
+    rawText.replace(protectPattern, (match) => {
+      const placeholder = `___CODE_BLOCK_PLACEHOLDER_${index++}___`
+      codeBlocks.push(match)
+      return placeholder
+    })
+
+  const restore = (text: string) => {
+    return text.replace(/___CODE_BLOCK_PLACEHOLDER_(\d+)___/g, (_, i) => {
+      return codeBlocks[+i]
+    })
+  }
+
+  return { protectedText, restore }
+})()
+
 export default function (markdown: string): string {
+  // 没有识别到 :::tooltip-map 容器，直接退出
   const match = markdown.match(tooltipMapRE)
   if (!match) return markdown
 
@@ -29,19 +51,54 @@ export default function (markdown: string): string {
 
   // 移除 :::tooltip-map 容器部分
   let result = markdown.replace(tooltipMapRE, '')
+  // 隔离代码块
+  result = protectedText(result)
 
   // 遍历所有映射的术语，替换内容
   for (const term in tooltipMap) {
     const desc = escapeHtml(tooltipMap[term])
+    const escaped = escapeRegExp(term) // 安全处理
+    // 中文检测：只要包含一个中文字符，就当作中文词处理
+    const isChinese = /[\u4e00-\u9fa5]/.test(term)
+    let patternBody: string
+
+    if (isChinese) {
+      // 匹配规则：中文词前后不是字母数字（避免误伤拼音或变量名）
+      patternBody = [
+        `(?<![\\p{L}\\p{N}])`, // 前缀：前面不能是 Unicode 字母或数字（中文、英文都算）
+        escaped,
+        // 后缀：后面不能是 Unicode 字母或数字
+        `(?![\\p{L}\\p{N}])`,
+      ].join('')
+    } else {
+      // 匹配规则：英文词使用 \b 单词边界，确保完整匹配
+      patternBody = `\\b${escaped}\\b`
+    }
+
     const pattern = new RegExp(
-      `(?<![\\w-])(\`${escapeRegExp(term)}\`|\\b${escapeRegExp(term)}\\b)(?![\\w-])`,
+      [
+        // 不能被单词字符或 - 包围（避免 “foo-let-bar” 误匹配）
+        `(?<![\\w-])`,
+        // 支持 `term` 或 term（根据是否带反引号）
+        `(\`${escaped}\`|${patternBody})`,
+        `(?![\\w-])`,
+      ].join(''),
       'g',
     )
 
     result = result.replace(pattern, (matched) => {
-      return `<el-tooltip content="${desc}"><span>${matched}<sup style="user-select: none;">?</sup></span></el-tooltip>`
+      return `
+        <el-tooltip content="${desc}" placement="top">
+          <span class="tooltip-keyword">
+            <u>${matched}</u>
+            <sup>?</sup>
+          </span>
+        </el-tooltip>
+      `.replace(/\s*\n\s*/g, '')
     })
   }
+  // 恢复代码块
+  result = restore(result)
 
   return result
 }
