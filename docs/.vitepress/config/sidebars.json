@@ -19,7 +19,12 @@
       "items": [
         {
           "text": "ECMAScript 核心",
-          "items": ["语言核心", "数据类型", "异步编程", "运算符"]
+          "items": [
+            { "text": "语言核心", "link": "语言核心/" },
+            { "text": "数据类型", "link": "数据类型/" },
+            { "text": "异步编程", "link": "异步编程/" },
+            { "text": "运算符", "link": "运算符/" }
+          ]
         },
         {
           "text": "WEB API",
@@ -45,7 +50,7 @@
               "collapsed": true,
               "base": "/base/js/通信体系/",
               "items": [
-                { "text": "概述", "link": "index" },
+                { "text": "概述", "link": "/" },
                 {
                   "text": "传统请求",
                   "items": ["XMLHttpRequest", "fetch"]

@@ -13,8 +13,7 @@ export const files: string[] = []
 const parse: ParseFunction = function (list, parentBase) {
   return list.map((item) => {
     if (typeof item === 'string') {
-      const filesPath = `${parentBase}${item}`
-      files.push(`${filesPath}.md`, `${filesPath}/index.md`)
+      files.push(`${parentBase}${item}.md`)
       return { text: item, link: item }
     }
 
@@ -22,8 +21,12 @@ const parse: ParseFunction = function (list, parentBase) {
       item.items = parse(item.items, item.base ?? parentBase)
       return item as SidebarItem
     } else {
-      const filesPath = `${item.base ?? parentBase}${item.link ?? item.text}`
-      files.push(`${filesPath}.md`, `${filesPath}/index.md`)
+      const filesPath =
+        `${item.base ?? parentBase}${item.link ?? item.text}`.replaceAll(
+          '//',
+          '/',
+        )
+      files.push(item.link ? `${filesPath}index.md` : `${filesPath}.md`)
       return {
         text: item.text,
         link: item.link ?? item.text, // 确保 link 必填
