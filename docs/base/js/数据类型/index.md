@@ -28,7 +28,7 @@ outline: [2, 3]
 
 ### 3. **`Function`** <Sound word="Function"/>
 
-@import "./dataType/Function.md"
+@import "./Function.md"
 
 ### 4. **`Map`** <Sound word="Map"/>
 
@@ -40,7 +40,7 @@ outline: [2, 3]
 
 ### 8. **`RegExp`** <Sound word="RegExp"/> ⭐
 
-@import "./dataType/RegExp.md"
+@import "./RegExp.md"
 
 ### 9. **`Promise`** <Sound word="Promise"/>
 

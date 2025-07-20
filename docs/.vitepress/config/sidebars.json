@@ -43,9 +43,9 @@
             {
               "text": "通信体系",
               "collapsed": true,
-              "base": "/base/js/network/",
+              "base": "/base/js/通信体系/",
               "items": [
-                { "text": "概述", "link": "通信体系" },
+                { "text": "概述", "link": "index" },
                 {
                   "text": "传统请求",
                   "items": ["XMLHttpRequest", "fetch"]
@@ -60,7 +60,7 @@
                 },
                 {
                   "text": "单向传输",
-                  "items": ["Beacon", "Web Push", "EventSource"]
+                  "items": ["Beacon", "EventSource"]
                 }
               ]
             },
