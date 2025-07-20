@@ -7,6 +7,7 @@ import { mdPlugin } from './plugins'
 import { generateExclude } from '../utils'
 
 export default defineConfig({
+  cleanUrls: true, // 生成简洁的 URL
   base: process.env.NODE_ENV === 'production' ? '/document/' : '/',
   title: '前端知识体系',
   description: '系统性整理前端开发核心知识',
