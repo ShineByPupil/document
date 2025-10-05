@@ -56,7 +56,6 @@ export default function (markdown: string): string {
 
   // 遍历所有映射的术语，替换内容
   for (const term in tooltipMap) {
-    const desc = escapeHtml(tooltipMap[term])
     const escaped = escapeRegExp(term) // 安全处理
     // 中文检测：只要包含一个中文字符，就当作中文词处理
     const isChinese = /[\u4e00-\u9fa5]/.test(term)
@@ -87,16 +86,28 @@ export default function (markdown: string): string {
     )
 
     result = result.replace(pattern, (matched) => {
-      return `
+      return `___CODE_BLOCK_PLACEHOLDER_${matched}___`
+    })
+  }
+
+  // 将占位符替换为 tooltip
+  for (const term in tooltipMap) {
+    const desc = escapeHtml(tooltipMap[term])
+    result = result.replace(
+      `___CODE_BLOCK_PLACEHOLDER_${term}___`,
+      (matched) => {
+        return `
         <el-tooltip content="${desc}" placement="top">
           <span class="tooltip-keyword">
-            <u>${matched}</u>
+            <u>${term}</u>
             <sup>?</sup>
           </span>
         </el-tooltip>
       `.replace(/\s*\n\s*/g, '')
-    })
+      },
+    )
   }
+
   // 恢复代码块
   result = restore(result)
 
