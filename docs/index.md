@@ -12,6 +12,12 @@ hero:
     - theme: brand
       text: 开始学习
       link: /base/html/基础语法与结构
+    - theme: alt
+      text: GitHub
+      link: /base/html/基础语法与结构
+    - theme: alt
+      text: 新的特性
+      link: /changelog.md
 
 features:
   - title: 🧱 核心基础
