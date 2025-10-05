@@ -6,7 +6,7 @@ outline: [2, 3]
 
 ## 一、基本类型
 
-### 1. **`String`** <Sound word="String"/>
+@import "./String.md"
 
 ### 2. **`Number`** <Sound word="Number"/>
 
