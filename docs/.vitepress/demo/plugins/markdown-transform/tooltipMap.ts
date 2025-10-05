@@ -1,6 +1,3 @@
-// 匹配 :::tooltip-map 容器，提取内容
-const tooltipMapRE = /:::tooltip-map\s+([\s\S]*?):::/
-
 // 转义正则表达式中的特殊字符，确保安全构造 RegExp
 function escapeRegExp(str: string) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
@@ -37,20 +34,23 @@ const { protectedText, restore } = (() => {
 })()
 
 export default function (markdown: string): string {
+  // 匹配 :::tooltip-map 容器，提取内容
+  const tooltipMapRE = /:::tooltip-map\s+([\s\S]*?):::/g
   // 没有识别到 :::tooltip-map 容器，直接退出
-  const match = markdown.match(tooltipMapRE)
-  if (!match) return markdown
+  let tooltipMap: Record<string, string> = {}
 
   // 解析 JSON 内容为 tooltip 映射表
-  let tooltipMap: Record<string, string> = {}
-  try {
-    tooltipMap = JSON.parse(match[1])
-  } catch (e) {
-    console.warn('tooltip-map JSON 格式错误')
+  for (let match of markdown.matchAll(tooltipMapRE)) {
+    try {
+      const obj = JSON.parse(match[1])
+      Object.assign(tooltipMap, obj)
+    } catch (e) {
+      console.warn('tooltip-map JSON 格式错误')
+    }
   }
 
   // 移除 :::tooltip-map 容器部分
-  let result = markdown.replace(tooltipMapRE, '')
+  let result = markdown.replaceAll(tooltipMapRE, '')
   // 隔离代码块
   result = protectedText(result)
 
