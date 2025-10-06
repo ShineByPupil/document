@@ -1,5 +1,15 @@
 ### 1. **`String`** <Sound word="String"/>
 
+- `concat` <Sound word="concat"/>
+
+  > 将调用的字符串与参数连接，返回一个新的字符串
+
+  ```js
+  'A'.concat('😀𠮷') // 'A😀𠮷'
+  'A'.concat('😀', '𠮷') // 'A😀𠮷'
+  'A'.concat(...['😀', '𠮷']) // 'A😀𠮷'
+  ```
+
 - `at` <Sound word="at"/>
 
   > 返回的指定位置的 UTF-16 码元，而不是严格意义上的字符。负整数从后往前取
