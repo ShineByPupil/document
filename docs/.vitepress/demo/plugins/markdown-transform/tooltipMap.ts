@@ -93,7 +93,7 @@ export default function (markdown: string): string {
   // 将占位符替换为 tooltip
   for (const term in tooltipMap) {
     const desc = escapeHtml(tooltipMap[term])
-    result = result.replace(
+    result = result.replaceAll(
       `___CODE_BLOCK_PLACEHOLDER_${term}___`,
       (matched) => {
         return `
