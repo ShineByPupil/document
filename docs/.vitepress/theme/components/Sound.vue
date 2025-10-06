@@ -8,10 +8,12 @@ const props = defineProps({
   },
 })
 const baseURL = import.meta.env.BASE_URL
+const url = `${baseURL}sound/${props.word}.mp3`
 const audioRef = ref<HTMLAudioElement | null>(null)
 
 const playAudio = () => {
   if (audioRef.value) {
+    audioRef.value.src = url
     audioRef.value.currentTime = 0
     audioRef.value.play().catch((error) => {
       console.error('音频播放失败:', error)
@@ -35,7 +37,7 @@ const playAudio = () => {
       </svg>
     </button>
 
-    <audio ref="audioRef" :src="`${baseURL}sound/${props.word}.mp3`"></audio>
+    <audio ref="audioRef"></audio>
   </div>
 </template>
 
