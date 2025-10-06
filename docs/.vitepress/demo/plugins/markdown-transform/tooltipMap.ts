@@ -97,12 +97,14 @@ export default function (markdown: string): string {
       `___CODE_BLOCK_PLACEHOLDER_${term}___`,
       (matched) => {
         return `
-        <el-tooltip content="${desc}" placement="top">
-          <span class="tooltip-keyword">
-            <u>${term}</u>
-            <sup>?</sup>
-          </span>
-        </el-tooltip>
+        <ClientOnly>
+          <el-tooltip content="${desc}" placement="top">
+            <span class="tooltip-keyword">
+              <u>${term}</u>
+              <sup>?</sup>
+            </span>
+          </el-tooltip>
+        </ClientOnly>
       `.replace(/\s*\n\s*/g, '')
       },
     )

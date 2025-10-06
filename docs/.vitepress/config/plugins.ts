@@ -28,15 +28,17 @@ export const mdPlugin = (md: MarkdownRenderer) => {
         if (!source) throw new Error(`Incorrect source file: ${sourceFile}`)
 
         return description === 'onlyShow'
-          ? `<ep-${sourceFile.replaceAll('/', '-')}/>`
-          : `<Demo source="${encodeURIComponent(md.render(`\`\`\` vue\n${source}\`\`\``))}"
-                             path="${sourceFile}"
-                             raw-source="${encodeURIComponent(source)}"
-                             description="${encodeURIComponent(md.render(description))}">
-                          <template #source>
-                              <ep-${sourceFile.replaceAll('/', '-')}/>
-                          </template>
-                       </Demo>`
+          ? `<ClientOnly><ep-${sourceFile.replaceAll('/', '-')}/></ClientOnly>`
+          : `<ClientOnly>
+              <Demo source="${encodeURIComponent(md.render(`\`\`\` vue\n${source}\`\`\``))}"
+                path="${sourceFile}"
+                raw-source="${encodeURIComponent(source)}"
+                description="${encodeURIComponent(md.render(description))}">
+                <template #source>
+                  <ep-${sourceFile.replaceAll('/', '-')}/>
+                </template>
+              </Demo>
+            </ClientOnly>`
       } else {
         return '\n'
       }
